@@ -37,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${manrope.variable} ${geistMono.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-[#181818] text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300 font-sans [text-wrap:pretty]">
+    <html lang="pt-BR" className={`${manrope.variable} ${geistMono.variable} scroll-smooth`} suppressHydrationWarning>
+      <body className="min-h-screen bg-[#181818] text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300 font-sans [text-wrap:pretty]" suppressHydrationWarning>
         {/* Skip to main content for accessibility */}
         <a
           href="#conteudo-principal"
