@@ -1,0 +1,6 @@
+{
+  "name": "Letramento Digital em IA — Amazônia",
+  "description": "Plataforma educacional completa do Curso de Letramento Digital em Inteligência Artificial para estudantes de Belém do Pará, promovido por PRODEPA, iSACI e IFPA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
