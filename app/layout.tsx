@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Manrope, Geist_Mono } from 'next/font/google';
+import { BarraProgresso, ProvedorMovimento, VoltarAoTopo } from '@/components/movimento/Navegacao';
 import './globals.css';
 
 const manrope = Manrope({
@@ -16,18 +17,22 @@ const geistMono = Geist_Mono({
   weight: ['400', '500', '600'],
 });
 
+const titulo = 'Letramento digital em inteligência artificial | Amazônia e comunidade';
+
 export const metadata: Metadata = {
-  title: 'Letramento digital em inteligência artificial | Amazônia e comunidade',
-  description: 'Formação crítica e prática em inteligência artificial para estudantes e moradores de Belém do Pará. Parceria PRODEPA, iSACI, IFPA e UFPA.',
+  title: { default: titulo, template: '%s | Letramento Digital em IA' },
+  description:
+    'Formação crítica e prática em inteligência artificial para estudantes e moradores de Belém do Pará. Curso promovido por PRODEPA, iSACI e IFPA, com apoio do Governo do Pará.',
   openGraph: {
-    title: 'Letramento digital em inteligência artificial | Amazônia e comunidade',
+    title: titulo,
     description: 'Aprenda a entender, comandar, auditar e construir inteligência artificial com foco comunitário na Amazônia.',
     type: 'website',
+    locale: 'pt_BR',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Letramento digital em inteligência artificial | Amazônia e comunidade',
-    description: 'Curso completo gratuito em inteligência artificial para a juventude de Belém do Pará.',
+    title: titulo,
+    description: 'Curso gratuito de letramento digital em inteligência artificial para a juventude de Belém do Pará.',
   },
 };
 
@@ -42,11 +47,15 @@ export default function RootLayout({
         {/* Skip to main content for accessibility */}
         <a
           href="#conteudo-principal"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-400 focus:text-slate-950 focus:font-semibold focus:rounded-lg focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:px-4 focus:py-2 focus:bg-emerald-400 focus:text-slate-950 focus:font-semibold focus:rounded-lg focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-white"
         >
           Pular para o conteúdo principal
         </a>
-        {children}
+        <ProvedorMovimento>
+          <BarraProgresso />
+          {children}
+          <VoltarAoTopo />
+        </ProvedorMovimento>
       </body>
     </html>
   );

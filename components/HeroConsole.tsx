@@ -1,11 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Layers, ShieldCheck, Eye, Bot, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
+type Aba = 'tokens' | 'pacif' | 'bias' | 'bot';
+const ABAS: Aba[] = ['tokens', 'pacif', 'bias', 'bot'];
+
 export default function HeroConsole() {
-  const [activeTab, setActiveTab] = useState<'tokens' | 'pacif' | 'bias' | 'bot'>('tokens');
+  const [activeTab, setActiveTab] = useState<Aba>('tokens');
+  const abasRef = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Padrão de abas: setas esquerda/direita trocam de aba e levam o foco junto.
+  const aoTeclar = (e: React.KeyboardEvent, i: number) => {
+    const passo = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!passo) return;
+    e.preventDefault();
+    const prox = (i + passo + ABAS.length) % ABAS.length;
+    setActiveTab(ABAS[prox]);
+    abasRef.current[prox]?.focus();
+  };
 
   // Interactive states for each tab
   const [pacifShielded, setPacifShielded] = useState(true);
@@ -28,63 +43,119 @@ export default function HeroConsole() {
         </div>
 
         {/* Tab switchers */}
-        <div className="flex items-center gap-1 bg-[#272727] p-1 rounded-lg border border-[#313131]">
+        <div role="tablist" aria-label="Experimente cada módulo" className="flex flex-wrap items-center gap-1 bg-[#272727] p-1 rounded-lg border border-[#313131]">
           <button
             type="button"
+            role="tab"
+            id="aba-tokens"
+            aria-selected={activeTab === 'tokens'}
+            aria-controls="painel-console"
+            tabIndex={activeTab === 'tokens' ? 0 : -1}
+            ref={(el) => { abasRef.current[0] = el; }}
+            onKeyDown={(e) => aoTeclar(e, 0)}
             onClick={() => setActiveTab('tokens')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex items-center gap-1.5 ${
-              activeTab === 'tokens'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+            className={`relative min-h-9 px-3 py-1 rounded-md text-xs font-medium transition-colors duration-300 flex items-center gap-1.5 ${
+              activeTab === 'tokens' ? 'text-emerald-300' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Layers className="w-3.5 h-3.5" />
-            <span>01 Tokens</span>
+            {activeTab === 'tokens' && (
+              <motion.span
+                layoutId="console-aba-ativa"
+                className="absolute inset-0 rounded-md border bg-emerald-500/20 border-emerald-500/30"
+                transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+              />
+            )}
+            <Layers className="w-3.5 h-3.5 relative" />
+            <span className="relative">01 Tokens</span>
           </button>
 
           <button
             type="button"
+            role="tab"
+            id="aba-pacif"
+            aria-selected={activeTab === 'pacif'}
+            aria-controls="painel-console"
+            tabIndex={activeTab === 'pacif' ? 0 : -1}
+            ref={(el) => { abasRef.current[1] = el; }}
+            onKeyDown={(e) => aoTeclar(e, 1)}
             onClick={() => setActiveTab('pacif')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex items-center gap-1.5 ${
-              activeTab === 'pacif'
-                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+            className={`relative min-h-9 px-3 py-1 rounded-md text-xs font-medium transition-colors duration-300 flex items-center gap-1.5 ${
+              activeTab === 'pacif' ? 'text-blue-300' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>02 PACIF</span>
+            {activeTab === 'pacif' && (
+              <motion.span
+                layoutId="console-aba-ativa"
+                className="absolute inset-0 rounded-md border bg-blue-500/20 border-blue-500/30"
+                transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+              />
+            )}
+            <ShieldCheck className="w-3.5 h-3.5 relative" />
+            <span className="relative">02 PACIF</span>
           </button>
 
           <button
             type="button"
+            role="tab"
+            id="aba-bias"
+            aria-selected={activeTab === 'bias'}
+            aria-controls="painel-console"
+            tabIndex={activeTab === 'bias' ? 0 : -1}
+            ref={(el) => { abasRef.current[2] = el; }}
+            onKeyDown={(e) => aoTeclar(e, 2)}
             onClick={() => setActiveTab('bias')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex items-center gap-1.5 ${
-              activeTab === 'bias'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+            className={`relative min-h-9 px-3 py-1 rounded-md text-xs font-medium transition-colors duration-300 flex items-center gap-1.5 ${
+              activeTab === 'bias' ? 'text-amber-300' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Eye className="w-3.5 h-3.5" />
-            <span>03 Vieses</span>
+            {activeTab === 'bias' && (
+              <motion.span
+                layoutId="console-aba-ativa"
+                className="absolute inset-0 rounded-md border bg-amber-500/20 border-amber-500/30"
+                transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+              />
+            )}
+            <Eye className="w-3.5 h-3.5 relative" />
+            <span className="relative">03 Vieses</span>
           </button>
 
           <button
             type="button"
+            role="tab"
+            id="aba-bot"
+            aria-selected={activeTab === 'bot'}
+            aria-controls="painel-console"
+            tabIndex={activeTab === 'bot' ? 0 : -1}
+            ref={(el) => { abasRef.current[3] = el; }}
+            onKeyDown={(e) => aoTeclar(e, 3)}
             onClick={() => setActiveTab('bot')}
-            className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex items-center gap-1.5 ${
-              activeTab === 'bot'
-                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+            className={`relative min-h-9 px-3 py-1 rounded-md text-xs font-medium transition-colors duration-300 flex items-center gap-1.5 ${
+              activeTab === 'bot' ? 'text-purple-300' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Bot className="w-3.5 h-3.5" />
-            <span>04 Chatbot</span>
+            {activeTab === 'bot' && (
+              <motion.span
+                layoutId="console-aba-ativa"
+                className="absolute inset-0 rounded-md border bg-purple-500/20 border-purple-500/30"
+                transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+              />
+            )}
+            <Bot className="w-3.5 h-3.5 relative" />
+            <span className="relative">04 Chatbot</span>
           </button>
         </div>
       </div>
 
       {/* Console Interactive Stage */}
-      <div className="p-6 min-h-[220px] flex flex-col justify-between">
+      <div id="painel-console" role="tabpanel" aria-labelledby={`aba-${activeTab}`} className="p-6 min-h-[220px] flex flex-col justify-between">
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
+          transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+        >
         {/* TAB 1: TOKENS */}
         {activeTab === 'tokens' && (
           <div className="space-y-4">
@@ -163,6 +234,7 @@ export default function HeroConsole() {
               <div className="flex items-center gap-1 bg-[#181818] p-1 rounded-lg border border-[#313131] text-xs">
                 <button
                   type="button"
+                  aria-pressed={!pacifShielded}
                   onClick={() => setPacifShielded(false)}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     !pacifShielded ? 'bg-red-500/20 text-red-300 border border-red-500/40' : 'text-slate-400'
@@ -172,6 +244,7 @@ export default function HeroConsole() {
                 </button>
                 <button
                   type="button"
+                  aria-pressed={pacifShielded}
                   onClick={() => setPacifShielded(true)}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     pacifShielded ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40 font-semibold' : 'text-slate-400'
@@ -223,6 +296,7 @@ export default function HeroConsole() {
               <div className="flex items-center gap-1 bg-[#181818] p-1 rounded-lg border border-[#313131] text-xs">
                 <button
                   type="button"
+                  aria-pressed={!biasCorrected}
                   onClick={() => setBiasCorrected(false)}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     !biasCorrected ? 'bg-red-500/20 text-red-300 border border-red-500/40' : 'text-slate-400'
@@ -232,6 +306,7 @@ export default function HeroConsole() {
                 </button>
                 <button
                   type="button"
+                  aria-pressed={biasCorrected}
                   onClick={() => setBiasCorrected(true)}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     biasCorrected ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold' : 'text-slate-400'
@@ -285,6 +360,7 @@ export default function HeroConsole() {
               <div className="flex items-center gap-1 bg-[#181818] p-1 rounded-lg border border-[#313131] text-xs">
                 <button
                   type="button"
+                  aria-pressed={botPrompt === 'normal'}
                   onClick={() => setBotPrompt('normal')}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     botPrompt === 'normal' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40' : 'text-slate-400'
@@ -294,6 +370,7 @@ export default function HeroConsole() {
                 </button>
                 <button
                   type="button"
+                  aria-pressed={botPrompt === 'emergency'}
                   onClick={() => setBotPrompt('emergency')}
                   className={`px-2.5 py-0.5 rounded transition-colors ${
                     botPrompt === 'emergency' ? 'bg-red-500/20 text-red-300 border border-red-500/40 font-semibold' : 'text-slate-400'
@@ -323,6 +400,8 @@ export default function HeroConsole() {
             </div>
           </div>
         )}
+        </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

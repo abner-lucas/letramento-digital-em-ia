@@ -101,10 +101,13 @@ export default function InteractiveQuiz({ questions, moduleTitle }: InteractiveQ
                   }
 
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={opt.label}
+                      aria-pressed={isSelected}
+                      disabled={isSubmitted}
                       onClick={() => handleSelect(q.id, opt.label)}
-                      className={`p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start gap-3 ${optionStyle}`}
+                      className={`w-full text-left p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start gap-3 ${optionStyle}`}
                     >
                       <span className="font-bold font-mono uppercase shrink-0 mt-0.5">
                         {opt.label})
@@ -116,15 +119,16 @@ export default function InteractiveQuiz({ questions, moduleTitle }: InteractiveQ
                       {isSubmitted && isSelected && !isCorrect && (
                         <XCircle className="w-4 h-4 text-red-600 shrink-0" />
                       )}
-                    </div>
+                    </button>
                   );
                 })}
               </div>
 
               {/* Action or Explanation */}
-              <div className="mt-4 pl-9">
+              <div className="mt-4 pl-9" aria-live="polite">
                 {!isSubmitted ? (
                   <button
+                    type="button"
                     disabled={!chosen}
                     onClick={() => handleConfirm(q.id)}
                     className="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-900 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"

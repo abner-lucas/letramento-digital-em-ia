@@ -1,6 +1,6 @@
 # Letramento Digital em Inteligência Artificial — Amazônia & Comunidade
 
-Plataforma educacional completa do **Curso de Letramento Digital em Inteligência Artificial** para estudantes e comunidades de Belém do Pará, promovido em parceria por **PRODEPA**, **Instituto iSACI**, **IFPA**, **SIMBIC/UFPA** e **Governo do Estado do Pará**, sob coordenação do **Prof. Dr. Bruno Duarte Gomes**.
+Plataforma educacional completa do **Curso de Letramento Digital em Inteligência Artificial** para estudantes e comunidades de Belém do Pará, promovido por **PRODEPA**, **Instituto iSACI** e **IFPA**, com apoio do **Governo do Pará**. Material de autoria do **Prof. Dr. Bruno Duarte Gomes** (iSACI / SIMBIC – CCAD – UFPA), tutor do curso.
 
 ---
 
@@ -15,8 +15,8 @@ A interface e a landing page foram refinadas com base nas diretrizes da skill **
   - **Passo a Passo Pedagógico:** Metodologia em 4 etapas (Desmistificar, Comandar com PACIF, Auditar Vieses e Construir Assistentes).
   - **Módulos do Curso:** Cards com raio aninhado (`inner radius = outer radius - gap`) e cores de fundo planas.
   - **Hub de Apostilas para Impressão:** 4 guias em páginas estáticas A4 prontas para salvar como PDF ou imprimir para estudo offline.
-  - **Prova Social Realista:** Depoimentos de educadores e alunos do Guamá, Terra Firme e Icoaraci.
-  - **FAQ Detalhado:** 8 perguntas abordando objeções reais (acesso pelo celular, gratuidade, ausência de código, etc.).
+  - **Regras de Ouro:** as 4 regras de uso responsável repetidas em todas as apostilas (no lugar de depoimentos, que não constam do material oficial).
+  - **FAQ em sanfona:** 8 perguntas abordando objeções reais (acesso pelo celular, gratuidade, ausência de código, etc.).
 - **Regras Visuais Estritas:**
   - Tipografia: Família **Manrope** com **Geist Mono** para códigos e dados numéricos. Sem itálicos, sem pesos 900 ultra-negrito.
   - Escala de fontes estrita do Tailwind CSS.
@@ -70,3 +70,12 @@ O projeto foi totalmente adaptado para **Static Site Generation (SSG)** com Next
    npm run build
    ```
    Os arquivos finais gerados estarão prontos na pasta `out/`.
+
+---
+
+## ✅ Conteúdo, testes e movimento
+
+- **Fonte da verdade:** os textos seguem as apostilas oficiais em PDF, publicadas em [`public/apostilas/`](public/apostilas/) e oferecidas para download no site. Dados ainda não conferidos aparecem como `[conferir]`, como na apostila do Módulo 4.
+- **Simulador "Guia Saúde Guamá":** as regras ficam em [`lib/guiaSaude.ts`](lib/guiaSaude.ts), na ordem da apostila (emergência → sofrimento/CVV 188 → violência 190/180 → dados pessoais → escopo → frase de recuo → base conferida). Rode `npm test` para validar os 4 testes obrigatórios.
+- **Movimento:** entradas ao rolar, barra de progresso, cabeçalho que some ao descer, indicador lateral de seções e sumário que acompanha a leitura. Tudo respeita a preferência "reduzir movimento" do sistema.
+

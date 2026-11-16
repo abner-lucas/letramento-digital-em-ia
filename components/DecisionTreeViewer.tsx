@@ -49,7 +49,7 @@ export default function DecisionTreeViewer() {
           {/* Filter branches */}
           <div className="flex flex-wrap gap-1 bg-slate-800 p-1 rounded-lg">
             <button
-              onClick={() => setActiveBranch('all')}
+              type="button" aria-pressed={activeBranch === 'all'} onClick={() => setActiveBranch('all')}
               className={`px-2.5 py-1 text-xs rounded transition-colors ${
                 activeBranch === 'all' ? 'bg-emerald-500 text-slate-950 font-semibold' : 'text-slate-300 hover:text-white'
               }`}
@@ -57,7 +57,7 @@ export default function DecisionTreeViewer() {
               Todos os Ramos
             </button>
             <button
-              onClick={() => setActiveBranch('4')}
+              type="button" aria-pressed={activeBranch === '4'} onClick={() => setActiveBranch('4')}
               className={`px-2.5 py-1 text-xs rounded transition-colors ${
                 activeBranch === '4' ? 'bg-red-500 text-white font-semibold' : 'text-red-300 hover:text-white'
               }`}
@@ -65,7 +65,7 @@ export default function DecisionTreeViewer() {
               Ramo 4 (Emergência)
             </button>
             <button
-              onClick={() => setActiveBranch('1')}
+              type="button" aria-pressed={activeBranch === '1'} onClick={() => setActiveBranch('1')}
               className={`px-2.5 py-1 text-xs rounded transition-colors ${
                 activeBranch === '1' ? 'bg-blue-500 text-white font-semibold' : 'text-slate-300 hover:text-white'
               }`}
@@ -119,13 +119,13 @@ export default function DecisionTreeViewer() {
                 <div className="p-3 bg-blue-50/60 rounded-lg border border-blue-100 text-xs">
                   <strong className="text-blue-900 block mb-1">↳ Opção 1: UBS Guamá</strong>
                   <p className="text-slate-700 font-mono text-[11px]">
-                    Rua Barão de Igarapé-Miri · Seg-Sex 7h-17h · Sábado fechado [Conferido 03/2026]
+                    Rua [conferir] · Seg-Sex 7h-17h · Sábado fechado [Conferido 03/2026]
                   </p>
                 </div>
                 <div className="p-3 bg-blue-50/60 rounded-lg border border-blue-100 text-xs">
                   <strong className="text-blue-900 block mb-1">↳ Opção 2: UBS Terra Firme</strong>
                   <p className="text-slate-700 font-mono text-[11px]">
-                    Passagem São Silvestre · Seg-Sex 7h-17h · Sáb 8h-12h [Conferido 03/2026]
+                    Rua [conferir] · Seg-Sex 7h-17h · Sáb 8h-12h [Conferido 03/2026]
                   </p>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default function DecisionTreeViewer() {
                 RAMO 3: &ldquo;vacina / vacinação infantil / campanhas&rdquo;
               </span>
               <div className="p-3 bg-emerald-50/60 rounded-lg border border-emerald-100 text-xs text-emerald-950 font-mono">
-                ↳ <strong>FOLHA DE VACINAS:</strong> Salas abertas das 8h às 16h30. Levar caderneta de vacinação e RG/certidão.
+                Pergunta: &ldquo;Vacina de criança ou de adulto?&rdquo;<br />↳ <strong>Criança:</strong> calendário infantil + link oficial<br />↳ <strong>Adulto:</strong> campanhas ativas + link oficial
               </div>
             </div>
           )}
@@ -196,10 +196,13 @@ export default function DecisionTreeViewer() {
           {CHECKLIST_ITEMS.map((item, idx) => {
             const isChecked = !!checkedItems[idx];
             return (
-              <div
+              <button
+                type="button"
+                role="checkbox"
+                aria-checked={isChecked}
                 key={idx}
                 onClick={() => toggleCheck(idx)}
-                className={`p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start gap-2.5 ${
+                className={`w-full text-left p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start gap-2.5 ${
                   isChecked
                     ? 'bg-emerald-50/70 border-emerald-300 text-emerald-950 font-medium'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
@@ -211,7 +214,7 @@ export default function DecisionTreeViewer() {
                   <Square className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                 )}
                 <span className="leading-relaxed">{item}</span>
-              </div>
+              </button>
             );
           })}
         </div>

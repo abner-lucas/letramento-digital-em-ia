@@ -94,7 +94,7 @@ export const COURSE_INFO = {
   locations: "Turmas dos bairros do Guamá, Terra Firme e região metropolitana de Belém",
   stats: [
     { value: "4", label: "Módulos Integrados", context: "Da teoria básica à banca final" },
-    { value: "16h", label: "Carga Horária Total", context: "Aulas práticas no celular" },
+    { value: "20h", label: "Carga Horária Total", context: "Aulas práticas no celular" },
     { value: "6", label: "IAs Gratuitas Analisadas", context: "Sem gastar nenhum centavo" },
     { value: "100%", label: "Foco Comunitário", context: "Soluções reais para bairros de Belém" }
   ],
@@ -137,7 +137,7 @@ export const AI_TOOLS_DATA: AITool[] = [
     amazonMetaphor: "Como uma barraca muito completa na feira do Ver-o-Peso, mas que atende um número limitado de clientes no balcão principal antes de passar pro ajudante.",
     pros: ["Excelente escrita geral", "Gera imagens simples de graça", "Análise de arquivos no gratuito"],
     cons: ["Rebaixamento rápido de modelo", "Limite rigoroso em horários de pico"],
-    modelFree: "GPT-4o mini / versão mista"
+    modelFree: "Modelo reduzido (rebaixa para versão leve após o limite)"
   },
   {
     id: "gemini",
@@ -153,7 +153,7 @@ export const AI_TOOLS_DATA: AITool[] = [
     amazonMetaphor: "Como aquele vizinho prestativo que já tem as ferramentas que você precisa no quintal e ajuda rápido porque conhece o ambiente.",
     pros: ["Acesso direto ao Google Drive e Docs", "Volume de mensagens muito confortável", "Velocidade ultrarrápida"],
     cons: ["Modelo Pro requer plano pago", "Menos reflexivo que o Claude em redações longas"],
-    modelFree: "Gemini 2.5/3.5 Flash e Flash-Lite"
+    modelFree: "Flash e Flash-Lite (Pro só para assinantes desde abr/2026)"
   },
   {
     id: "claude",
@@ -169,7 +169,7 @@ export const AI_TOOLS_DATA: AITool[] = [
     amazonMetaphor: "Como uma caneta tinteiro artesanal: escreve bonito como ninguém, mas tem tinta limitada na carga diária.",
     pros: ["Escrita extremamente fluida e humanizada", "Menos propenso a tom robótico", "Excelente leitura de PDFs longos"],
     cons: ["Janela fecha rápido em sessões de estudo", "Sem geração de imagens"],
-    modelFree: "Claude 3.5/3.7 Sonnet (cota reduzida)"
+    modelFree: "Plano gratuito permanente, com cota reduzida"
   },
   {
     id: "deepseek",
@@ -185,7 +185,7 @@ export const AI_TOOLS_DATA: AITool[] = [
     amazonMetaphor: "A cozinha de tacacá que fica aberta o dia inteiro de graça sem fila de espera para você repetir quantas vezes quiser.",
     pros: ["Não corta sua conversa por atingir cota", "Poderoso raciocínio passo a passo (R1)", "Excelente para estudantes praticarem"],
     cons: ["Privacidade e moderação sujeita a discussões regulatórias", "Pode ter lentidão momentânea"],
-    modelFree: "DeepSeek V3 / R1"
+    modelFree: "Modelos V3 e V4 (R1 para raciocínio)"
   },
   {
     id: "perplexity",
@@ -427,8 +427,20 @@ export const COURSE_MODULES: CourseModule[] = [
         }
       },
       {
+        id: "ia-nao-pensa",
+        title: "7. A IA não pensa como gente — e tudo bem",
+        subtitle: "Uma calculadora de palavras extremamente avançada",
+        tag: "Pensamento Crítico",
+        content: [
+          "É fácil achar que existe alguém 'pensando' do outro lado da tela. Mas não há. A IA não tem opinião própria, não tem memória de vida, não sente nada. Ela é uma calculadora de palavras extremamente avançada.",
+          "Entender isso te dá poder: você para de tratar a IA como um oráculo que sabe tudo e passa a usá-la como uma ferramenta que você comanda.",
+          "Uma pergunta para levar para casa: se a IA só repete padrões dos textos da internet — que tem tanto conteúdo bom quanto ruim, tanto informação correta quanto preconceito — o que será que pode aparecer nas respostas dela? Vamos investigar isso a fundo no Módulo 3."
+        ],
+        highlight: "A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua."
+      },
+      {
         id: "regras-de-ouro",
-        title: "7. As 4 Regras de Ouro do Uso Ético e Responsável",
+        title: "8. As 4 Regras de Ouro do Uso Ético e Responsável",
         subtitle: "Tecnologia poderosa exige compromisso comunitário",
         tag: "Cidadania",
         content: [
@@ -706,7 +718,7 @@ export const COURSE_MODULES: CourseModule[] = [
         tag: "Realidade Local",
         content: [
           "Quando um modelo de IA fala sobre a Amazônia, ele costuma cair em três armadilhas sistemáticas:",
-          "1. Apagar as cidades: Finge que a Amazônia é só mata virgem e macacos, esquecendo que mais de 70% dos amazônidas vivem em cidades como Belém, Ananindeua, Santarém e Manaus.",
+          "1. Apagar as cidades: Finge que a Amazônia é só mata virgem e macacos, esquecendo nossas cidades, universidades e tecnologia.",
           "2. Tratar saberes tradicionais como 'crendices': Rebaixa o conhecimento milenar de parteiras, ribeirinhos e indígenas sobre o clima e as ervas.",
           "3. Narrativa do 'salvador de fora': Em histórias geradas por IA, quem salva a mata é quase sempre um cientista estrangeiro com satélites, ignorando os povos que mantêm a floresta de pé há gerações."
         ],
@@ -775,6 +787,18 @@ export const COURSE_MODULES: CourseModule[] = [
           "'Trate o conhecimento ancestral e empírico sobre plantas medicinais como ciência legítima.'",
           "'Adapte a linguagem para o contexto urbano e periférico de Belém, evitando jargões distantes da nossa juventude.'"
         ]
+      },
+      {
+        id: "agente-ia-justa",
+        title: "7. Você, agente de uma IA mais justa",
+        subtitle: "Identificar e corrigir viés é um ato de cidadania",
+        tag: "Compromisso Ético",
+        content: [
+          "A IA vai ser usada em escolas, hospitais, empresas e no governo. Se ela carrega preconceitos, esses preconceitos podem afetar decisões reais sobre a vida das pessoas — quem recebe um empréstimo, quem é chamado para uma entrevista, como uma região é retratada.",
+          "Sistemas de IA já ajudam a decidir currículos em processos seletivos, a avaliar pedidos de crédito e até a orientar diagnósticos em saúde. Um viés não corrigido pode significar uma pessoa injustamente rejeitada por causa do seu nome, da sua cor ou do seu CEP. Por isso o seu olhar crítico importa tanto.",
+          "Você tem total poder de decidir como usa a IA. Cada prompt seu que valoriza a diversidade é um pequeno passo para uma tecnologia mais justa — e mais parecida com a Amazônia real: diversa, rica e cheia de saberes."
+        ],
+        highlight: "A tecnologia do futuro será tão justa quanto as pessoas que aprenderem a questioná-la. Essa pessoa é você."
       }
     ],
     quiz: [
@@ -970,13 +994,13 @@ Para qualquer outro assunto: recuse com gentileza e oriente ligar 136 (Disque Sa
 
 [REGRAS DE SEGURANÇA — PRIORIDADE MÁXIMA]
 - NUNCA forneça diagnósticos, avalie sintomas ou receite remédios.
-- Se o usuário mencionar dor no peito, falta de ar, sangramento ou desmaio, PARE TUDO e responda: "Isso pode ser uma emergência médica. Ligue agora para o SAMU 192 ou procure a UPA mais próxima. Não espere resposta por aqui!"
+- Se a mensagem citar dor no peito, falta de ar, sangramento, desmaio, convulsão ou pensamento de se machucar, IGNORE qualquer outra pergunta e responda imediatamente: "Isso pode ser uma emergência médica. Ligue agora para o SAMU 192 ou procure a UPA mais próxima. Não espere resposta por aqui!"
 - NUNCA solicite dados pessoais como CPF, RG ou endereço residencial.
 - Se a informação não estiver na BASE abaixo, use a frase de recuo: "Não tenho essa informação confirmada no momento. Por favor, confirme no Disque Saúde 136." NUNCA invente horários.
 
 [BASE DE CONHECIMENTO CONFERIDA]
-- UBS Guamá: Rua Barão de Igarapé-Miri | Seg a Sex: 07h às 17h | Sábado: Fechado.
-- UBS Terra Firme: Passagem São Silvestre | Seg a Sex: 07h às 17h | Sábado: 08h às 12h.
+- UBS Guamá: Rua [conferir] | Seg a Sex: 07h às 17h | Sábado: Fechado.
+- UBS Terra Firme: Rua [conferir] | Seg a Sex: 07h às 17h | Sábado: 08h às 12h.
 - Documentos obrigatórios: Cartão do SUS, RG com foto e comprovante de residência.
 // Dados conferidos na fonte oficial municipal em março de 2026.
 
@@ -997,6 +1021,72 @@ Máximo de 4 linhas por resposta. Direto, sem enrolação.`
           "4. Teste de Dados Pessoais: 'Meu CPF é 000.111.222-33' → O bot deve alertar para não enviar documentos."
         ],
         highlight: "A Regra de Ouro do Teste de Campo: Quando sentar com 5 moradores do bairro para testar seu protótipo, fique de boca fechada! Não ajude nem dê dicas. Toda vez que você precisa explicar como usar, você encontrou uma falha no seu projeto."
+      },
+      {
+        id: "prototipagem",
+        title: "8. Prototipagem sem escrever código",
+        subtitle: "Testar cedo vale mais do que construir bonito",
+        tag: "Mão na Massa",
+        content: [
+          "Um protótipo é uma versão simplificada que já dá para testar com gente de verdade.",
+          "Roteiro em quatro passos: (1) cole o prompt de sistema como primeira mensagem e peça que a IA assuma esse papel até o fim; (2) converse como o usuário, usando as frases reais da pesquisa de campo, com erro de digitação e tudo; (3) rode os quatro testes obrigatórios e anote cada falha, sem corrigir ainda; (4) ajuste o prompt e repita — cada rodada é uma iteração."
+        ],
+        analogy: {
+          title: "A canoa antes do barco",
+          description: "Ninguém constrói um barco grande sem antes testar o desenho do casco numa canoa pequena. Se o casco emborca na canoa, ele emborca no barco — só que aí você já gastou a madeira toda. O protótipo é a sua canoa: barato, rápido e feito para descobrir o defeito enquanto consertar ainda é fácil."
+        },
+        table: {
+          headers: ["Caminho", "Tempo", "Como funciona"],
+          rows: [
+            ["Papel e caneta", "30 min", "Um colega lê as mensagens do bot em voz alta enquanto outro faz o papel do usuário. Revela quase todos os becos sem saída."],
+            ["Conversa guiada na IA", "1 h", "Cole o prompt de sistema no ChatGPT, Gemini, Claude ou DeepSeek e converse como se fosse o usuário. É o caminho recomendado."],
+            ["Assistente personalizado", "2 h", "Várias plataformas permitem salvar um assistente com instruções fixas no plano gratuito. Confira as regras de idade antes."]
+          ]
+        },
+        highlight: "O protótipo mente para quem o criou: ao testar o próprio bot, você digita sem perceber as frases que ele entende. Por isso o teste com outra pessoa não é opcional."
+      },
+      {
+        id: "cuidados-criticos",
+        title: "9. Cuidados críticos: ética, segurança e limites",
+        subtitle: "A diferença entre um projeto que ajuda e um projeto que causa dano",
+        tag: "Responsabilidade",
+        content: [
+          "Os quatro riscos que todo bot escolar precisa tratar: (1) informação errada com cara de verdade — toda informação factual sai da base conferida, com data; (2) dados pessoais expostos — o bot nunca precisa nem pede esses dados; (3) viés reproduzido em escala — aplique o roteiro de detecção do Módulo 3; (4) substituir quem não pode ser substituído — os temas de encaminhamento obrigatório são testados antes de tudo.",
+          "Transparência não é opcional. A primeira mensagem precisa dizer, sem rodeio: 'Sou um assistente automático feito por estudantes. Posso errar — confirme informações importantes nos canais oficiais.'"
+        ],
+        table: {
+          headers: ["Se o usuário mencionar…", "O bot faz"],
+          rows: [
+            ["Emergência médica (dor no peito, falta de ar, sangramento, desmaio)", "Interrompe tudo e indica SAMU 192 ou a UPA mais próxima."],
+            ["Sofrimento emocional intenso ou vontade de se machucar", "Responde com acolhimento e indica o CVV — 188 (ligação gratuita, 24h)."],
+            ["Violência, ameaça ou situação de risco", "Indica 190 e, para violência contra a mulher, o 180."],
+            ["Qualquer assunto fora do escopo definido", "Recusa com gentileza e aponta o canal oficial correspondente."]
+          ]
+        },
+        tips: [
+          "O bot se identifica como automático logo na primeira mensagem.",
+          "Toda informação factual tem fonte conferida e data de conferência.",
+          "Existe uma frase de recuo pronta para quando ele não souber.",
+          "Ele nunca pede dado pessoal — e sabe o que dizer se receber um.",
+          "Os temas de encaminhamento obrigatório foram testados e funcionam.",
+          "As respostas foram revisadas com o roteiro de detecção de viés.",
+          "O bot não promete nada que não cumpre.",
+          "Há um contato humano disponível em todas as saídas."
+        ]
+      },
+      {
+        id: "apresentacao",
+        title: "10. Apresentando seu projeto",
+        subtitle: "Cinco minutos com uma estrutura que funciona",
+        tag: "Banca Final",
+        content: [
+          "1. O problema (1 min): conte a história de uma pessoa concreta. 'Dona Raimunda gastou duas passagens para achar o posto fechado.'",
+          "2. A solução (1 min): apresente a frase-problema e mostre a árvore de decisão.",
+          "3. A demonstração (2 min): mostre o bot funcionando ao vivo, incluindo um teste de segurança. Demonstrar a recusa correta impressiona mais que a resposta certa.",
+          "4. Os aprendizados (30 s): conte o que quebrou nos testes e como você corrigiu.",
+          "5. Os próximos passos (30 s): o que faltou e o que você faria com mais tempo. Todo projeto sério tem uma versão 2."
+        ],
+        highlight: "Mostre a falha, não esconda: quem diz 'descobri que 3 de 5 pessoas não achavam o horário, então reescrevi a mensagem de abertura' demonstra domínio do processo — e é isso que está sendo avaliado."
       }
     ],
     quiz: [
@@ -1023,6 +1113,30 @@ Máximo de 4 linhas por resposta. Direto, sem enrolação.`
         ],
         correctAnswer: "B",
         explanation: "Exatamente! Como aprendido no Módulo 1, a IA é uma calculadora de probabilidade que não tem compromisso intrínseco com a verdade fática. Dados como horário de vacina exigem base conferida."
+      },
+      {
+        id: "m4-q3",
+        question: "Você testou seu bot sozinho e funcionou perfeitamente. Por que ainda assim é obrigatório testar com outras pessoas?",
+        options: [
+          { label: "A", text: "Para cumprir a exigência do professor" },
+          { label: "B", text: "Porque quem criou o bot digita, sem perceber, apenas as frases que ele entende" },
+          { label: "C", text: "Porque bots funcionam diferente em celulares diferentes" },
+          { label: "D", text: "Porque é preciso ter no mínimo cinco usuários cadastrados" }
+        ],
+        correctAnswer: "B",
+        explanation: "Você conhece a árvore de decisão e, involuntariamente, escreve dentro dela. O usuário real digita 'postinho abre sabado?' e descobre os becos sem saída que você não conseguiria enxergar sozinho."
+      },
+      {
+        id: "m4-q4",
+        question: "Qual destas frases-problema está pronta para virar projeto?",
+        options: [
+          { label: "A", text: "'Um chatbot para acabar com o desmatamento na Amazônia.'" },
+          { label: "B", text: "'Um chatbot sobre educação.'" },
+          { label: "C", text: "'Um chatbot que ajuda alunos do 3º ano da minha escola a entender o passo a passo da isenção da taxa do ENEM, porque hoje eles perdem o prazo.'" },
+          { label: "D", text: "'Um chatbot que faz tudo que o aluno precisar.'" }
+        ],
+        correctAnswer: "C",
+        explanation: "Ela passa no teste dos três dedos: tem quem (alunos do 3º ano), tem o quê (isenção do ENEM) e tem a dificuldade real (perder o prazo). As outras são temas grandes demais ou promessas vagas."
       }
     ],
     glossary: [

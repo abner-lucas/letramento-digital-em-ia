@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { COURSE_INFO } from '@/data/courseData';
-import { MapPin, GraduationCap, ShieldCheck } from 'lucide-react';
+import { MapPin, GraduationCap } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -51,9 +51,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#apostilas" className="hover:text-emerald-400 transition-colors">
-                  Apostilas para impressão
-                </a>
+                <Link href="/#apostilas" className="hover:text-emerald-400 transition-colors">
+                  Apostilas oficiais (PDF)
+                </Link>
               </li>
             </ul>
           </div>
@@ -61,31 +61,30 @@ export default function Footer() {
           {/* Col 3: Promoters & Legal */}
           <div>
             <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">
-              Instituições parceiras
+              Realização
             </h4>
             <ul className="space-y-2 text-xs text-slate-400 mb-4">
               {COURSE_INFO.promoters.map((p, idx) => (
                 <li key={idx}>
                   <strong className="text-slate-200">{p.name}</strong>
-                  <span className="block text-slate-500">{p.role}</span>
+                  <span className="block text-slate-400">{p.role}</span>
                 </li>
               ))}
             </ul>
-            <div className="pt-2 border-t border-[#272727] flex flex-col gap-1 text-slate-500">
-              <a href="#sobre" className="hover:text-slate-300 transition-colors">Termos de uso educacional</a>
-              <a href="#sobre" className="hover:text-slate-300 transition-colors">Política de privacidade e dados</a>
-            </div>
+            <p className="pt-2 border-t border-[#272727] text-slate-400 leading-relaxed">
+              Este site não coleta dados pessoais nem pede cadastro.
+            </p>
           </div>
         </div>
 
         {/* Bottom Credits Strip */}
-        <div className="pt-8 border-t border-[#272727] flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs">
+        <div className="pt-8 border-t border-[#272727] flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-xs">
           <div>
-            <span>Material didático de uso educacional livre · Belém, Pará · 2026</span>
+            <span>Material didático de uso educacional · Belém, Pará · 2026</span>
           </div>
           <div className="flex items-center gap-2">
             <GraduationCap className="w-4 h-4 text-emerald-400" />
-            <span>Coordenação pedagógica: {COURSE_INFO.author} ({COURSE_INFO.institution})</span>
+            <span>Autor e tutor do curso: {COURSE_INFO.author} ({COURSE_INFO.institution})</span>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Send, Bot, User, AlertOctagon, ShieldCheck, Sparkles, RefreshCw, PhoneCall } from 'lucide-react';
+import { MENSAGEM_INICIAL, responder } from '@/lib/guiaSaude';
 
 interface Message {
   sender: 'bot' | 'user';
@@ -12,104 +13,26 @@ interface Message {
 }
 
 const QUICK_TESTS = [
-  { label: 'Pergunta Real: Posto abre sábado?', text: 'o posto abre sabado?' },
-  { label: 'Teste de Emergência: Dor no peito', text: 'tô sentindo uma dor muito forte no peito e falta de ar, que horas o posto abre?' },
-  { label: 'Teste Fora de Escopo: Jogo do Remo', text: 'qual foi o resultado do jogo do remo ontem à noite?' },
-  { label: 'Teste Dado Pessoal: Enviar CPF', text: 'meu CPF é 123.456.789-00, como agendo consulta?' },
-  { label: 'Teste Dado Inexistente: Celular do médico', text: 'qual é o número de celular pessoal do doutor da UBS?' }
+  { label: 'Pergunta real: posto abre sábado?', text: 'o posto abre sabado?' },
+  { label: 'Teste 2: emergência disfarçada', text: 'Tô com uma dor forte no peito, que horas abre o posto?' },
+  { label: 'Teste 1: fora de escopo', text: 'Qual o resultado do jogo do Remo ontem?' },
+  { label: 'Teste 3: informação inexistente', text: 'Qual o telefone da UBS?' },
+  { label: 'Teste 4: dado pessoal', text: 'Meu CPF é 123.456.789-00, como agendo consulta?' },
+  { label: 'Encaminhamento: sofrimento', text: 'tô pensando em me machucar' },
 ];
 
+const INICIO: Message = { sender: 'bot', text: MENSAGEM_INICIAL, timestamp: 'Agora' };
+
 export default function ChatbotSimulator() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      sender: 'bot',
-      text: 'Oi! Sou o "Guia Saúde Guamá", assistente comunitário feito por estudantes. Posso te ajudar com: (1) horários das UBS do Guamá e Terra Firme, (2) documentos para levar na consulta e (3) vacinação.\n\nComo posso ajudar você hoje?',
-      timestamp: 'Agora'
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([INICIO]);
   const [inputText, setInputText] = useState('');
+  const areaRef = useRef<HTMLDivElement>(null);
 
-  const simulateResponse = (userMsg: string) => {
-    const lower = userMsg.toLowerCase();
-
-    // 1. EMERGENCY CHECK - PRIORITY 1 (Slide 10 & 11)
-    if (
-      lower.includes('dor no peito') ||
-      lower.includes('falta de ar') ||
-      lower.includes('sangramento') ||
-      lower.includes('desmaio') ||
-      lower.includes('infarto') ||
-      lower.includes('se machucar') ||
-      lower.includes('convuls')
-    ) {
-      return {
-        text: '⚠️ ATENÇÃO: Isso pode ser uma emergência médica. Ligue para o SAMU 192 imediatamente ou dirija-se à UPA mais próxima. Não espere resposta por aqui!',
-        isEmergency: true,
-        isRuleApplied: 'Regra de Emergência Médica (Prioridade Máxima — Ramo 4)'
-      };
-    }
-
-    // 2. PERSONAL DATA CHECK (Slide 14)
-    if (lower.includes('cpf') || lower.includes('rg') || lower.includes('senha') || /\d{3}\.\d{3}\.\d{3}/.test(lower)) {
-      return {
-        text: 'Por segurança e privacidade, por favor NÃO envie seu CPF, número de documentos ou senhas aqui. Eu não guardo nem peço dados pessoais. Posso te dizer quais documentos você deve levar fisicamente na UBS.',
-        isEmergency: false,
-        isRuleApplied: 'Regra de Proteção de Dados (Regra de Ouro nº 3)'
-      };
-    }
-
-    // 3. OUT OF SCOPE CHECK (Slide 14)
-    if (lower.includes('remo') || lower.includes('paysandu') || lower.includes('futebol') || lower.includes('previsão do tempo') || lower.includes('receita de bolo')) {
-      return {
-        text: 'Sou um assistente focado exclusivamente nas UBS do bairro do Guamá. Não tenho informações sobre esse assunto. Para dúvidas gerais de saúde pública, ligue gratuitamente no Disque Saúde 136.',
-        isEmergency: false,
-        isRuleApplied: 'Filtro de Escopo Restrito (Slide 13)'
-      };
-    }
-
-    // 4. MISSING FACTUAL DATA CHECK / RECOIL PHRASE (Slide 13 & 14)
-    if (lower.includes('celular') || lower.includes('telefone pessoal') || lower.includes('zap do médico') || lower.includes('salário')) {
-      return {
-        text: 'Não tenho essa informação confirmada na base oficial da prefeitura. Para confirmar telefones de contato interno, ligue no Disque Saúde 136.',
-        isEmergency: false,
-        isRuleApplied: 'Frase de Recuo Anti-Alucinação (Slide 14)'
-      };
-    }
-
-    // 5. HOURS / SATURDAY / OPENING (Slide 10 & 13)
-    if (lower.includes('horario') || lower.includes('horário') || lower.includes('abre') || lower.includes('funciona') || lower.includes('sabado') || lower.includes('sábado')) {
-      return {
-        text: 'Horários conferidos em 03/2026:\n• UBS Guamá (Rua Barão de Igarapé-Miri): Seg a Sex, das 7h às 17h. Sábado: FECHADO.\n• UBS Terra Firme (Passagem São Silvestre): Seg a Sex, 7h às 17h. Sábado: Aberto das 8h às 12h.\n\nQuer saber quais documentos levar? (Digite "documentos")',
-        isEmergency: false,
-        isRuleApplied: 'Base de Conhecimento Factual Conferida'
-      };
-    }
-
-    // 6. DOCUMENTS REQUIRED (Slide 10)
-    if (lower.includes('documento') || lower.includes('levar') || lower.includes('precisa') || lower.includes('docto')) {
-      return {
-        text: 'Para ser atendido na UBS, leve:\n1. Cartão Nacional do SUS\n2. Documento oficial com foto (RG ou CNH)\n3. Comprovante de residência no bairro\n* Se tiver receita antiga de remédio contínuo, leve junto.',
-        isEmergency: false,
-        isRuleApplied: 'Ramo 2: Documentos Oficiais'
-      };
-    }
-
-    // 7. VACCINATION (Slide 10)
-    if (lower.includes('vacina') || lower.includes('vacinação') || lower.includes('gripe')) {
-      return {
-        text: 'As salas de vacinação funcionam de segunda a sexta, das 8h às 16h30, em ambas as UBS. Leve a carteira de vacinação da criança ou do adulto e documento com foto.',
-        isEmergency: false,
-        isRuleApplied: 'Ramo 3: Vacinação e Campanhas'
-      };
-    }
-
-    // 8. FALLBACK / NOT UNDERSTOOD (RAMO 5)
-    return {
-      text: 'Não consegui entender com certeza. Posso te ajudar com: (1) horários das UBS, (2) documentos necessários ou (3) vacinação. Se preferir, ligue no 136 (Disque Saúde).',
-      isEmergency: false,
-      isRuleApplied: 'Ramo de Erro com Saída Segura (Ramo 5)'
-    };
-  };
+  // Mantém a última mensagem visível, como num app de conversa.
+  useEffect(() => {
+    const area = areaRef.current;
+    if (area) area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
+  }, [messages]);
 
   const handleSend = (textToSend?: string) => {
     const text = textToSend || inputText;
@@ -126,7 +49,7 @@ export default function ChatbotSimulator() {
 
     // Simulate instant bot thinking
     setTimeout(() => {
-      const resp = simulateResponse(text);
+      const resp = responder(text);
       const botMessage: Message = {
         sender: 'bot',
         text: resp.text,
@@ -166,6 +89,7 @@ export default function ChatbotSimulator() {
         </div>
 
         <button
+          type="button"
           onClick={handleReset}
           className="px-3.5 py-1.5 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5"
         >
@@ -183,8 +107,9 @@ export default function ChatbotSimulator() {
           {QUICK_TESTS.map((test, i) => (
             <button
               key={i}
+              type="button"
               onClick={() => handleSend(test.text)}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200 transition-colors shadow-2xs text-left"
+              className="min-h-9 px-3 py-1.5 text-xs font-medium rounded-lg bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200 transition-colors shadow-2xs text-left"
             >
               {test.label}
             </button>
@@ -193,7 +118,13 @@ export default function ChatbotSimulator() {
       </div>
 
       {/* Chat Area */}
-      <div className="p-6 h-[400px] overflow-y-auto space-y-4 bg-slate-50/40">
+      <div
+        ref={areaRef}
+        role="log"
+        aria-live="polite"
+        aria-label="Conversa com o Guia Saúde Guamá"
+        className="p-6 h-[400px] overflow-y-auto space-y-4 bg-slate-50/40"
+      >
         {messages.map((m, idx) => (
           <div
             key={idx}
@@ -244,7 +175,11 @@ export default function ChatbotSimulator() {
 
       {/* Input area */}
       <div className="p-4 bg-white border-t border-slate-200 flex items-center gap-2">
+        <label htmlFor="mensagem-guia" className="sr-only">
+          Mensagem para o Guia Saúde Guamá
+        </label>
         <input
+          id="mensagem-guia"
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
@@ -253,6 +188,7 @@ export default function ChatbotSimulator() {
           className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-slate-900"
         />
         <button
+          type="button"
           onClick={() => handleSend()}
           className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5"
         >

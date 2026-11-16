@@ -1,7 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { FileText, CheckCircle, ExternalLink, Printer } from 'lucide-react';
+import { FileText, CheckCircle, Download, Printer } from 'lucide-react';
+import { Cascata, ItemCascata } from './movimento/Revelar';
+
+// GitHub Pages publica o site num subcaminho; arquivos de public/ precisam dele.
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const APOSTILAS = [
   {
@@ -9,6 +13,8 @@ const APOSTILAS = [
     title: 'Apostila 01 · Fundamentos',
     subtitle: 'Como a inteligência artificial pensa?',
     pages: '13 páginas',
+    pdf: 'modulo-1-fundamentos.pdf',
+    pdfLabel: 'Baixar PDF oficial',
     hours: '4 horas',
     highlights: 'Tokens, farinha de mandioca, embeddings, alucinações, 4 regras de ouro e testes práticos.',
   },
@@ -16,7 +22,9 @@ const APOSTILAS = [
     id: 2,
     title: 'Apostila 02 · Engenharia de prompts e tabuleiro',
     subtitle: 'A arte de comandar e ferramentas gratuitas',
-    pages: '14 páginas',
+    pages: 'PDF complementar · 14 págs.',
+    pdf: 'modulo-2-complemento-ferramentas.pdf',
+    pdfLabel: 'PDF: complemento ferramentas',
     hours: '6 horas',
     highlights: 'Matriz PACIF, exemplos no prompt com casos do Ver o Peso, encadeamento e comparação de 6 IAs.',
   },
@@ -25,6 +33,8 @@ const APOSTILAS = [
     title: 'Apostila 03 · Identificação de vieses',
     subtitle: 'A IA também reproduz preconceitos?',
     pages: '10 páginas',
+    pdf: 'modulo-3-identificacao-de-vieses.pdf',
+    pdfLabel: 'Baixar PDF oficial',
     hours: '4 horas',
     highlights: 'Metáfora da rede de pesca, dados do Norte global, 4 tipos de viés e frases de blindagem.',
   },
@@ -33,6 +43,8 @@ const APOSTILAS = [
     title: 'Apostila 04 · Projeto final comunitário',
     subtitle: 'Construindo seu próprio assistente',
     pages: '24 páginas',
+    pdf: 'modulo-4-chatbot-projeto-final.pdf',
+    pdfLabel: 'Baixar PDF oficial',
     hours: '6 horas',
     highlights: 'Jornada da persona, árvore de decisão, salvaguarda de emergência, checklist e apresentação.',
   },
@@ -50,24 +62,24 @@ export default function PdfDownloadHub() {
             Apostilas oficiais para leitura e impressão
           </h3>
           <p className="text-sm text-slate-400 mt-1 max-w-2xl [text-wrap:pretty]">
-            Estudos de caso, tabelas comparativas e exercícios práticos formatados em páginas A4 prontas para estudar na tela ou imprimir.
+            As apostilas oficiais em PDF para baixar, ler sem internet ou imprimir — e uma versão de leitura na tela para cada módulo.
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <span className="text-xs font-mono text-emerald-300 bg-[#272727] border border-[#313131] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Acesso livre educacional</span>
+            <span>Uso educacional livre</span>
           </span>
         </div>
       </div>
 
       {/* Grid of 4 download cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <Cascata className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         {APOSTILAS.map((doc) => (
-          <div
+          <ItemCascata
             key={doc.id}
-            className="p-5 bg-[#272727] rounded-xl border border-[#313131] hover:border-slate-600 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col justify-between group"
+            className="p-5 bg-[#272727] rounded-xl border border-[#313131] hover:border-slate-600 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 flex flex-col justify-between group"
           >
             <div>
               <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
@@ -89,18 +101,28 @@ export default function PdfDownloadHub() {
               </p>
             </div>
 
-            <div className="pt-3 border-t border-[#313131]">
+            <div className="pt-3 border-t border-[#313131] flex flex-col gap-2">
+              <a
+                href={`${BASE}/apostilas/${doc.pdf}`}
+                download
+                className="w-full min-h-10 py-2 px-3 text-xs font-semibold rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>{doc.pdfLabel}</span>
+                <span className="sr-only"> do módulo {doc.id}</span>
+              </a>
               <Link
                 href={`/apostila/${doc.id}`}
-                className="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+                className="w-full min-h-10 py-2 px-3 text-xs font-semibold rounded-lg bg-[#1F1F1F] hover:bg-[#313131] border border-[#313131] text-slate-200 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
               >
-                <Printer className="w-3.5 h-3.5" />
-                <span>Ler e imprimir</span>
+                <Printer className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Ler na tela e imprimir</span>
+                <span className="sr-only"> o módulo {doc.id}</span>
               </Link>
             </div>
-          </div>
+          </ItemCascata>
         ))}
-      </div>
+      </Cascata>
     </section>
   );
 }

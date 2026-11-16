@@ -87,10 +87,11 @@ export default function TokenVisualizer() {
 
       <div className="p-5 space-y-4">
         <div>
-          <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+          <label htmlFor="frase-tokens" className="text-xs font-semibold text-slate-700 block mb-1.5">
             Digite sua própria frase para ver a quebra de tokens:
           </label>
           <input
+            id="frase-tokens"
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
@@ -116,7 +117,7 @@ export default function TokenVisualizer() {
 
           <div className="flex flex-wrap gap-2 min-h-[50px] items-center">
             {tokens.length === 0 ? (
-              <span className="text-xs text-slate-400 italic">Digite algo acima para visualizar os tokens...</span>
+              <span className="text-xs text-slate-500 italic">Digite algo acima para visualizar os tokens...</span>
             ) : (
               tokens.map((token, idx) => {
                 const colorClass = tokenColors[idx % tokenColors.length];

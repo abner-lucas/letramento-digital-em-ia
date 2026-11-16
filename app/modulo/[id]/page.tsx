@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SumarioModulo from '@/components/SumarioModulo';
+import { Revelar } from '@/components/movimento/Revelar';
+import type { Metadata } from 'next';
 import InteractiveQuiz from '@/components/InteractiveQuiz';
 import TokenVisualizer from '@/components/TokenVisualizer';
 import PacifBuilder from '@/components/PacifBuilder';
@@ -29,6 +32,19 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+const PDFS: Record<number, string> = {
+  1: 'modulo-1-fundamentos.pdf',
+  2: 'modulo-2-complemento-ferramentas.pdf',
+  3: 'modulo-3-identificacao-de-vieses.pdf',
+  4: 'modulo-4-chatbot-projeto-final.pdf',
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const m = COURSE_MODULES.find((x) => x.id === Number(id));
+  return m ? { title: `Módulo ${m.id}: ${m.subtitle}`, description: m.shortDescription } : {};
+}
+
 export function generateStaticParams() {
   return [
     { id: '1' },
@@ -54,6 +70,7 @@ export default async function ModulePage({ params }: Props) {
     <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar />
 
+      <main id="conteudo-principal" className="flex-1 flex flex-col">
       {/* Module Hero Banner */}
       <section className={`bg-gradient-to-r ${currentModule.color.primary} text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800`}>
         <div className="max-w-6xl mx-auto">
@@ -100,8 +117,16 @@ export default async function ModulePage({ params }: Props) {
                   className="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <FileText className="w-3.5 h-3.5" />
-                  <span>Apostila Oficial (Ler / Imprimir)</span>
+                  <span>Apostila (ler na tela / imprimir)</span>
                 </Link>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/apostilas/${PDFS[currentModule.id]}`}
+                  download
+                  className="mt-2 w-full min-h-9 py-2 px-3 text-xs font-semibold rounded-lg bg-black/30 hover:bg-black/45 text-white border border-white/15 transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>{currentModule.id === 2 ? 'PDF oficial (complemento)' : 'Baixar PDF oficial'}</span>
+                </a>
               </div>
             </div>
           </div>
@@ -131,11 +156,12 @@ export default async function ModulePage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Main Content Column */}
-          <main className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-12">
             
             {/* Render each pedagogical section */}
             {currentModule.sections.map((section, idx) => (
-              <article
+              <Revelar
+                como="article"
                 key={section.id}
                 id={section.id}
                 className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs scroll-mt-24 space-y-6"
@@ -276,7 +302,7 @@ export default async function ModulePage({ params }: Props) {
                     </ul>
                   </div>
                 )}
-              </article>
+              </Revelar>
             ))}
 
             {/* Embedded Specialized Interactive Tool by Module */}
@@ -392,7 +418,7 @@ export default async function ModulePage({ params }: Props) {
               )}
             </div>
 
-          </main>
+          </div>
 
           {/* Sticky Sidebar Navigation (Right Column) */}
           <aside className="lg:col-span-4 sticky top-24 space-y-6">
@@ -408,17 +434,7 @@ export default async function ModulePage({ params }: Props) {
                 </span>
               </div>
 
-              <nav className="space-y-1">
-                {currentModule.sections.map((s, idx) => (
-                  <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    className="block text-xs text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/60 p-2 rounded-md transition-colors leading-snug"
-                  >
-                    {s.title}
-                  </a>
-                ))}
-              </nav>
+              <SumarioModulo secoes={currentModule.sections.map(({ id, title }) => ({ id, title }))} />
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                 <span>Belém · 2026</span>
@@ -431,16 +447,17 @@ export default async function ModulePage({ params }: Props) {
             {/* Author note */}
             <div className="bg-emerald-50/60 rounded-xl p-4 border border-emerald-100 text-xs text-slate-700 space-y-2">
               <span className="font-bold text-emerald-950 block">
-                Coordenação Pedagógica
+                Autor e tutor do curso
               </span>
               <p className="leading-relaxed">
-                Prof. Dr. Bruno Duarte Gomes · iSACI / SIMBIC – CCAD – UFPA. Material desenvolvido para as turmas públicas do Guamá, Terra Firme e região metropolitana.
+                Prof. Dr. Bruno Duarte Gomes · iSACI / SIMBIC – CCAD – UFPA. Curso promovido por PRODEPA, iSACI e IFPA para as turmas do Guamá, Terra Firme e região metropolitana de Belém.
               </p>
             </div>
           </aside>
 
         </div>
       </div>
+      </main>
 
       <Footer />
     </div>

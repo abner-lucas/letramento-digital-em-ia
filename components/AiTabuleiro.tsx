@@ -43,7 +43,7 @@ export default function AiTabuleiro() {
           </div>
 
           <button
-            onClick={() => setShowFullTable(!showFullTable)}
+            type="button" aria-pressed={showFullTable} onClick={() => setShowFullTable(!showFullTable)}
             className="px-3.5 py-2 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap"
           >
             <Table className="w-3.5 h-3.5 text-emerald-400" />
@@ -60,7 +60,7 @@ export default function AiTabuleiro() {
           {FILTER_OPTIONS.map((opt) => (
             <button
               key={opt.id}
-              onClick={() => setActiveFilter(opt.id)}
+              type="button" aria-pressed={activeFilter === opt.id} onClick={() => setActiveFilter(opt.id)}
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap ${
                 activeFilter === opt.id
                   ? 'bg-emerald-500 text-slate-950 font-semibold shadow-xs'
@@ -93,7 +93,7 @@ export default function AiTabuleiro() {
                 <tr key={tool.id} className="hover:bg-slate-50/80 transition-colors">
                   <td className="py-3 px-4 font-semibold text-slate-900 whitespace-nowrap">
                     <div>{tool.name}</div>
-                    <div className="text-[11px] text-slate-400 font-normal">{tool.nickname}</div>
+                    <div className="text-[11px] text-slate-500 font-normal">{tool.nickname}</div>
                   </td>
                   <td className="py-3 px-4 font-mono text-slate-600">{tool.modelFree}</td>
                   <td className="py-3 px-4 text-emerald-700 font-medium">{tool.freeLimit}</td>
@@ -124,7 +124,9 @@ export default function AiTabuleiro() {
               {displayedTools.map((tool) => {
                 const isSelected = selectedTool.id === tool.id;
                 return (
-                  <div
+                  <button
+                    type="button"
+                    aria-pressed={isSelected}
                     key={tool.id}
                     onClick={() => setSelectedTool(tool)}
                     className={`p-4 rounded-xl border text-left cursor-pointer transition-all ${
@@ -137,7 +139,7 @@ export default function AiTabuleiro() {
                       <span className="font-bold text-sm text-slate-900 font-display">
                         {tool.name}
                       </span>
-                      <span className="text-[11px] text-slate-400 font-medium">
+                      <span className="text-[11px] text-slate-500 font-medium">
                         {tool.company}
                       </span>
                     </div>
@@ -158,7 +160,7 @@ export default function AiTabuleiro() {
                         Ver detalhes <ChevronRight className="w-3 h-3" />
                       </span>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -169,7 +171,7 @@ export default function AiTabuleiro() {
             <div>
               <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
-                  <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                  <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">
                     Ficha Técnica da Ferramenta
                   </span>
                   <h4 className="text-2xl font-bold font-display text-slate-900 mt-0.5">

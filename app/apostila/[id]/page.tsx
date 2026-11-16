@@ -1,7 +1,16 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { COURSE_MODULES, COURSE_INFO } from '@/data/courseData';
-import { ArrowLeft, Printer } from 'lucide-react';
+import type { Metadata } from 'next';
+import { ArrowLeft, Download } from 'lucide-react';
+import BotaoImprimir from '@/components/BotaoImprimir';
+
+const PDFS: Record<number, string> = {
+  1: 'modulo-1-fundamentos.pdf',
+  2: 'modulo-2-complemento-ferramentas.pdf',
+  3: 'modulo-3-identificacao-de-vieses.pdf',
+  4: 'modulo-4-chatbot-projeto-final.pdf',
+};
 
 export function generateStaticParams() {
   return [
@@ -14,6 +23,12 @@ export function generateStaticParams() {
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const m = COURSE_MODULES.find((x) => x.id === Number(id));
+  return m ? { title: `Apostila do Módulo ${m.id}: ${m.subtitle}`, description: m.shortDescription } : {};
 }
 
 export default async function ApostilaPage({ params }: Props) {
@@ -32,7 +47,7 @@ export default async function ApostilaPage({ params }: Props) {
         <div className="flex items-center gap-3">
           <Link
             href={`/modulo/${currentModule.id}`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+            className="min-h-10 flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Voltar ao Módulo</span>
@@ -44,34 +59,22 @@ export default async function ApostilaPage({ params }: Props) {
         </div>
 
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={undefined}
-            className="print-trigger-btn px-4 py-1.5 text-xs font-semibold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
+          <a
+            href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/apostilas/${PDFS[currentModule.id]}`}
+            download
+            className="hidden sm:flex min-h-10 px-4 py-1.5 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors items-center gap-1.5"
           >
-            <Printer className="w-3.5 h-3.5" />
-            <span>Imprimir ou Salvar PDF</span>
-          </button>
+            <Download className="w-3.5 h-3.5 text-emerald-400" />
+            <span>PDF oficial</span>
+          </a>
+          <BotaoImprimir />
         </div>
       </div>
 
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.addEventListener('DOMContentLoaded', function() {
-              var btn = document.querySelector('.print-trigger-btn');
-              if (btn) {
-                btn.addEventListener('click', function() {
-                  window.print();
-                });
-              }
-            });
-          `,
-        }}
-      />
+
 
       {/* Main Printable Document Layout */}
-      <main className="max-w-4xl mx-auto p-6 sm:p-12 my-6 bg-white shadow-lg rounded-xl print:shadow-none print:m-0 print:p-0 print:max-w-none print:rounded-none">
+      <main id="conteudo-principal" className="max-w-4xl mx-auto p-6 sm:p-12 my-6 bg-white shadow-lg rounded-xl print:shadow-none print:m-0 print:p-0 print:max-w-none print:rounded-none">
         {/* Institutional Header */}
         <header className="border-b-2 border-emerald-600 pb-4 mb-6">
           <div className="text-xs font-bold text-emerald-700 tracking-wider uppercase mb-1">
@@ -84,7 +87,7 @@ export default async function ApostilaPage({ params }: Props) {
             Curso de Letramento Digital em Inteligência Artificial · Belém, Pará · 2026
           </p>
           <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-700 leading-relaxed">
-            <p><strong>Autor e Coordenação Pedagógica:</strong> {COURSE_INFO.author} ({COURSE_INFO.institution})</p>
+            <p><strong>Autor e tutor do curso:</strong> {COURSE_INFO.author} ({COURSE_INFO.institution})</p>
             <p><strong>Carga Horária:</strong> {currentModule.hours} horas | <strong>Comunidade:</strong> {COURSE_INFO.locations}</p>
           </div>
         </header>

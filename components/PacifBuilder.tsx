@@ -116,7 +116,7 @@ ${formato}`;
           {PRESETS.map((p, idx) => (
             <button
               key={idx}
-              onClick={() => handleSelectPreset(idx)}
+              type="button" aria-pressed={selectedPresetIndex === idx} onClick={() => handleSelectPreset(idx)}
               className={`px-3 py-1 text-xs rounded-md font-medium transition-colors ${
                 selectedPresetIndex === idx
                   ? 'bg-emerald-500 text-slate-950 font-semibold shadow-xs'
@@ -143,13 +143,14 @@ ${formato}`;
           {/* [P] Papel */}
           <div className="p-3.5 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+              <label htmlFor="pacif-papel" className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-mono text-xs">P</span>
                 <span>[P] Papel — Quem a IA deve ser?</span>
               </label>
-              <span className="text-[11px] text-slate-400">Atribuição de persona / profissão</span>
+              <span className="text-[11px] text-slate-500">Atribuição de persona / profissão</span>
             </div>
             <textarea
+              id="pacif-papel"
               value={papel}
               onChange={(e) => setPapel(e.target.value)}
               rows={2}
@@ -161,13 +162,14 @@ ${formato}`;
           {/* [A] Ação */}
           <div className="p-3.5 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-blue-800 flex items-center gap-1.5">
+              <label htmlFor="pacif-acao" className="text-xs font-bold text-blue-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded bg-blue-100 text-blue-800 flex items-center justify-center font-mono text-xs">A</span>
                 <span>[A] Ação — O que ela deve fazer?</span>
               </label>
-              <span className="text-[11px] text-slate-400">Verbo central e tarefa</span>
+              <span className="text-[11px] text-slate-500">Verbo central e tarefa</span>
             </div>
             <textarea
+              id="pacif-acao"
               value={acao}
               onChange={(e) => setAcao(e.target.value)}
               rows={2}
@@ -179,13 +181,14 @@ ${formato}`;
           {/* [C] Contexto */}
           <div className="p-3.5 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-indigo-800 flex items-center gap-1.5">
+              <label htmlFor="pacif-contexto" className="text-xs font-bold text-indigo-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded bg-indigo-100 text-indigo-800 flex items-center justify-center font-mono text-xs">C</span>
                 <span>[C] Contexto — Qual o cenário e o público?</span>
               </label>
-              <span className="text-[11px] text-slate-400">Público-alvo e localização</span>
+              <span className="text-[11px] text-slate-500">Público-alvo e localização</span>
             </div>
             <textarea
+              id="pacif-contexto"
               value={contexto}
               onChange={(e) => setContexto(e.target.value)}
               rows={2}
@@ -197,13 +200,14 @@ ${formato}`;
           {/* [I] Instruções */}
           <div className="p-3.5 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+              <label htmlFor="pacif-instrucoes" className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded bg-amber-100 text-amber-800 flex items-center justify-center font-mono text-xs">I</span>
                 <span>[I] Instruções — Regras restritivas e limites</span>
               </label>
-              <span className="text-[11px] text-slate-400">O que é proibido / obrigatório</span>
+              <span className="text-[11px] text-slate-500">O que é proibido / obrigatório</span>
             </div>
             <textarea
+              id="pacif-instrucoes"
               value={instrucoes}
               onChange={(e) => setInstrucoes(e.target.value)}
               rows={2}
@@ -215,13 +219,14 @@ ${formato}`;
           {/* [F] Formato */}
           <div className="p-3.5 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-purple-800 flex items-center gap-1.5">
+              <label htmlFor="pacif-formato" className="text-xs font-bold text-purple-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded bg-purple-100 text-purple-800 flex items-center justify-center font-mono text-xs">F</span>
                 <span>[F] Formato — A embalagem visual da resposta</span>
               </label>
-              <span className="text-[11px] text-slate-400">Tópicos, linhas, tabela</span>
+              <span className="text-[11px] text-slate-500">Tópicos, linhas, tabela</span>
             </div>
             <textarea
+              id="pacif-formato"
               value={formato}
               onChange={(e) => setFormato(e.target.value)}
               rows={2}

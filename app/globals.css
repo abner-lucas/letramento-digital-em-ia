@@ -42,3 +42,22 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #4a4a4a;
 }
+
+/* Respeita "reduzir movimento" do sistema também nas transições em CSS */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Âncoras não ficam escondidas atrás do cabeçalho flutuante */
+html { scroll-padding-top: 6rem; }
+
+:focus-visible { outline: 2px solid #34d399; outline-offset: 3px; }
+
+@media print {
+  html, body { background: #fff !important; }
+}

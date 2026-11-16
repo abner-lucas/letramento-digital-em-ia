@@ -79,7 +79,7 @@ export default function BiasHunter() {
           {BIAS_CASES.map((c) => (
             <button
               key={c.id}
-              onClick={() => setSelectedCase(c)}
+              type="button" aria-pressed={selectedCase.id === c.id} onClick={() => setSelectedCase(c)}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
                 selectedCase.id === c.id
                   ? 'bg-amber-400 text-slate-950 shadow-xs'
@@ -102,7 +102,7 @@ export default function BiasHunter() {
                 <ShieldAlert className="w-3.5 h-3.5" />
                 <span>Resposta Enviesada sem Filtro</span>
               </span>
-              <span className="text-[11px] text-slate-400">Prompt Vago Original</span>
+              <span className="text-[11px] text-slate-500">Prompt Vago Original</span>
             </div>
 
             <div className="p-2.5 bg-slate-100 rounded text-xs text-slate-600 font-mono mb-3">
