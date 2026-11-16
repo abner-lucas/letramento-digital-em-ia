@@ -1,33 +1,35 @@
 /**
- * Plano de aula do Módulo 1 — Roteiro do Professor.
+ * Plano de aula do Módulo 1 — Roteiro do Professor, em 3 encontros.
  *
- * Fonte: página pública do Notion "Módulo 1 — Fundamentos (Roteiro do
- * Professor)" (workspace profbrunopereira), lida em 16/11/2026, e a apostila
- * oficial do Módulo 1. Para trocar um link, edite só este arquivo.
+ * Base: roteiro do Notion "Módulo 1 — Fundamentos (Roteiro do Professor)"
+ * (workspace profbrunopereira, 2 encontros) reorganizado em 3 encontros de
+ * 150 minutos, e a apostila oficial do Módulo 1.
  *
- * Status de cada ferramenta:
- * - "pronto": já existe e o link funciona (conferido);
- * - "no-site": substituída por uma atividade interativa da página da turma;
- * - "criar": precisa ser criada na conta do professor (instruções na página).
+ * O site NÃO coleta respostas (não há banco de dados). Toda atividade que gera
+ * resposta de aluno acontece em uma ferramenta da conta do professor, e o campo
+ * `coleta` diz onde o professor encontra essas respostas depois.
+ * Para trocar um link, edite só este arquivo.
  */
-
-import type { QuizQuestion } from './courseData';
 
 export const SITE_URL = 'https://abner-lucas.github.io/letramento-digital-em-ia';
 export const NOTION_URL =
   'https://app.notion.com/p/profbrunopereira/M-dulo-1-Fundamentos-Roteiro-do-Professor-3f2dde8b8c80819b8686d7c7183ad651';
 
-export type Status = 'pronto' | 'no-site' | 'criar';
+export type Ferramenta = 'Mentimeter' | 'Padlet' | 'Kahoot' | 'Site' | 'IA' | 'Tokenizador';
 
 export interface Recurso {
   nome: string;
-  status: Status;
-  /** Link externo (quando existe). */
+  ferramenta: Ferramenta;
+  /** Link que o aluno abre (participação). */
   url?: string;
-  /** Âncora da atividade equivalente na página da turma. */
+  /** Link de edição/apresentação do professor. */
+  urlProfessor?: string;
+  /** Âncora da atividade na página da turma (atividades que rodam no site). */
   ancora?: string;
-  /** Passo a passo para criar na própria conta. */
-  comoCriar?: string[];
+  /** Onde o professor encontra as respostas dos alunos. */
+  coleta?: string;
+  /** Como o aluno entra (ex.: código na tela). */
+  acesso?: string;
 }
 
 export interface Bloco {
@@ -37,439 +39,333 @@ export interface Bloco {
   ferramenta?: string;
   descricao: string[];
   recursos?: Recurso[];
-  /** Bloco proposto aqui para completar o roteiro (não está no Notion). */
-  sugestao?: boolean;
 }
 
 export interface Encontro {
-  id: 'encontro-1' | 'encontro-2';
-  numero: 1 | 2;
+  id: 'encontro-1' | 'encontro-2' | 'encontro-3';
+  numero: 1 | 2 | 3;
   titulo: string;
   topicos: string;
   objetivo: string;
   duracao: number;
   selo: string;
+  corSelo: string;
   ferramentas: string[];
   blocos: Bloco[];
+  /** Como a participação de cada aluno fica registrada para o professor. */
+  registro: string[];
+  recompensa: string;
 }
 
 export const PLANO = {
   titulo: 'Módulo 1 — Fundamentos (Roteiro do Professor)',
   resumo:
-    'Roteiro do professor para 2 encontros presenciais de 150 minutos, cobrindo os Tópicos 3 a 8 do Módulo 1 — "Como a Inteligência Artificial Pensa?" (os Tópicos 1 e 2 já foram vistos em encontro anterior).',
+    'Roteiro do professor para 3 encontros presenciais de 150 minutos, cobrindo os Tópicos 3 a 8 do Módulo 1 — "Como a Inteligência Artificial Pensa?" (os Tópicos 1 e 2 já foram vistos em encontro anterior).',
   logica:
-    'O Encontro 1 foca em como a IA funciona por dentro (tipos, tokens, embeddings, pipeline completo). O Encontro 2 foca em como usar a IA com critério (alucinações, limites, ética). Ambos seguem o mesmo formato já testado nos módulos anteriores: blocos curtos, oficinas práticas com celular, ferramentas digitais no lugar de material físico e uma avaliação gamificada com selo digital ao final.',
+    'O Encontro 1 apresenta os tipos de IA e como ela lê o texto em tokens. O Encontro 2 abre a máquina por dentro: embeddings e o caminho completo da pergunta até a resposta. O Encontro 3 trata de como usar a IA com critério: alucinações, limites e as regras de ouro. Todos seguem o mesmo formato: abertura no Mentimeter, oficinas com celular registradas no Padlet, avaliação gamificada no Kahoot, bilhete de saída no Mentimeter e selo digital ao final.',
+  coleta:
+    'O site não guarda respostas. Tudo o que os alunos produzem fica na sua conta: postagens no Padlet (com nome do autor), respostas no Mentimeter (aba "Resultados" de cada apresentação) e notas no Kahoot (relatório ao final de cada jogo, exportável em planilha).',
 };
 
-const KAHOOT_PASSOS = [
-  'Entre em kahoot.com (ou quizizz.com) com a sua conta e clique em "Criar" → "Kahoot".',
-  'Use as perguntas desta página (estão na página da turma) — copie enunciado, alternativas e marque a correta.',
-  'Salve, clique em "Iniciar" → "Modo clássico" e cole o link de compartilhamento aqui no arquivo data/planoModulo1.ts.',
-  'Se preferir não criar: projete a página da turma — o quiz dela funciona no celular de cada aluno, sem cadastro.',
+/* Ferramentas criadas na conta do professor em 16/11/2026 ------------------- */
+
+const MENTI = {
+  e1: { edit: 'https://www.mentimeter.com/app/presentation/alm4wsfh13tyf7ktbk835te6nvonfunf/edit', present: 'https://www.mentimeter.com/app/presentation/alm4wsfh13tyf7ktbk835te6nvonfunf/present' },
+  e2: { edit: 'https://www.mentimeter.com/app/presentation/al1i1nac6gv59fkza2ya5pcqea6hthqu/edit', present: 'https://www.mentimeter.com/app/presentation/al1i1nac6gv59fkza2ya5pcqea6hthqu/present' },
+  e3: { edit: 'https://www.mentimeter.com/app/presentation/alyfswf2a8z9c18ff5jdkn2ntbpgtmde/edit', present: 'https://www.mentimeter.com/app/presentation/alyfswf2a8z9c18ff5jdkn2ntbpgtmde/present' },
+};
+const PADLET = {
+  e1: 'https://padlet.com/prof_abner_ti/m1-e1-tipos-de-ia-no-dia-a-dia-s025iwmcfka1t1h8a8bg',
+  e23: 'https://padlet.com/prof_abner_ti/m1-e2-e-e3-murais-da-turma-s025iwmnuhdk3fkw11z6',
+};
+const KAHOOT = {
+  e1: 'https://create.kahoot.it/details/d388367e-eb31-4f91-bcb9-aefc6554f0e2',
+  e2: 'https://create.kahoot.it/details/1da16fc2-236c-40c6-8309-d9b127f4d898',
+  e3casos: 'https://create.kahoot.it/details/e2425d6a-c2da-4c1e-bfe0-57fe6632af24',
+  e3final: 'https://create.kahoot.it/details/fa53f8bc-ea9f-43a1-895d-15d25aab4f00',
+};
+
+const ACESSO_MENTI = 'Aluno entra em menti.com e digita o código que aparece no topo da tela projetada.';
+const ACESSO_KAHOOT = 'Clique em "Iniciar" → "Clássico"; o aluno entra em kahoot.it com o PIN que aparece na tela.';
+const COLETA_MENTI = 'Mentimeter → abra a apresentação → aba "Resultados" (respostas da sessão; anônimas por padrão).';
+const COLETA_KAHOOT = 'Kahoot → "Relatórios" → escolha o jogo: nota e acertos por aluno, com opção de baixar planilha.';
+const COLETA_PADLET = 'Padlet → as postagens ficam no mural com o nome de quem postou; use "Compartilhar" → "Exportar" para salvar em PDF ou planilha.';
+
+const mentiRecurso = (nome: string, k: keyof typeof MENTI): Recurso => ({
+  nome,
+  ferramenta: 'Mentimeter',
+  urlProfessor: MENTI[k].present,
+  acesso: ACESSO_MENTI,
+  coleta: COLETA_MENTI,
+});
+const kahootRecurso = (nome: string, url: string): Recurso => ({
+  nome,
+  ferramenta: 'Kahoot',
+  urlProfessor: url,
+  acesso: ACESSO_KAHOOT,
+  coleta: COLETA_KAHOOT,
+});
+
+export const LINKS_PROFESSOR = [
+  { nome: 'Mentimeter — Encontro 1 (editar)', url: MENTI.e1.edit },
+  { nome: 'Mentimeter — Encontro 2 (editar)', url: MENTI.e2.edit },
+  { nome: 'Mentimeter — Encontro 3 (editar)', url: MENTI.e3.edit },
+  { nome: 'Padlet — Encontro 1', url: PADLET.e1 },
+  { nome: 'Padlet — Encontros 2 e 3', url: PADLET.e23 },
+  { nome: 'Kahoot — Encontro 1', url: KAHOOT.e1 },
+  { nome: 'Kahoot — Encontro 2', url: KAHOOT.e2 },
+  { nome: 'Kahoot — Encontro 3: casos do dia a dia', url: KAHOOT.e3casos },
+  { nome: 'Kahoot — Encontro 3: quiz final', url: KAHOOT.e3final },
 ];
 
 export const ENCONTROS: Encontro[] = [
   {
     id: 'encontro-1',
     numero: 1,
-    titulo: 'Por Dentro da Máquina: Tokens e o Caminho da Resposta',
-    topicos: 'Tópicos 3 (Os diferentes tipos de IA), 4 (Como a IA "lê" o que você escreve: os tokens) e 5 (O passo a passo: o que acontece quando você digita)',
-    objetivo:
-      'O aluno distingue os diferentes tipos de IA do dia a dia, explica o que é um token e um embedding, e descreve o caminho completo que a IA percorre entre a pergunta e a resposta.',
+    titulo: 'Que IA é essa? Tipos de IA e tokens',
+    topicos: 'Tópicos 3 (Os diferentes tipos de IA) e 4 (Como a IA "lê" o que você escreve: os tokens)',
+    objetivo: 'O aluno distingue os diferentes tipos de IA do dia a dia e explica, com as próprias palavras, o que é um token e por que algumas palavras viram mais pedaços que outras.',
     duracao: 150,
     selo: 'Explorador de Tokens — Nível 1',
+    corSelo: '#34d399',
     ferramentas: [
-      'Mentimeter — nuvem de palavras da abertura',
-      'Padlet — mural de classificação dos tipos de IA',
-      'Tiktokenizer ou OpenAI Tokenizer — oficina de tokens, direto no celular',
-      'tldraw — agrupamento de embeddings + desenho do pipeline',
-      'Kahoot ou Quizizz — quiz gamificado',
-      'Canva — selo digital "Explorador de Tokens — Nível 1"',
-      'Google Forms — ficha da oficina de tokens',
+      'Mentimeter — nuvem de palavras da abertura e bilhete de saída',
+      'Padlet — mural dos tipos de IA + ficha da oficina de tokens',
+      'Tiktokenizer ou OpenAI Tokenizer — oficina de tokens no celular',
+      'Kahoot — quiz gamificado (10 itens)',
+      'Selo digital "Explorador de Tokens — Nível 1" (gerado no site)',
       'Celulares/notebooks liberados nas oficinas',
     ],
     blocos: [
       {
-        inicio: 0,
-        fim: 10,
-        titulo: 'Abertura — "Qual IA você já usou hoje sem perceber?"',
-        ferramenta: 'Mentimeter',
-        descricao: [
-          'Abra uma nuvem de palavras no Mentimeter perguntando: "Qual app de IA você usou nas últimas 24h?". Colete as respostas ao vivo (Spotify, Instagram, Google Maps, Face ID etc.) e conecte: "muita gente nem percebe quantas IAs diferentes já usa todos os dias".',
-        ],
-        recursos: [{ nome: 'Mentimeter — "Qual app de IA você usou nas últimas 24h?"', status: 'pronto', url: 'https://www.menti.com/alb7kv6n4ejp' }],
+        inicio: 0, fim: 10, titulo: 'Abertura — "Qual IA você já usou hoje sem perceber?"', ferramenta: 'Mentimeter',
+        descricao: ['Nuvem de palavras: "Qual app de IA você usou nas últimas 24h?". Colete ao vivo (Spotify, Instagram, Google Maps, Face ID…) e conecte: "muita gente nem percebe quantas IAs diferentes já usa todos os dias".'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 1–3)', 'e1')],
       },
       {
-        inicio: 10,
-        fim: 30,
-        titulo: 'Os diferentes tipos de IA',
-        ferramenta: 'Padlet classificatório',
+        inicio: 10, fim: 35, titulo: 'Os diferentes tipos de IA', ferramenta: 'Padlet classificatório',
         descricao: [
-          'Monte um Padlet com 6 colunas: IA de linguagem, de imagem, de recomendação, de rotas, de voz, de busca. Cada grupo pensa em 2 apps que usa no dia a dia e posta na coluna certa, pelo próprio celular.',
-          'Puxe 2 ou 3 exemplos em plenária, reforçando que o curso foca na "IA de linguagem".',
+          'Padlet com 6 colunas: IA de linguagem, de imagem, de recomendação, de rotas, de voz e de busca. Cada grupo posta 2 apps que usa no dia a dia na coluna certa, pelo celular.',
+          'Puxe 2 ou 3 exemplos em plenária, reforçando que o curso foca na "IA de linguagem". No Menti, a pergunta do app de mapas confere o entendimento.',
         ],
-        recursos: [{ nome: 'Padlet "Tipos de IA"', status: 'pronto', url: 'https://padlet.com/eubrunodiego/tipos-de-ia-s023palb78lp1l9cmohr' }],
+        recursos: [{ nome: 'Padlet "Tipos de IA no dia a dia"', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET }],
       },
       {
-        inicio: 30,
-        fim: 70,
-        titulo: 'Oficina dos tokens',
-        ferramenta: 'Duplas, com celular',
+        inicio: 35, fim: 80, titulo: 'Oficina dos tokens', ferramenta: 'Duplas, com celular',
         descricao: [
-          'Cada dupla acessa um tokenizador online e testa 3 palavras regionais (ex.: açaí, igarapé, Guamá, cupuaçu) e 3 palavras comuns (ex.: computador, felicidade, inteligência).',
-          'Anotam quantos tokens cada palavra virou e se alguma palavra regional "quebrou" em mais pedaços que o esperado. Os tokenizadores rodam no navegador do celular, sem instalar nada.',
-          'Cada dupla preenche a "Ficha Encontro 1".',
+          'Apresente a metáfora da farinha de mandioca: a IA rala a frase em tokens antes de trabalhar com ela.',
+          'Cada dupla abre um tokenizador e testa 3 palavras regionais (açaí, igarapé, Guamá ou cupuaçu) e 3 comuns (computador, felicidade, inteligência). Anotam quantos tokens cada uma virou.',
+          'A ficha da dupla é um post no Padlet, na coluna "Ficha · Oficina dos tokens", seguindo o modelo fixado lá: nomes, turma, palavras e tokens, e o que mais surpreendeu.',
         ],
         recursos: [
-          { nome: 'Tiktokenizer', status: 'pronto', url: 'https://tiktokenizer.vercel.app/' },
-          { nome: 'OpenAI Tokenizer', status: 'pronto', url: 'https://platform.openai.com/tokenizer' },
-          {
-            nome: 'Ficha Encontro 1 (oficina de tokens)',
-            status: 'no-site',
-            ancora: 'ficha-tokens',
-            comoCriar: [
-              'Em forms.google.com, crie o formulário "Ficha Encontro 1 — Oficina de tokens".',
-              'Perguntas: nomes da dupla; para cada uma das 6 palavras, "palavra" e "nº de tokens"; "Alguma palavra regional quebrou em mais pedaços que o esperado? Qual?".',
-              'Clique em "Enviar" → ícone de link → copie e cole o link em data/planoModulo1.ts.',
-              'Enquanto isso, use a ficha da página da turma: ela gera um texto pronto para a dupla enviar.',
-            ],
-          },
+          { nome: 'Tiktokenizer', ferramenta: 'Tokenizador', url: 'https://tiktokenizer.vercel.app/' },
+          { nome: 'OpenAI Tokenizer', ferramenta: 'Tokenizador', url: 'https://platform.openai.com/tokenizer' },
+          { nome: 'Ficha da oficina (coluna do Padlet)', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET },
         ],
       },
       {
-        inicio: 70,
-        fim: 90,
-        titulo: 'Embeddings — o mapa das palavras',
-        ferramenta: 'tldraw',
+        inicio: 80, fim: 100, titulo: 'Socialização — por que as palavras regionais quebram mais?', ferramenta: 'Mentimeter + discussão',
         descricao: [
-          'Em grupos, abrem um quadro com estas 12 palavras soltas: rio, igarapé, furo, açaí, cupuaçu, bacuri, carro, ônibus, bicicleta, escola, professor, aluno. Agrupam visualmente as que "têm a ver" umas com as outras — antes de qualquer explicação técnica.',
-          'Depois, revele o conceito de embedding ("mapa de coordenadas da floresta", do material) e compare com o agrupamento que os grupos fizeram sozinhos.',
+          'No Menti, cada dupla responde qual palavra regional quebrou em mais tokens. Discuta: a IA foi treinada com muito mais texto em outros idiomas e regiões, por isso nossas palavras viram mais pedaços — um primeiro sinal do que veremos no Encontro 3.',
         ],
-        recursos: [
-          {
-            nome: 'Mapa de embeddings',
-            status: 'no-site',
-            ancora: 'embeddings',
-            comoCriar: [
-              'Em tldraw.com, crie um quadro e escreva as 12 palavras soltas, cada uma numa nota.',
-              'Clique em "Share" → "Copy link" (modo de edição para os grupos).',
-              'Cole o link em data/planoModulo1.ts. A atividade da página da turma faz o mesmo agrupamento sem precisar do tldraw.',
-            ],
-          },
-        ],
+        recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 4–5)', 'e1')],
       },
       {
-        inicio: 90,
-        fim: 120,
-        titulo: 'O caminho completo: do seu texto à resposta',
-        ferramenta: 'tldraw',
-        descricao: [
-          'Cada grupo recebe a mesma frase — "Escreva um poema sobre o rio Guamá" — e desenha os 5 passos do pipeline do material: (1) quebra em tokens, (2) vira números (embeddings), (3) cálculo de padrões, (4) palavra por palavra, (5) resposta pronta.',
-        ],
-        recursos: [
-          {
-            nome: 'Pipeline em 5 passos',
-            status: 'no-site',
-            ancora: 'pipeline',
-            comoCriar: ['Em tldraw.com, crie um quadro com a frase no topo e 5 caixas vazias ligadas por setas; compartilhe o link como no bloco anterior.'],
-          },
-        ],
+        inicio: 100, fim: 130, titulo: 'Avaliação gamificada — Quiz', ferramenta: 'Kahoot',
+        descricao: ['Quiz de 10 itens com a pergunta oficial 1 do "Teste seu conhecimento" (a primeira coisa que a IA faz é quebrar o texto em tokens) e perguntas sobre tipos de IA e tokens. Cada aluno joga pelo celular.'],
+        recursos: [kahootRecurso('Kahoot "Tipos de IA e tokens"', KAHOOT.e1)],
       },
       {
-        inicio: 120,
-        fim: 145,
-        titulo: 'Avaliação gamificada — Quiz',
-        ferramenta: 'Kahoot ou Quizizz',
-        descricao: [
-          'Quiz de 7 a 8 perguntas misturando a pergunta oficial 1 do "Teste seu conhecimento" do material (a primeira coisa que a IA faz com o texto é quebrá-lo em tokens) com perguntas novas sobre tipos de IA, embeddings e as etapas do pipeline. Cada aluno joga pelo próprio celular.',
-        ],
-        recursos: [{ nome: 'Quiz do Encontro 1 (8 perguntas)', status: 'no-site', ancora: 'quiz-1', comoCriar: KAHOOT_PASSOS }],
+        inicio: 130, fim: 145, titulo: 'Bilhete de saída', ferramenta: 'Mentimeter',
+        descricao: ['Autoavaliação de 1 a 5 ("sei citar 3 tipos de IA", "sei explicar o que é um token") e uma frase sobre o que cada um leva da aula.'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 6–7)', 'e1')],
       },
       {
-        inicio: 145,
-        fim: 150,
-        titulo: 'Selo digital + gancho para o Encontro 2',
-        ferramenta: 'Canva',
+        inicio: 145, fim: 150, titulo: 'Selo digital + gancho para o Encontro 2', ferramenta: 'Site',
         descricao: [
-          'Gere o emblema digital "Explorador de Tokens — Nível 1" e envie para quem conquistou.',
-          'Anuncie: "no próximo encontro vamos descobrir por que a IA às vezes erra com toda a confiança do mundo — e o que fazer sobre isso".',
+          'Os alunos geram o selo "Explorador de Tokens — Nível 1" na página da turma e salvam a imagem. Reconheça a dupla com a ficha mais caprichada no Padlet.',
+          'Anuncie: "no próximo encontro vamos abrir a máquina e seguir o caminho da sua pergunta até a resposta".',
         ],
-        recursos: [{ nome: 'Gerador do selo "Explorador de Tokens — Nível 1"', status: 'no-site', ancora: 'selo-1' }],
+        recursos: [{ nome: 'Gerador do selo — Nível 1', ferramenta: 'Site', ancora: 'selo-1' }],
       },
     ],
+    registro: [
+      'Padlet: posts dos grupos nas 6 colunas + ficha de cada dupla (com nome e turma).',
+      'Kahoot: nota e acertos de cada aluno no relatório do jogo.',
+      'Mentimeter: nuvem de palavras, respostas abertas e autoavaliação da turma.',
+    ],
+    recompensa: 'Selo digital "Explorador de Tokens — Nível 1" + reconhecimento da dupla com a ficha mais completa no Padlet.',
   },
   {
     id: 'encontro-2',
     numero: 2,
-    titulo: 'Limites, Pensamento Crítico e Uso Ético',
-    topicos: 'Tópicos 6 (Por que a IA erra? Alucinações e limites), 7 (A IA não pensa como gente — e tudo bem) e 8 (Uso ético e responsável: as regras de ouro)',
-    objetivo:
-      'O aluno reconhece quando uma IA pode alucinar, entende por que ela não "pensa" como um ser humano e aplica as 4 regras de ouro do uso responsável em situações reais.',
+    titulo: 'Por dentro da máquina: embeddings e o caminho da resposta',
+    topicos: 'Tópico 5 (O passo a passo: o que acontece quando você digita), com embeddings e a previsão da próxima palavra',
+    objetivo: 'O aluno explica o que é um embedding, reconhece que palavras parecidas ficam "perto" no mapa da linguagem e descreve os 5 passos que a IA percorre entre a pergunta e a resposta.',
     duracao: 150,
-    selo: 'Pensador Crítico de IA — Nível 2',
+    selo: 'Navegador do Pipeline — Nível 2',
+    corSelo: '#60a5fa',
     ferramentas: [
-      'Mentimeter — retomada ativa',
-      'Padlet — mural "arriscado x seguro" + casos do dia a dia',
-      'ChatGPT, Claude, Gemini ou DeepSeek — oficina da caça às alucinações',
-      'Kahoot ou Quizizz — quiz gamificado',
-      'Canva — selo digital "Pensador Crítico de IA — Nível 2"',
-      'Google Forms — ficha da oficina',
+      'Mentimeter — retomada, conferências rápidas, ranking dos 5 passos e bilhete de saída',
+      'Site (página da turma) — mapa das palavras e caminho da resposta animado',
+      'Padlet — 5 colunas do caminho da resposta',
+      'Kahoot — quiz gamificado (10 itens)',
+      'Selo digital "Navegador do Pipeline — Nível 2" (gerado no site)',
       'Celulares/notebooks liberados nas oficinas',
     ],
     blocos: [
       {
-        inicio: 0,
-        fim: 10,
-        titulo: 'Retomada ativa — Quiz relâmpago de recall',
-        ferramenta: 'Mentimeter',
-        descricao: ['Abra uma pergunta rápida no Mentimeter: "O que é um token?" (nuvem de palavras ou múltipla escolha). Use as respostas para reativar o que foi visto no Encontro 1 antes de seguir.'],
-        recursos: [{ nome: 'Mentimeter — "Em uma palavra: o que é um token?"', status: 'pronto', url: 'https://www.menti.com/alo5t7nsmjck' }],
+        inicio: 0, fim: 10, titulo: 'Retomada ativa — "O que é um token?"', ferramenta: 'Mentimeter',
+        descricao: ['Nuvem de palavras "Em uma palavra: o que é um token?". Use as respostas para reativar o Encontro 1.'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 2 (slides 1–2)', 'e2')],
       },
       {
-        inicio: 10,
-        fim: 40,
-        titulo: 'Caça às alucinações',
-        ferramenta: 'Duplas, com celular',
+        inicio: 10, fim: 40, titulo: 'Embeddings — o mapa das palavras', ferramenta: 'Site, em grupos',
         descricao: [
-          'Cada dupla testa na IA: uma "pergunta arriscada" do material (ex.: "quantos habitantes tem o bairro X exatamente?"), a versão "pergunta segura" equivalente e uma pergunta hiperlocal própria, tentando provocar uma alucinação de propósito.',
-          'Verificam se a resposta é real com uma busca rápida.',
+          'Em grupos, na página da turma, agrupam 12 palavras soltas (rio, igarapé, furo, açaí, cupuaçu, bacuri, carro, ônibus, bicicleta, escola, professor, aluno) pelo que "têm a ver" — antes de qualquer explicação técnica.',
+          'Revele o conceito de embedding ("mapa de coordenadas da floresta", do material) e compare com o agrupamento dos grupos. Confira no Menti: "Qual trio ficaria na mesma vizinhança?".',
         ],
         recursos: [
-          { nome: 'ChatGPT', status: 'pronto', url: 'https://chat.openai.com' },
-          { nome: 'Gemini', status: 'pronto', url: 'https://gemini.google.com' },
-          { nome: 'Claude', status: 'pronto', url: 'https://claude.ai' },
-          { nome: 'DeepSeek', status: 'pronto', url: 'https://chat.deepseek.com' },
-          {
-            nome: 'Ficha da oficina (caça às alucinações)',
-            status: 'no-site',
-            ancora: 'ficha-alucinacoes',
-            comoCriar: [
-              'Em forms.google.com, crie "Ficha Encontro 2 — Caça às alucinações".',
-              'Perguntas: nomes da dupla; IA usada; pergunta arriscada + resposta + "era verdade?"; pergunta segura + resposta; pergunta hiperlocal + "a IA alucinou? Como você descobriu?".',
-              'Copie o link de envio e cole em data/planoModulo1.ts.',
-            ],
-          },
+          { nome: 'Mapa das palavras (página da turma)', ferramenta: 'Site', ancora: 'embeddings' },
+          mentiRecurso('Mentimeter do Encontro 2 (slides 3–4)', 'e2'),
         ],
       },
       {
-        inicio: 40,
-        fim: 55,
-        titulo: 'Quando desconfiar mais',
-        ferramenta: 'Padlet classificatório',
+        inicio: 40, fim: 55, titulo: 'A próxima palavra mais provável', ferramenta: 'Mentimeter',
+        descricao: ['"O açaí é uma fruta típica da…": a turma vota e você mostra que a IA faz o mesmo — escolhe o token mais provável ("Amazônia" muito provável, "Europa" muito improvável), sem saber se é verdade.'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 2 (slide 5)', 'e2')],
+      },
+      {
+        inicio: 55, fim: 95, titulo: 'O caminho completo: do seu texto à resposta', ferramenta: 'Site + Padlet, em grupos',
         descricao: [
-          'Padlet com 2 colunas: "Pergunta arriscada" × "Pergunta segura". Cada dupla posta 1 exemplo novo (além do que já testou) em cada coluna, usando as 4 categorias do material como guia: números específicos, fatos recentes, assuntos muito locais, citações/referências.',
+          'Todos acompanham na página da turma a frase "Escreva um poema sobre o rio Guamá" passando pelos 5 passos do material: (1) quebra em tokens, (2) vira números, (3) cálculo de padrões, (4) palavra por palavra, (5) resposta pronta.',
+          'Cada grupo recebe um passo e posta no Padlet, na coluna dele, uma explicação com as próprias palavras e um exemplo da Amazônia. Em plenária, a turma lê o caminho completo da esquerda para a direita.',
         ],
         recursos: [
-          {
-            nome: 'Padlet "Arriscado x Seguro"',
-            status: 'criar',
-            ancora: 'arriscado-seguro',
-            comoCriar: [
-              'Em padlet.com, clique em "Criar" → "Colunas". Título: "Arriscado x Seguro".',
-              'Crie as colunas "Pergunta arriscada" e "Pergunta segura".',
-              'Em "Compartilhar", libere "Pode escrever" para quem tem o link e copie o link.',
-              'Cole o link em data/planoModulo1.ts. Enquanto isso, a página da turma tem um classificador com as 4 categorias.',
-            ],
-          },
+          { nome: 'Caminho da resposta animado (página da turma)', ferramenta: 'Site', ancora: 'pipeline' },
+          { nome: 'Padlet — colunas "E2 · 1 a 5"', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET },
         ],
       },
       {
-        inicio: 55,
-        fim: 70,
-        titulo: 'A IA não pensa como gente',
-        ferramenta: 'Discussão coletiva',
+        inicio: 95, fim: 125, titulo: 'Avaliação gamificada — Quiz', ferramenta: 'Kahoot',
+        descricao: ['Quiz de 10 itens sobre embeddings, o mapa das palavras e a ordem do caminho da resposta.'],
+        recursos: [kahootRecurso('Kahoot "Embeddings e o caminho da resposta"', KAHOOT.e2)],
+      },
+      {
+        inicio: 125, fim: 145, titulo: 'Ordem dos passos + bilhete de saída', ferramenta: 'Mentimeter',
+        descricao: ['Ranking: cada aluno ordena os 5 passos. Depois, autoavaliação de 1 a 5 e "qual passo mais te surpreendeu?".'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 2 (slides 6–8)', 'e2')],
+      },
+      {
+        inicio: 145, fim: 150, titulo: 'Selo digital + gancho para o Encontro 3', ferramenta: 'Site',
+        descricao: [
+          'Os alunos geram o selo "Navegador do Pipeline — Nível 2". Reconheça o grupo com a explicação mais clara no Padlet.',
+          'Anuncie: "no próximo encontro vamos descobrir por que a IA às vezes erra com toda a confiança do mundo — e o que fazer sobre isso".',
+        ],
+        recursos: [{ nome: 'Gerador do selo — Nível 2', ferramenta: 'Site', ancora: 'selo-2' }],
+      },
+    ],
+    registro: [
+      'Padlet: explicação de cada grupo para os 5 passos (colunas "E2 · 1 a 5").',
+      'Kahoot: nota e acertos de cada aluno no relatório do jogo.',
+      'Mentimeter: votações, ranking e autoavaliação da turma.',
+    ],
+    recompensa: 'Selo digital "Navegador do Pipeline — Nível 2" + reconhecimento do grupo com a explicação mais clara do caminho da resposta.',
+  },
+  {
+    id: 'encontro-3',
+    numero: 3,
+    titulo: 'Limites, pensamento crítico e uso ético',
+    topicos: 'Tópicos 6 (Por que a IA erra? Alucinações e limites), 7 (A IA não pensa como gente — e tudo bem) e 8 (Uso ético e responsável: as regras de ouro)',
+    objetivo: 'O aluno reconhece quando uma IA pode alucinar, entende por que ela não "pensa" como um ser humano e aplica as 4 regras de ouro do uso responsável em situações reais.',
+    duracao: 150,
+    selo: 'Pensador Crítico de IA — Nível 3',
+    corSelo: '#a78bfa',
+    ferramentas: [
+      'Mentimeter — retomada, discussão e bilhete de saída',
+      'ChatGPT, Claude, Gemini ou DeepSeek — oficina da caça às alucinações',
+      'Padlet — ficha da oficina, "arriscado x seguro" e "crie seu caso"',
+      'Kahoot — "Casos do dia a dia" e quiz final',
+      'Selo digital "Pensador Crítico de IA — Nível 3" (gerado no site)',
+      'Celulares/notebooks liberados nas oficinas',
+    ],
+    blocos: [
+      {
+        inicio: 0, fim: 10, titulo: 'Retomada ativa — o caminho da IA', ferramenta: 'Mentimeter',
+        descricao: ['Pergunta rápida sobre a ordem do caminho da IA, para reativar o Encontro 2 antes de seguir.'],
+        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 1–2)', 'e3')],
+      },
+      {
+        inicio: 10, fim: 40, titulo: 'Caça às alucinações', ferramenta: 'Duplas, com celular',
+        descricao: [
+          'Cada dupla testa na IA: (1) uma "pergunta arriscada" do material (ex.: "quantos habitantes tem o bairro X exatamente?"); (2) a versão "pergunta segura" equivalente; (3) uma pergunta hiperlocal própria, tentando provocar uma alucinação de propósito. Verificam se a resposta é real com uma busca rápida.',
+          'A ficha da dupla é um post no Padlet, na coluna "E3 · Ficha: caça às alucinações", seguindo o modelo fixado lá. Fechamento no Menti: "qual alucinação a sua dupla flagrou?".',
+        ],
+        recursos: [
+          { nome: 'ChatGPT', ferramenta: 'IA', url: 'https://chat.openai.com' },
+          { nome: 'Gemini', ferramenta: 'IA', url: 'https://gemini.google.com' },
+          { nome: 'Claude', ferramenta: 'IA', url: 'https://claude.ai' },
+          { nome: 'DeepSeek', ferramenta: 'IA', url: 'https://chat.deepseek.com' },
+          { nome: 'Ficha da oficina (coluna do Padlet)', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET },
+          mentiRecurso('Mentimeter do Encontro 3 (slides 3–4)', 'e3'),
+        ],
+      },
+      {
+        inicio: 40, fim: 55, titulo: 'Quando desconfiar mais', ferramenta: 'Padlet classificatório',
+        descricao: [
+          'No Padlet, colunas "Pergunta arriscada" e "Pergunta segura": cada dupla posta 1 exemplo novo (além do que já testou) em cada coluna, usando as 4 categorias do material: números específicos, fatos recentes, assuntos muito locais, citações/referências.',
+          'Quem quiser treinar antes usa o classificador da página da turma.',
+        ],
+        recursos: [
+          { nome: 'Padlet — colunas "Arriscada" e "Segura"', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET },
+          { nome: 'Classificador arriscado × seguro (página da turma)', ferramenta: 'Site', ancora: 'arriscado-seguro' },
+        ],
+      },
+      {
+        inicio: 55, fim: 70, titulo: 'A IA não pensa como gente', ferramenta: 'Discussão coletiva + Mentimeter',
         descricao: [
           'Leia em voz alta: "A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua."',
-          'Abra a discussão com a "pergunta para levar para casa" do material: se a IA repete os padrões da internet, que tem tanto conteúdo bom quanto ruim, o que pode aparecer nas respostas dela?',
+          'Abra a discussão com a "pergunta para levar para casa" do material: se a IA repete os padrões da internet, que tem tanto conteúdo bom quanto ruim, o que pode aparecer nas respostas dela? As respostas vão para o Menti.',
         ],
+        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 5–6)', 'e3')],
       },
       {
-        inicio: 70,
-        fim: 100,
-        titulo: 'As regras de ouro + casos do dia a dia',
-        ferramenta: 'Quiz ao vivo',
-        descricao: [
-          'Apresente rapidamente as 4 regras de ouro do material (confira sempre, assuma a autoria, proteja seus dados, respeite as pessoas).',
-          'Em seguida, rode um quiz com os 5 "casos do dia a dia" da tabela do material como perguntas de certo ou errado, mais 2 ou 3 novas.',
-        ],
-        recursos: [{ nome: 'Quiz "Casos do dia a dia" (8 casos)', status: 'no-site', ancora: 'quiz-2', comoCriar: KAHOOT_PASSOS }],
+        inicio: 70, fim: 100, titulo: 'As regras de ouro + casos do dia a dia', ferramenta: 'Kahoot',
+        descricao: ['Apresente as 4 regras de ouro (confira sempre, assuma a autoria, proteja seus dados, respeite as pessoas). Rode o Kahoot com os 5 "casos do dia a dia" da tabela do material como certo ou errado, mais 3 novos.'],
+        recursos: [kahootRecurso('Kahoot "Casos do dia a dia"', KAHOOT.e3casos)],
       },
       {
-        inicio: 100,
-        fim: 125,
-        titulo: 'Fechamento da oficina — ficha e socialização',
-        ferramenta: 'Google Forms',
-        sugestao: true,
-        descricao: [
-          'As duplas registram a ficha da caça às alucinações e 2 ou 3 duplas contam a alucinação mais convincente que encontraram e como descobriram que era falsa.',
-        ],
-        recursos: [{ nome: 'Ficha da oficina (caça às alucinações)', status: 'no-site', ancora: 'ficha-alucinacoes' }],
+        inicio: 100, fim: 130, titulo: 'Oficina de síntese — crie seu próprio caso', ferramenta: 'Padlet',
+        descricao: ['Cada dupla inventa 1 situação nova de uso da IA (certa ou errada) e posta no Padlet sem revelar a resposta. Trocam de posição com outra dupla, que comenta o post classificando como certo/errado e justificando por escrito com a regra de ouro.'],
+        recursos: [{ nome: 'Padlet — coluna "E3 · Crie seu caso" (comentários ligados)', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET }],
       },
       {
-        inicio: 125,
-        fim: 145,
-        titulo: 'Desafio final — o módulo inteiro',
-        ferramenta: 'Quiz',
-        sugestao: true,
+        inicio: 130, fim: 145, titulo: 'Quiz final', ferramenta: 'Kahoot + Mentimeter',
         descricao: [
-          'Rodada final com as duas perguntas oficiais do "Teste seu conhecimento" da apostila (tokens e a alucinação do "rio Guamá com 1.247 km"), para fechar o Módulo 1.',
+          'Quiz cobrindo os Tópicos 6 a 8, incluindo a pergunta oficial 2 do "Teste seu conhecimento" (o rio Guamá com "1.247 km" inventados).',
+          'Bilhete de saída no Menti: ranking da regra de ouro mais difícil, autoavaliação e "qual descoberta você vai contar em casa?".',
         ],
-        recursos: [{ nome: 'Quiz final do Módulo 1', status: 'no-site', ancora: 'quiz-final' }],
+        recursos: [kahootRecurso('Kahoot "Quiz final"', KAHOOT.e3final), mentiRecurso('Mentimeter do Encontro 3 (slides 7–9)', 'e3')],
       },
       {
-        inicio: 145,
-        fim: 150,
-        titulo: 'Selo digital + gancho para o Módulo 2',
-        ferramenta: 'Canva',
-        sugestao: true,
+        inicio: 145, fim: 150, titulo: 'Selo digital + missão para a próxima aula', ferramenta: 'Site',
         descricao: [
-          'Entregue o selo "Pensador Crítico de IA — Nível 2" e anuncie o próximo tema: a matriz PACIF — "agora que vocês sabem como a IA pensa, vão aprender a comandá-la".',
+          'Os alunos geram o selo "Pensador Crítico de IA — Nível 3".',
+          'Repasse a "Sua missão para a próxima aula" do material: abrir um assistente de IA, pedir para explicar o que é um token para um estudante do ensino médio, testar uma alucinação sobre o próprio bairro e trazer uma descoberta para compartilhar.',
         ],
-        recursos: [{ nome: 'Gerador do selo "Pensador Crítico de IA — Nível 2"', status: 'no-site', ancora: 'selo-2' }],
+        recursos: [{ nome: 'Gerador do selo — Nível 3', ferramenta: 'Site', ancora: 'selo-3' }],
       },
     ],
+    registro: [
+      'Padlet: ficha da caça às alucinações, exemplos arriscados/seguros e o caso criado por dupla, com os comentários de quem julgou.',
+      'Kahoot: notas dos dois jogos (casos do dia a dia e quiz final).',
+      'Mentimeter: nuvem das alucinações, discussão, ranking e autoavaliação.',
+    ],
+    recompensa: 'Selo digital "Pensador Crítico de IA — Nível 3" + reconhecimento da dupla que melhor flagrou uma alucinação real.',
   },
 ];
 
-/** Quiz do Encontro 1: pergunta oficial da apostila + perguntas novas sobre tipos, tokens, embeddings e pipeline. */
-export const QUIZ_ENCONTRO_1: QuizQuestion[] = [
-  {
-    id: 'e1-q1',
-    question: 'Quando você digita uma pergunta, qual é a PRIMEIRA coisa que a IA faz com o seu texto?',
-    options: [
-      { label: 'A', text: 'Procura a resposta pronta em um banco de dados' },
-      { label: 'B', text: 'Quebra o texto em pedacinhos chamados tokens' },
-      { label: 'C', text: 'Liga para um atendente humano' },
-      { label: 'D', text: 'Copia a resposta de um site da internet' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Pergunta oficial da apostila. Antes de tudo, a IA "rala" o texto em tokens — como a mandioca vira farinha.',
-  },
-  {
-    id: 'e1-q2',
-    question: 'O app de mapas que calcula o caminho com menos trânsito é um exemplo de qual tipo de IA?',
-    options: [
-      { label: 'A', text: 'IA de linguagem' },
-      { label: 'B', text: 'IA de imagem' },
-      { label: 'C', text: 'IA de rotas' },
-      { label: 'D', text: 'IA de voz' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'A IA de rotas calcula o melhor caminho no aplicativo de mapas, evitando o trânsito.',
-  },
-  {
-    id: 'e1-q3',
-    question: 'O app de música que sugere a próxima faixa usa principalmente…',
-    options: [
-      { label: 'A', text: 'IA de recomendação' },
-      { label: 'B', text: 'IA de busca' },
-      { label: 'C', text: 'IA de rotas' },
-      { label: 'D', text: 'Nenhuma IA' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'A IA de recomendação sugere a próxima música, o próximo vídeo, o próximo produto.',
-  },
-  {
-    id: 'e1-q4',
-    question: 'Na apostila, por que a palavra "açaízeiro" pode ser montada pela IA mesmo que ela nunca a tenha visto?',
-    options: [
-      { label: 'A', text: 'Porque a IA consulta um dicionário paraense' },
-      { label: 'B', text: 'Porque ela junta pedaços que já conhece, como "açaí" + "zeiro"' },
-      { label: 'C', text: 'Porque toda palavra vira exatamente um token' },
-      { label: 'D', text: 'Porque a IA entende o significado de cada letra' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'É a flexibilidade dos tokens: palavras novas são montadas com pedaços conhecidos.',
-  },
-  {
-    id: 'e1-q5',
-    question: 'O que é um embedding?',
-    options: [
-      { label: 'A', text: 'Um tipo de aplicativo de celular' },
-      { label: 'B', text: 'A senha que protege a IA' },
-      { label: 'C', text: 'Uma lista de números que funciona como o "endereço" de um token no mapa da linguagem' },
-      { label: 'D', text: 'Um erro da IA quando inventa informação' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Computador só entende número: cada token vira uma lista de números que guarda o seu significado.',
-  },
-  {
-    id: 'e1-q6',
-    question: 'No "mapa de coordenadas da floresta", quais palavras ficariam na mesma vizinhança?',
-    options: [
-      { label: 'A', text: 'rio, igarapé e furo' },
-      { label: 'B', text: 'rio, ônibus e professor' },
-      { label: 'C', text: 'açaí, carro e escola' },
-      { label: 'D', text: 'Nenhuma: todas ficam à mesma distância' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Palavras de significado parecido ficam perto umas das outras no mapa dos embeddings.',
-  },
-  {
-    id: 'e1-q7',
-    question: 'Qual é a ordem certa do caminho da IA, do seu texto até a resposta?',
-    options: [
-      { label: 'A', text: 'Resposta pronta → tokens → embeddings → cálculo de padrões' },
-      { label: 'B', text: 'Tokens → embeddings → cálculo de padrões → palavra por palavra → resposta pronta' },
-      { label: 'C', text: 'Embeddings → resposta pronta → tokens' },
-      { label: 'D', text: 'Busca na internet → cópia → resposta pronta' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'São os 5 passos da apostila: quebra em tokens, vira números, cálculo de padrões, palavra por palavra, resposta pronta.',
-  },
-  {
-    id: 'e1-q8',
-    question: 'A IA escreveu "O açaí é uma fruta típica da… Amazônia". Por que ela escolheu "Amazônia"?',
-    options: [
-      { label: 'A', text: 'Porque ela sabe geografia como uma pessoa' },
-      { label: 'B', text: 'Porque é o próximo token mais provável, de acordo com os padrões que aprendeu' },
-      { label: 'C', text: 'Porque alguém digitou a resposta por ela' },
-      { label: 'D', text: 'Porque ela conferiu num livro' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'A IA calcula a palavra mais provável — "Amazônia" muito provável, "Europa" muito improvável.',
-  },
-];
-
-/** Quiz "Casos do dia a dia": os 5 casos da tabela da apostila + 3 novos. */
-export const QUIZ_CASOS: QuizQuestion[] = [
-  ['Pedir à IA que explique um conteúdo de biologia que você não entendeu.', true, 'Você está aprendendo. (Caso da apostila)'],
-  ['Copiar uma redação inteira da IA e entregar como sua.', false, 'É desonesto e você não aprende. (Caso da apostila)'],
-  ['Usar a IA para revisar a gramática do texto que VOCÊ escreveu.', true, 'A autoria continua sua. (Caso da apostila)'],
-  ['Colocar o CPF de um parente para "testar" a IA.', false, 'Nunca exponha dados pessoais. (Caso da apostila)'],
-  ['Pedir ideias de projeto e depois desenvolvê-las com suas palavras.', true, 'A IA foi um ponto de partida. (Caso da apostila)'],
-  ['Usar a IA para criar um áudio falso de um colega dizendo algo que ele não disse.', false, 'Regra de ouro 4: não use a IA para enganar ou prejudicar ninguém.'],
-  ['A IA citou um livro na resposta; você procura o livro numa biblioteca ou site confiável antes de usar no trabalho.', true, 'Regra de ouro 1: confira sempre — a IA às vezes inventa livros e autores.'],
-  ['Mandar a foto do boletim com nome e matrícula para a IA "calcular a média".', false, 'Regra de ouro 3: proteja seus dados. Digite só as notas, sem identificação.'],
-].map(([texto, certo, explicacao], i) => ({
-  id: `casos-${i + 1}`,
-  question: `É uso responsável? ${texto}`,
-  options: [
-    { label: 'A', text: 'Sim, é uso responsável' },
-    { label: 'B', text: 'Não, não é uso responsável' },
-  ],
-  correctAnswer: certo ? 'A' : 'B',
-  explanation: explicacao as string,
-}));
-
-/** Rodada final: as duas perguntas oficiais do "Teste seu conhecimento" do Módulo 1. */
-export const QUIZ_FINAL: QuizQuestion[] = [
-  QUIZ_ENCONTRO_1[0],
-  {
-    id: 'final-q2',
-    question: 'Uma IA respondeu com total confiança que o rio Guamá tem "exatamente 1.247 km". O que você deve fazer?',
-    options: [
-      { label: 'A', text: 'Confiar, porque a IA parecia muito segura' },
-      { label: 'B', text: 'Conferir a informação em uma fonte confiável antes de usar' },
-      { label: 'C', text: 'Copiar direto para o trabalho da escola' },
-      { label: 'D', text: 'Nunca mais usar a IA' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Pergunta oficial da apostila. A IA pode alucinar — números específicos sempre precisam ser conferidos.',
-  },
-];
-
-/** Palavras do mapa de embeddings (Encontro 1, 70–90 min) e o agrupamento de referência. */
+/** Palavras do mapa de embeddings (Encontro 2) e o agrupamento de referência. */
 export const PALAVRAS_EMBEDDING = ['rio', 'igarapé', 'furo', 'açaí', 'cupuaçu', 'bacuri', 'carro', 'ônibus', 'bicicleta', 'escola', 'professor', 'aluno'];
 export const GRUPOS_REFERENCIA: Record<string, string[]> = {
   'Água': ['rio', 'igarapé', 'furo'],
@@ -478,7 +374,7 @@ export const GRUPOS_REFERENCIA: Record<string, string[]> = {
   'Escola': ['escola', 'professor', 'aluno'],
 };
 
-/** Pipeline do material (Encontro 1, 90–120 min). */
+/** Pipeline do material (Encontro 2). */
 export const PIPELINE = [
   { titulo: 'Quebra em tokens', texto: 'A frase é ralada em pedacinhos, como a mandioca.' },
   { titulo: 'Vira números (embeddings)', texto: 'Cada token recebe seu "endereço" numérico no mapa da linguagem.' },
@@ -487,7 +383,7 @@ export const PIPELINE = [
   { titulo: 'Resposta pronta', texto: 'Os tokens viram texto de novo e aparecem na sua tela.' },
 ];
 
-/** Classificador "Arriscado x Seguro" (Encontro 2, 40–55 min). */
+/** Classificador "Arriscado x Seguro" (Encontro 3). */
 export const CATEGORIAS_RISCO = ['Números específicos', 'Fatos recentes', 'Assuntos muito locais', 'Citações e referências'];
 export const PERGUNTAS_RISCO: { texto: string; arriscada: boolean; porque: string }[] = [
   { texto: 'Quantos habitantes tem o bairro do Guamá exatamente?', arriscada: true, porque: 'Número específico e assunto muito local.' },

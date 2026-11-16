@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Clock, ExternalLink, MonitorSmartphone, Sparkles, Target, Wrench } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ClipboardList, Clock, ExternalLink, Inbox, MonitorSmartphone, Sparkles, Target, Trophy, Wrench } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import QRCode from '@/components/plano/QRCode';
 import { Cascata, ItemCascata, Revelar } from '@/components/movimento/Revelar';
 import { IndicadorSecoes } from '@/components/movimento/Navegacao';
-import { ENCONTROS, NOTION_URL, PLANO, SITE_URL, type Recurso, type Status } from '@/data/planoModulo1';
+import { ENCONTROS, LINKS_PROFESSOR, NOTION_URL, PLANO, SITE_URL, type Ferramenta, type Recurso } from '@/data/planoModulo1';
 
 export const metadata: Metadata = {
   title: 'Plano de aula do Módulo 1 (Roteiro do Professor)',
@@ -15,35 +15,42 @@ export const metadata: Metadata = {
 
 const TURMA = '/plano/modulo-1/turma';
 
-const ESTILO_STATUS: Record<Status, { rotulo: string; classe: string }> = {
-  pronto: { rotulo: 'Pronto', classe: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' },
-  'no-site': { rotulo: 'Na página da turma', classe: 'border-blue-500/30 bg-blue-500/10 text-blue-300' },
-  criar: { rotulo: 'Criar na sua conta', classe: 'border-amber-500/30 bg-amber-500/10 text-amber-300' },
+const COR: Record<Ferramenta, string> = {
+  Mentimeter: 'border-blue-500/30 bg-blue-500/10 text-blue-300',
+  Padlet: 'border-pink-500/30 bg-pink-500/10 text-pink-300',
+  Kahoot: 'border-purple-500/30 bg-purple-500/10 text-purple-300',
+  Site: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
+  IA: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+  Tokenizador: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
 };
 
-const todosRecursos = ENCONTROS.flatMap((e) => e.blocos.flatMap((b) => b.recursos ?? []));
-const contagem = (s: Status) => new Set(todosRecursos.filter((r) => r.status === s).map((r) => r.nome)).size;
-const pendencias = [...new Map(todosRecursos.filter((r) => r.comoCriar).map((r) => [r.nome, r])).values()];
-
-function LinkRecurso({ r }: { r: Recurso }) {
-  const estilo = ESTILO_STATUS[r.status];
-  const destino = r.url ?? (r.ancora ? `${TURMA}#${r.ancora}` : undefined);
+function CartaoRecurso({ r }: { r: Recurso }) {
+  const destino = r.urlProfessor ?? r.url ?? (r.ancora ? `${TURMA}#${r.ancora}` : undefined);
+  const externo = !!(r.urlProfessor ?? r.url);
   const conteudo = (
     <>
-      <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${estilo.classe}`}>{estilo.rotulo}</span>
-      <span className="flex-1">{r.nome}</span>
-      {destino && (r.url ? <ExternalLink className="h-3.5 w-3.5 shrink-0" /> : <ArrowRight className="h-3.5 w-3.5 shrink-0" />)}
+      <span className="flex items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${COR[r.ferramenta]}`}>{r.ferramenta}</span>
+        <span className="flex-1 font-semibold text-slate-100">{r.nome}</span>
+        {destino && (externo ? <ExternalLink className="h-3.5 w-3.5 shrink-0" /> : <ArrowRight className="h-3.5 w-3.5 shrink-0" />)}
+      </span>
+      {r.acesso && <span className="mt-1.5 block text-[11px] leading-snug text-slate-400">{r.acesso}</span>}
+      {r.coleta && (
+        <span className="mt-1 flex gap-1.5 text-[11px] leading-snug text-emerald-300/90">
+          <Inbox className="mt-0.5 h-3 w-3 shrink-0" /> {r.coleta}
+        </span>
+      )}
     </>
   );
-  const classe = 'flex min-h-10 items-center gap-2 rounded-lg border border-[#313131] bg-[#181818] px-3 py-2 text-xs text-slate-200 transition-colors';
+  const classe = 'block rounded-lg border border-[#313131] bg-[#181818] px-3 py-2.5 text-xs text-slate-200 transition-colors hover:border-slate-500';
   if (!destino) return <span className={classe}>{conteudo}</span>;
-  return r.url ? (
-    <a href={destino} target="_blank" rel="noopener noreferrer" className={`${classe} hover:border-slate-500 hover:text-white`}>
+  return externo ? (
+    <a href={destino} target="_blank" rel="noopener noreferrer" className={classe}>
       {conteudo}
       <span className="sr-only"> (abre em nova aba)</span>
     </a>
   ) : (
-    <Link href={destino} className={`${classe} hover:border-slate-500 hover:text-white`}>
+    <Link href={destino} className={classe}>
       {conteudo}
     </Link>
   );
@@ -58,12 +65,12 @@ export default function PlanoModulo1() {
           { id: 'visao-geral', rotulo: 'Visão geral' },
           { id: 'encontro-1', rotulo: 'Encontro 1' },
           { id: 'encontro-2', rotulo: 'Encontro 2' },
-          { id: 'pendencias', rotulo: 'Para criar' },
+          { id: 'encontro-3', rotulo: 'Encontro 3' },
+          { id: 'respostas', rotulo: 'Respostas dos alunos' },
         ]}
       />
 
       <main id="conteudo-principal" className="flex-1">
-        {/* Abertura */}
         <section id="visao-geral" className="pt-28 sm:pt-32 pb-14 px-4 sm:px-6 lg:px-8 border-b border-[#272727]">
           <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1fr_auto] lg:items-start">
             <Revelar>
@@ -81,18 +88,20 @@ export default function PlanoModulo1() {
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <a href={NOTION_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-[#313131] bg-[#272727] px-4 py-2.5 text-sm font-semibold text-slate-200 transition-all hover:bg-[#313131]">
-                  <ExternalLink className="h-4 w-4 text-emerald-400" /> Roteiro original no Notion
+                  <ExternalLink className="h-4 w-4 text-emerald-400" /> Roteiro de origem no Notion
                   <span className="sr-only"> (abre em nova aba)</span>
                 </a>
               </div>
-              <dl className="mt-10 grid max-w-2xl grid-cols-3 gap-4 border-t border-[#272727] pt-6">
-                {(['pronto', 'no-site', 'criar'] as Status[]).map((s) => (
-                  <div key={s} className="flex flex-col">
-                    <dt className="order-2 mt-1 text-xs text-slate-400">{ESTILO_STATUS[s].rotulo}</dt>
-                    <dd className={`order-1 font-mono text-2xl font-bold ${ESTILO_STATUS[s].classe.split(' ').at(-1)}`}>{contagem(s)}</dd>
-                  </div>
+              <ol className="mt-10 grid max-w-2xl gap-3 border-t border-[#272727] pt-6 sm:grid-cols-3">
+                {ENCONTROS.map((e) => (
+                  <li key={e.id}>
+                    <a href={`#${e.id}`} className="block rounded-xl border border-[#313131] bg-[#1F1F1F] p-3 transition-colors hover:border-slate-500">
+                      <span className="font-mono text-xs text-emerald-400">Encontro {e.numero} · {e.duracao} min</span>
+                      <span className="mt-1 block text-sm font-semibold leading-snug text-white">{e.titulo}</span>
+                    </a>
+                  </li>
                 ))}
-              </dl>
+              </ol>
             </Revelar>
             <Revelar atraso={0.15} className="rounded-2xl border border-[#313131] bg-[#1F1F1F] p-5 text-center">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-emerald-400">Projete na sala</p>
@@ -101,7 +110,6 @@ export default function PlanoModulo1() {
           </div>
         </section>
 
-        {/* Lógica pedagógica */}
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#1F1F1F] border-b border-[#272727]">
           <Revelar className="max-w-6xl mx-auto flex gap-4 items-start">
             <Sparkles className="mt-1 h-5 w-5 shrink-0 text-emerald-400" />
@@ -112,7 +120,6 @@ export default function PlanoModulo1() {
           </Revelar>
         </section>
 
-        {/* Encontros */}
         {ENCONTROS.map((e, idx) => (
           <section key={e.id} id={e.id} className={`py-16 px-4 sm:px-6 lg:px-8 border-b border-[#272727] ${idx % 2 ? 'bg-[#1F1F1F]' : 'bg-[#181818]'}`}>
             <div className="max-w-6xl mx-auto">
@@ -130,7 +137,7 @@ export default function PlanoModulo1() {
                   <p className="mt-2 text-sm leading-relaxed text-slate-300">{e.objetivo}</p>
                 </Revelar>
                 <Revelar atraso={0.08} className="rounded-2xl border border-[#313131] bg-[#272727] p-5">
-                  <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Wrench className="h-4 w-4 text-emerald-400" /> Ferramentas e materiais</h3>
+                  <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Wrench className="h-4 w-4 text-emerald-400" /> Checklist de ferramentas (zero material físico)</h3>
                   <ul className="mt-2 space-y-1 text-sm text-slate-300">
                     {e.ferramentas.map((f) => (
                       <li key={f} className="flex gap-2"><CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />{f}</li>
@@ -139,26 +146,17 @@ export default function PlanoModulo1() {
                 </Revelar>
               </div>
 
-              {/* Linha do tempo: a largura de cada faixa é proporcional à duração do bloco */}
-              <Revelar className="mt-10" >
+              <Revelar className="mt-10">
                 <div className="flex h-2 overflow-hidden rounded-full bg-[#272727]" aria-hidden>
                   {e.blocos.map((b, i) => (
-                    <span
-                      key={b.inicio}
-                      style={{ width: `${((b.fim - b.inicio) / e.duracao) * 100}%` }}
-                      className={`${b.sugestao ? 'bg-amber-400/60' : ['bg-emerald-400', 'bg-emerald-600'][i % 2]} border-r border-[#181818]`}
-                    />
+                    <span key={b.inicio} style={{ width: `${((b.fim - b.inicio) / e.duracao) * 100}%` }} className={`${['bg-emerald-400', 'bg-emerald-600'][i % 2]} border-r border-[#181818]`} />
                   ))}
                 </div>
               </Revelar>
 
               <Cascata como="ol" className="mt-6 space-y-4">
                 {e.blocos.map((b) => (
-                  <ItemCascata
-                    key={b.inicio}
-                    como="li"
-                    className={`grid gap-4 rounded-2xl border bg-[#1F1F1F] p-5 sm:grid-cols-[7.5rem_1fr] ${b.sugestao ? 'border-amber-500/30 border-dashed' : 'border-[#313131]'}`}
-                  >
+                  <ItemCascata key={b.inicio} como="li" className="grid gap-4 rounded-2xl border border-[#313131] bg-[#1F1F1F] p-5 sm:grid-cols-[7.5rem_1fr]">
                     <div className="flex items-start gap-2 sm:flex-col sm:gap-1">
                       <span className="inline-flex items-center gap-1.5 font-mono text-sm font-bold text-emerald-400">
                         <Clock className="h-3.5 w-3.5" />{b.inicio}–{b.fim} min
@@ -170,17 +168,12 @@ export default function PlanoModulo1() {
                         {b.titulo}
                         {b.ferramenta && <span className="ml-2 text-xs font-medium text-slate-400">· {b.ferramenta}</span>}
                       </h3>
-                      {b.sugestao && (
-                        <p className="mt-1 text-xs font-semibold text-amber-300">
-                          Sugestão para completar o roteiro (ainda não está no Notion) — revise antes de usar.
-                        </p>
-                      )}
                       <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-300">
                         {b.descricao.map((p) => <p key={p}>{p}</p>)}
                       </div>
                       {b.recursos && (
                         <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                          {b.recursos.map((r) => <LinkRecurso key={r.nome} r={r} />)}
+                          {b.recursos.map((r) => <CartaoRecurso key={r.nome} r={r} />)}
                         </div>
                       )}
                     </div>
@@ -188,44 +181,43 @@ export default function PlanoModulo1() {
                 ))}
               </Cascata>
 
-              <Revelar className="mt-6 flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-sm text-slate-200">
-                <Sparkles className="h-4 w-4 shrink-0 text-emerald-400" />
-                Selo do encontro: <strong className="text-emerald-300">{e.selo}</strong>
-                <Link href={`${TURMA}#selo-${e.numero}`} className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:text-emerald-300">
-                  Gerador do selo <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </Revelar>
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <Revelar className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5">
+                  <h3 className="flex items-center gap-2 text-sm font-bold text-white"><ClipboardList className="h-4 w-4 text-emerald-400" /> O que fica registrado</h3>
+                  <ul className="mt-2 space-y-1.5 text-sm text-slate-300">
+                    {e.registro.map((r) => <li key={r} className="flex gap-2"><Inbox className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />{r}</li>)}
+                  </ul>
+                </Revelar>
+                <Revelar atraso={0.08} className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5">
+                  <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Trophy className="h-4 w-4 text-amber-300" /> Recompensa do encontro</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-300">{e.recompensa}</p>
+                </Revelar>
+              </div>
             </div>
           </section>
         ))}
 
-        {/* O que falta criar nas contas externas */}
-        <section id="pendencias" className="py-16 px-4 sm:px-6 lg:px-8">
+        <section id="respostas" className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Revelar className="max-w-3xl">
-              <span className="text-xs font-semibold uppercase tracking-wider text-amber-300">Para criar na sua conta</span>
-              <h2 className="mt-2 text-2xl sm:text-4xl font-bold text-white">Ferramentas externas: passo a passo</h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                Estes recursos dependem da conta do professor (Padlet, Kahoot/Quizizz, Google Forms, tldraw). Enquanto não forem criados, a
-                atividade equivalente já funciona na página da turma. Depois de criar, cole o link no arquivo{' '}
-                <code className="rounded bg-[#272727] px-1.5 py-0.5 font-mono text-xs text-emerald-300">data/planoModulo1.ts</code>.
-              </p>
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Respostas dos alunos</span>
+              <h2 className="mt-2 text-2xl sm:text-4xl font-bold text-white">Onde você recebe o que a turma produz</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-300">{PLANO.coleta}</p>
             </Revelar>
-            <Cascata className="mt-8 grid gap-4 md:grid-cols-2">
-              {pendencias.map((r) => (
-                <ItemCascata key={r.nome} className="rounded-2xl border border-[#313131] bg-[#1F1F1F] p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-sm font-bold text-white">{r.nome}</h3>
-                    <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase ${ESTILO_STATUS[r.status].classe}`}>
-                      {ESTILO_STATUS[r.status].rotulo}
-                    </span>
-                  </div>
-                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-xs leading-relaxed text-slate-300">
-                    {r.comoCriar!.map((p) => <li key={p}>{p}</li>)}
-                  </ol>
+            <Cascata className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {LINKS_PROFESSOR.map((l) => (
+                <ItemCascata key={l.url}>
+                  <a href={l.url} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-[#313131] bg-[#1F1F1F] px-4 py-3 text-sm font-semibold text-slate-200 transition-colors hover:border-slate-500 hover:text-white">
+                    {l.nome}
+                    <ExternalLink className="h-4 w-4 shrink-0 text-emerald-400" />
+                    <span className="sr-only"> (abre em nova aba)</span>
+                  </a>
                 </ItemCascata>
               ))}
             </Cascata>
+            <p className="mt-6 text-xs text-slate-400">
+              Links de edição e apresentação só abrem com a sua conta logada. Os alunos nunca precisam deles: entram pelo código na tela (Menti e Kahoot) ou pelo QR code da página da turma (Padlet).
+            </p>
           </div>
         </section>
       </main>

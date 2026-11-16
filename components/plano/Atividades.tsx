@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Check, ClipboardCopy, Download, ExternalLink, RotateCcw, ShieldAlert, ShieldCheck, Sparkles } from 'lucide-react';
+import { Download, RotateCcw, ShieldAlert, ShieldCheck, Sparkles } from 'lucide-react';
 import { CATEGORIAS_RISCO, GRUPOS_REFERENCIA, PALAVRAS_EMBEDDING, PERGUNTAS_RISCO, PIPELINE } from '@/data/planoModulo1';
 
 const EASE = [0.32, 0.72, 0, 1] as const;
@@ -69,105 +69,7 @@ function useRascunho<T>(chave: string, inicial: T) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Ficha de oficina (substitui o Google Forms enquanto ele não existe) */
-/* ------------------------------------------------------------------ */
-
-export interface CampoFicha {
-  id: string;
-  rotulo: string;
-  tipo?: 'texto' | 'longo' | 'numero';
-  dica?: string;
-}
-
-export function Ficha({
-  chave,
-  titulo,
-  campos,
-  linkFormulario,
-}: {
-  chave: string;
-  titulo: string;
-  campos: CampoFicha[];
-  linkFormulario?: string;
-}) {
-  const base = useId();
-  const [respostas, setRespostas] = useRascunho<Record<string, string>>(`plano-m1:${chave}`, {});
-  const [copiado, setCopiado] = useState(false);
-
-  const texto = [titulo, '', ...campos.map((c) => `${c.rotulo}: ${respostas[c.id]?.trim() || '—'}`)].join('\n');
-  const preenchidos = campos.filter((c) => respostas[c.id]?.trim()).length;
-
-  const copiar = async () => {
-    try {
-      await navigator.clipboard.writeText(texto);
-      setCopiado(true);
-      setTimeout(() => setCopiado(false), 2500);
-    } catch {
-      /* navegador sem permissão: o aluno pode selecionar o texto da prévia */
-    }
-  };
-
-  return (
-    <div className={cartao}>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {campos.map((c) => (
-          <div key={c.id} className={c.tipo === 'longo' ? 'sm:col-span-2' : ''}>
-            <label htmlFor={`${base}-${c.id}`} className="mb-1.5 block text-xs font-semibold text-slate-300">
-              {c.rotulo}
-            </label>
-            {c.tipo === 'longo' ? (
-              <textarea
-                id={`${base}-${c.id}`}
-                rows={3}
-                value={respostas[c.id] ?? ''}
-                placeholder={c.dica}
-                onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
-                className={campo}
-              />
-            ) : (
-              <input
-                id={`${base}-${c.id}`}
-                type={c.tipo === 'numero' ? 'number' : 'text'}
-                inputMode={c.tipo === 'numero' ? 'numeric' : undefined}
-                min={c.tipo === 'numero' ? 0 : undefined}
-                value={respostas[c.id] ?? ''}
-                placeholder={c.dica}
-                onChange={(e) => setRespostas({ ...respostas, [c.id]: e.target.value })}
-                className={campo}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-[#313131] pt-4">
-        <span className="mr-auto text-xs text-slate-400" aria-live="polite">
-          {preenchidos} de {campos.length} campos preenchidos · rascunho salvo neste aparelho
-        </span>
-        <button type="button" onClick={() => setRespostas({})} className={botaoSecundario}>
-          <RotateCcw className="h-4 w-4" /> Limpar
-        </button>
-        <button type="button" onClick={copiar} className={botaoPrimario}>
-          {copiado ? <Check className="h-4 w-4" /> : <ClipboardCopy className="h-4 w-4" />}
-          {copiado ? 'Copiado!' : 'Copiar respostas'}
-        </button>
-        {linkFormulario && (
-          <a href={linkFormulario} target="_blank" rel="noopener noreferrer" className={botaoSecundario}>
-            <ExternalLink className="h-4 w-4" /> Enviar no formulário
-            <span className="sr-only"> (abre em nova aba)</span>
-          </a>
-        )}
-      </div>
-      <p className="mt-3 text-xs text-slate-400">
-        Copie as respostas e envie para o professor pelo canal da turma{linkFormulario ? ' ou cole no formulário' : ''}.
-        Nada é enviado automaticamente.
-      </p>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Mapa de embeddings (Encontro 1, 70–90 min)                          */
+/* Mapa de embeddings (Encontro 2)                          */
 /* ------------------------------------------------------------------ */
 
 const CORES_GRUPO = [
@@ -289,7 +191,7 @@ export function MapaEmbeddings() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Pipeline em 5 passos (Encontro 1, 90–120 min)                       */
+/* Pipeline em 5 passos (Encontro 2)                       */
 /* ------------------------------------------------------------------ */
 
 const FRASE = 'Escreva um poema sobre o rio Guamá';
@@ -377,7 +279,7 @@ export function PipelineAnimado() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Arriscado x Seguro (Encontro 2, 40–55 min)                          */
+/* Arriscado x Seguro (Encontro 3)                          */
 /* ------------------------------------------------------------------ */
 
 export function ClassificadorRisco() {
