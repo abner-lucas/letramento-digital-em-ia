@@ -72,7 +72,7 @@ export default async function ModulePage({ params }: Props) {
 
       <main id="conteudo-principal" className="flex-1 flex flex-col">
       {/* Module Hero Banner */}
-      <section className={`bg-gradient-to-r ${currentModule.color.primary} text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800`}>
+      <section className={`bg-gradient-to-r ${currentModule.color.primary} text-white pt-28 sm:pt-32 pb-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800`}>
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs font-medium text-white/80 mb-4">

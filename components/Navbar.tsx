@@ -83,7 +83,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     aria-current={atual ? (naInicial ? 'true' : 'page') : undefined}
-                    className={`relative block px-3 py-1.5 rounded-full transition-colors duration-200 hover:text-white ${
+                    className={`relative block whitespace-nowrap px-3 py-1.5 rounded-full transition-colors duration-200 hover:text-white ${
                       atual ? 'text-emerald-400 font-semibold' : ''
                     }`}
                   >
@@ -98,7 +98,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/#apostilas"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-200 bg-[#272727] hover:bg-[#313131] rounded-full border border-[#313131] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+              className="hidden sm:inline-flex lg:hidden xl:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-200 bg-[#272727] hover:bg-[#313131] rounded-full border border-[#313131] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
             >
               <FileText className="w-3.5 h-3.5 text-emerald-400" />
               <span>Apostilas</span>

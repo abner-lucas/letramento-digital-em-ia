@@ -120,7 +120,7 @@ export default function AiTabuleiro() {
         <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
           {/* Tools Grid (Left) */}
           <div className="lg:col-span-7 p-6 bg-slate-50/50">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
               {displayedTools.map((tool) => {
                 const isSelected = selectedTool.id === tool.id;
                 return (
@@ -135,7 +135,7 @@ export default function AiTabuleiro() {
                         : 'bg-white border-slate-200 hover:border-slate-300 shadow-2xs'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 mb-1.5">
                       <span className="font-bold text-sm text-slate-900 font-display">
                         {tool.name}
                       </span>
@@ -152,11 +152,11 @@ export default function AiTabuleiro() {
                       {tool.bestFor}
                     </div>
 
-                    <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <div className="pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[11px]">
                       <span className="text-slate-500 font-mono tabular-nums">
                         {tool.freeLimit}
                       </span>
-                      <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
+                      <span className="text-emerald-700 font-semibold flex items-center gap-0.5 whitespace-nowrap">
                         Ver detalhes <ChevronRight className="w-3 h-3" />
                       </span>
                     </div>

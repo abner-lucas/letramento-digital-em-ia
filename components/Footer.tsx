@@ -55,6 +55,16 @@ export default function Footer() {
                   Apostilas oficiais (PDF)
                 </Link>
               </li>
+              <li>
+                <Link href="/plano/modulo-1" className="hover:text-emerald-400 transition-colors">
+                  Área do professor: plano do Módulo 1
+                </Link>
+              </li>
+              <li>
+                <Link href="/plano/modulo-1/turma" className="hover:text-emerald-400 transition-colors">
+                  Atividades da turma (Módulo 1)
+                </Link>
+              </li>
             </ul>
           </div>
 
