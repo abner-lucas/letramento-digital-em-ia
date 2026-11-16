@@ -79,14 +79,14 @@ const PADLET = {
   e23: 'https://padlet.com/prof_abner_ti/m1-e2-e-e3-murais-da-turma-s025iwmnuhdk3fkw11z6',
 };
 const KAHOOT = {
-  e1: 'https://create.kahoot.it/details/d388367e-eb31-4f91-bcb9-aefc6554f0e2',
-  e2: 'https://create.kahoot.it/details/1da16fc2-236c-40c6-8309-d9b127f4d898',
-  e3casos: 'https://create.kahoot.it/details/e2425d6a-c2da-4c1e-bfe0-57fe6632af24',
-  e3final: 'https://create.kahoot.it/details/fa53f8bc-ea9f-43a1-895d-15d25aab4f00',
+  e1: 'https://create.kahoot.it/creator/d388367e-eb31-4f91-bcb9-aefc6554f0e2',
+  e2: 'https://create.kahoot.it/creator/1da16fc2-236c-40c6-8309-d9b127f4d898',
+  e3casos: 'https://create.kahoot.it/creator/e2425d6a-c2da-4c1e-bfe0-57fe6632af24',
+  e3final: 'https://create.kahoot.it/creator/fa53f8bc-ea9f-43a1-895d-15d25aab4f00',
 };
 
 const ACESSO_MENTI = 'Aluno entra em menti.com e digita o código que aparece no topo da tela projetada.';
-const ACESSO_KAHOOT = 'Clique em "Iniciar" → "Clássico"; o aluno entra em kahoot.it com o PIN que aparece na tela.';
+const ACESSO_KAHOOT = 'Abra o quiz, clique em "Iniciar" → "Clássico"; o aluno entra em kahoot.it com o PIN que aparece na tela.';
 const COLETA_MENTI = 'Mentimeter → abra a apresentação → aba "Resultados" (respostas da sessão; anônimas por padrão).';
 const COLETA_KAHOOT = 'Kahoot → "Relatórios" → escolha o jogo: nota e acertos por aluno, com opção de baixar planilha.';
 const COLETA_PADLET = 'Padlet → as postagens ficam no mural com o nome de quem postou; use "Compartilhar" → "Exportar" para salvar em PDF ou planilha.';
