@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import QRCode from '@/components/plano/QRCode';
 import { Cascata, ItemCascata, Revelar } from '@/components/movimento/Revelar';
 import { IndicadorSecoes } from '@/components/movimento/Navegacao';
-import { ENCONTROS, LINKS_PROFESSOR, NOTION_URL, PLANO, SITE_URL, type Ferramenta, type Recurso } from '@/data/planoModulo1';
+import { ENCONTROS_VISIVEIS as ENCONTROS, LINKS_PROFESSOR, NOTION_URL, PLANO, SITE_URL, type Ferramenta, type Recurso } from '@/data/planoModulo1';
 
 export const metadata: Metadata = {
   title: 'Plano de aula do Módulo 1 (Roteiro do Professor)',
@@ -64,9 +64,7 @@ export default function PlanoModulo1() {
       <IndicadorSecoes
         secoes={[
           { id: 'visao-geral', rotulo: 'Visão geral' },
-          { id: 'encontro-1', rotulo: 'Encontro 1' },
-          { id: 'encontro-2', rotulo: 'Encontro 2' },
-          { id: 'encontro-3', rotulo: 'Encontro 3' },
+          ...ENCONTROS.map((e) => ({ id: e.id, rotulo: `Encontro ${e.numero}` })),
           { id: 'respostas', rotulo: 'Respostas dos alunos' },
         ]}
       />

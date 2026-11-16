@@ -6,11 +6,11 @@ import QRCode from '@/components/plano/QRCode';
 import { ClassificadorRisco, GeradorSelo, MapaEmbeddings, PipelineAnimado } from '@/components/plano/Atividades';
 import { Revelar } from '@/components/movimento/Revelar';
 import { IndicadorSecoes } from '@/components/movimento/Navegacao';
-import { ENCONTROS, type Recurso } from '@/data/planoModulo1';
+import { ENCONTROS, ENCONTROS_VISIVEIS, encontroLiberado, type Recurso } from '@/data/planoModulo1';
 
 export const metadata: Metadata = {
   title: 'Módulo 1 — Atividades da turma',
-  description: 'Atividades no celular dos três encontros do Módulo 1: tipos de IA, tokens, embeddings, caminho da resposta, alucinações e regras de ouro.',
+  description: 'Atividades no celular do Encontro 1 do Módulo 1: tipos de IA, tokens, mapa de significados e caminho da resposta no tldraw.',
 };
 
 const recursos = ENCONTROS.flatMap((e) => e.blocos.flatMap((b) => b.recursos ?? []));
@@ -94,20 +94,21 @@ function Cabecalho({ id, numero, titulo }: { id: string; numero: number; titulo:
   );
 }
 
-const SECOES = [
-  { id: 'encontro-1', rotulo: 'Encontro 1' },
-  { id: 'tipos-ia', rotulo: 'Tipos de IA' },
-  { id: 'tokens', rotulo: 'Tokens' },
-  { id: 'tldraw-mapa', rotulo: 'tldraw: mapa' },
-  { id: 'tldraw-caminho', rotulo: 'tldraw: caminho' },
-  { id: 'encontro-2', rotulo: 'Encontro 2' },
-  { id: 'embeddings', rotulo: 'Embeddings' },
-  { id: 'pipeline', rotulo: 'Caminho' },
-  { id: 'encontro-3', rotulo: 'Encontro 3' },
-  { id: 'alucinacoes', rotulo: 'Alucinações' },
-  { id: 'arriscado-seguro', rotulo: 'Arriscado x seguro' },
-  { id: 'crie-seu-caso', rotulo: 'Crie seu caso' },
+const SECOES_TODAS = [
+  { id: 'encontro-1', rotulo: 'Encontro 1', encontro: 1 },
+  { id: 'tipos-ia', rotulo: 'Tipos de IA', encontro: 1 },
+  { id: 'tokens', rotulo: 'Tokens', encontro: 1 },
+  { id: 'tldraw-mapa', rotulo: 'tldraw: mapa', encontro: 1 },
+  { id: 'tldraw-caminho', rotulo: 'tldraw: caminho', encontro: 1 },
+  { id: 'encontro-2', rotulo: 'Encontro 2', encontro: 2 },
+  { id: 'embeddings', rotulo: 'Embeddings', encontro: 2 },
+  { id: 'pipeline', rotulo: 'Caminho', encontro: 2 },
+  { id: 'encontro-3', rotulo: 'Encontro 3', encontro: 3 },
+  { id: 'alucinacoes', rotulo: 'Alucinações', encontro: 3 },
+  { id: 'arriscado-seguro', rotulo: 'Arriscado x seguro', encontro: 3 },
+  { id: 'crie-seu-caso', rotulo: 'Crie seu caso', encontro: 3 },
 ];
+const SECOES = SECOES_TODAS.filter((s) => encontroLiberado(s.encontro)).map(({ id, rotulo }) => ({ id, rotulo }));
 
 export default function TurmaModulo1() {
   const padletE1 = porNome('Padlet "Tipos de IA');
@@ -132,11 +133,11 @@ export default function TurmaModulo1() {
               Atividades da turma
             </h1>
             <p className="mt-4 text-base text-slate-300">
-              Tudo o que vamos usar nos três encontros, direto no celular. Siga o professor e role até a atividade da vez. Suas respostas vão para o
+              Tudo o que vamos usar no encontro, direto no celular. Siga o professor e role até a atividade da vez. Suas respostas vão para o
               Padlet, o Mentimeter e o Kahoot — este site não guarda nada.
             </p>
             <nav aria-label="Encontros" className="mt-6 flex flex-wrap justify-center gap-3">
-              {ENCONTROS.map((e) => (
+              {ENCONTROS_VISIVEIS.map((e) => (
                 <a key={e.id} href={`#${e.id}`} className="min-h-10 inline-flex items-center rounded-lg border border-[#313131] bg-[#272727] px-4 text-sm font-semibold text-slate-200 hover:bg-[#313131]">
                   Encontro {e.numero}
                 </a>
@@ -212,7 +213,8 @@ export default function TurmaModulo1() {
           </div>
         </div>
 
-        {/* Encontro 2 */}
+        {/* Encontro 2 (oculto até ser liberado em ENCONTROS_LIBERADOS) */}
+        {encontroLiberado(2) && (
         <div className="px-4 sm:px-6 lg:px-8 py-14 bg-[#1F1F1F] border-t border-[#272727]">
           <div className="max-w-4xl mx-auto space-y-16">
             <Cabecalho id="encontro-2" numero={2} titulo={e2.titulo} />
@@ -242,7 +244,10 @@ export default function TurmaModulo1() {
           </div>
         </div>
 
-        {/* Encontro 3 */}
+        )}
+
+        {/* Encontro 3 (oculto até ser liberado em ENCONTROS_LIBERADOS) */}
+        {encontroLiberado(3) && (
         <div className="px-4 sm:px-6 lg:px-8 py-14 border-t border-[#272727]">
           <div className="max-w-4xl mx-auto space-y-16">
             <Cabecalho id="encontro-3" numero={3} titulo={e3.titulo} />
@@ -292,6 +297,7 @@ export default function TurmaModulo1() {
             </Bloco>
           </div>
         </div>
+        )}
       </main>
 
       <Footer />

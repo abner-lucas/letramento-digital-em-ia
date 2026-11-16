@@ -106,17 +106,26 @@ const kahootRecurso = (nome: string, url: string): Recurso => ({
   coleta: COLETA_KAHOOT,
 });
 
-export const LINKS_PROFESSOR = [
-  { nome: 'Mentimeter — Encontro 1 (editar)', url: MENTI.e1.edit },
-  { nome: 'Mentimeter — Encontro 2 (editar)', url: MENTI.e2.edit },
-  { nome: 'Mentimeter — Encontro 3 (editar)', url: MENTI.e3.edit },
-  { nome: 'Padlet — Encontro 1', url: PADLET.e1 },
-  { nome: 'Padlet — Encontros 2 e 3', url: PADLET.e23 },
-  { nome: 'Kahoot — Encontro 1', url: KAHOOT.e1 },
-  { nome: 'Kahoot — Encontro 2', url: KAHOOT.e2 },
-  { nome: 'Kahoot — Encontro 3: casos do dia a dia', url: KAHOOT.e3casos },
-  { nome: 'Kahoot — Encontro 3: quiz final', url: KAHOOT.e3final },
+/**
+ * Encontros em exibição nas páginas do plano. Os demais continuam completos
+ * aqui nos dados, apenas ocultos. Para liberar, acrescente o número: [1, 2].
+ */
+export const ENCONTROS_LIBERADOS: number[] = [1];
+export const encontroLiberado = (numero: number) => ENCONTROS_LIBERADOS.includes(numero);
+
+const LINKS_PROFESSOR_TODOS = [
+  { nome: 'Mentimeter — Encontro 1 (editar)', url: MENTI.e1.edit, encontros: [1] },
+  { nome: 'Mentimeter — Encontro 2 (editar)', url: MENTI.e2.edit, encontros: [2] },
+  { nome: 'Mentimeter — Encontro 3 (editar)', url: MENTI.e3.edit, encontros: [3] },
+  { nome: 'Padlet — Encontro 1', url: PADLET.e1, encontros: [1] },
+  { nome: 'Padlet — Encontros 2 e 3', url: PADLET.e23, encontros: [2, 3] },
+  { nome: 'Kahoot — Encontro 1', url: KAHOOT.e1, encontros: [1] },
+  { nome: 'Kahoot — Encontro 2', url: KAHOOT.e2, encontros: [2] },
+  { nome: 'Kahoot — Encontro 3: casos do dia a dia', url: KAHOOT.e3casos, encontros: [3] },
+  { nome: 'Kahoot — Encontro 3: quiz final', url: KAHOOT.e3final, encontros: [3] },
 ];
+
+export const LINKS_PROFESSOR = LINKS_PROFESSOR_TODOS.filter((l) => l.encontros.some(encontroLiberado));
 
 export const ENCONTROS: Encontro[] = [
   {
@@ -414,3 +423,6 @@ export const PERGUNTAS_RISCO: { texto: string; arriscada: boolean; porque: strin
   { texto: 'Qual é o horário exato do posto de saúde da minha rua?', arriscada: true, porque: 'Assunto muito local e dado específico — confira na fonte oficial.' },
   { texto: 'Me dê dicas para organizar meus estudos para o ENEM.', arriscada: false, porque: 'Pede ideias gerais, não fatos exatos.' },
 ];
+
+/** Somente os encontros liberados (ver ENCONTROS_LIBERADOS). */
+export const ENCONTROS_VISIVEIS = ENCONTROS.filter((e) => encontroLiberado(e.numero));
