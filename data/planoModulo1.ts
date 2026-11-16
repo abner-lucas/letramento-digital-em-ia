@@ -15,7 +15,7 @@ export const SITE_URL = 'https://abner-lucas.github.io/letramento-digital-em-ia'
 export const NOTION_URL =
   'https://app.notion.com/p/profbrunopereira/M-dulo-1-Fundamentos-Roteiro-do-Professor-3f2dde8b8c80819b8686d7c7183ad651';
 
-export type Ferramenta = 'Mentimeter' | 'Padlet' | 'Kahoot' | 'Site' | 'IA' | 'Tokenizador';
+export type Ferramenta = 'Mentimeter' | 'Padlet' | 'Kahoot' | 'Site' | 'IA' | 'Tokenizador' | 'tldraw';
 
 export interface Recurso {
   nome: string;
@@ -132,6 +132,7 @@ export const ENCONTROS: Encontro[] = [
       'Mentimeter — nuvem de palavras da abertura e bilhete de saída',
       'Padlet — mural dos tipos de IA + ficha da oficina de tokens',
       'Tiktokenizer ou OpenAI Tokenizer — oficina de tokens no celular',
+      'tldraw — mapa de significados + desenho do caminho da resposta',
       'Kahoot — quiz gamificado (10 itens)',
       'Selo digital "Explorador de Tokens — Nível 1" (gerado no site)',
       'Celulares/notebooks liberados nas oficinas',
@@ -143,7 +144,7 @@ export const ENCONTROS: Encontro[] = [
         recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 1–3)', 'e1')],
       },
       {
-        inicio: 10, fim: 35, titulo: 'Os diferentes tipos de IA', ferramenta: 'Padlet classificatório',
+        inicio: 10, fim: 30, titulo: 'Os diferentes tipos de IA', ferramenta: 'Padlet classificatório',
         descricao: [
           'Padlet com 6 colunas: IA de linguagem, de imagem, de recomendação, de rotas, de voz e de busca. Cada grupo posta 2 apps que usa no dia a dia na coluna certa, pelo celular.',
           'Puxe 2 ou 3 exemplos em plenária, reforçando que o curso foca na "IA de linguagem". No Menti, a pergunta do app de mapas confere o entendimento.',
@@ -151,50 +152,68 @@ export const ENCONTROS: Encontro[] = [
         recursos: [{ nome: 'Padlet "Tipos de IA no dia a dia"', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET }],
       },
       {
-        inicio: 35, fim: 80, titulo: 'Oficina dos tokens', ferramenta: 'Duplas, com celular',
+        inicio: 30, fim: 60, titulo: 'Oficina dos tokens — como a IA divide textos', ferramenta: 'Tiktokenizer, em duplas',
         descricao: [
           'Apresente a metáfora da farinha de mandioca: a IA rala a frase em tokens antes de trabalhar com ela.',
-          'Cada dupla abre um tokenizador e testa 3 palavras regionais (açaí, igarapé, Guamá ou cupuaçu) e 3 comuns (computador, felicidade, inteligência). Anotam quantos tokens cada uma virou.',
-          'A ficha da dupla é um post no Padlet, na coluna "Ficha · Oficina dos tokens", seguindo o modelo fixado lá: nomes, turma, palavras e tokens, e o que mais surpreendeu.',
+          'Cada dupla abre o Tiktokenizer e testa 3 palavras regionais (açaí, igarapé, Guamá ou cupuaçu) e 3 comuns (computador, felicidade, inteligência). Anotam quantos tokens cada uma virou e postam a ficha no Padlet, na coluna "Ficha · Oficina dos tokens".',
+          'Socialização rápida no Menti: qual palavra regional quebrou em mais tokens? A IA foi treinada com muito mais texto de outros idiomas e regiões — um primeiro sinal do que veremos no Encontro 3.',
         ],
         recursos: [
           { nome: 'Tiktokenizer', ferramenta: 'Tokenizador', url: 'https://tiktokenizer.vercel.app/' },
           { nome: 'OpenAI Tokenizer', ferramenta: 'Tokenizador', url: 'https://platform.openai.com/tokenizer' },
           { nome: 'Ficha da oficina (coluna do Padlet)', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET },
+          mentiRecurso('Mentimeter do Encontro 1 (slides 4–5)', 'e1'),
         ],
       },
       {
-        inicio: 80, fim: 100, titulo: 'Socialização — por que as palavras regionais quebram mais?', ferramenta: 'Mentimeter + discussão',
+        inicio: 60, fim: 90, titulo: 'tldraw · Atividade 1 — Mapa de significados', ferramenta: 'tldraw, em duplas',
         descricao: [
-          'No Menti, cada dupla responde qual palavra regional quebrou em mais tokens. Discuta: a IA foi treinada com muito mais texto em outros idiomas e regiões, por isso nossas palavras viram mais pedaços — um primeiro sinal do que veremos no Encontro 3.',
+          'Do Tiktokenizer (como a IA divide textos) para o tldraw (como representamos relações e etapas). Objetivo: compreender intuitivamente que palavras e conceitos podem ser representados por relações de proximidade semântica.',
+          'Cada dupla abre tldraw.com e: (1) cria cartões com açaí, cupuaçu, bacuri, rio, igarapé, furo, barco, ônibus, bicicleta, escola, professor e aluno; (2) movimenta os cartões, aproximando os termos de significado relacionado; (3) desenha círculos ou formas em torno dos grupos; (4) explica por que umas palavras ficaram próximas e outras distantes.',
+          'Pergunte: "Por que rio e igarapé ficaram próximos, enquanto cupuaçu e bicicleta ficaram afastados?". Depois explique que embeddings são representações vetoriais numéricas que os modelos usam para codificar informações — o quadro dos alunos é uma analogia visual simplificada, não um mapa real gerado por uma IA.',
+          'A dupla exporta o quadro (Menu → Exportar → PNG, ou print) e posta no Padlet, na coluna "tldraw · Mapa de significados".',
         ],
-        recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 4–5)', 'e1')],
+        recursos: [
+          { nome: 'tldraw (quadro em branco)', ferramenta: 'tldraw', url: 'https://www.tldraw.com/' },
+          { nome: 'Padlet — coluna "tldraw · Mapa de significados"', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET },
+        ],
       },
       {
-        inicio: 100, fim: 130, titulo: 'Avaliação gamificada — Quiz', ferramenta: 'Kahoot',
-        descricao: ['Quiz de 10 itens com a pergunta oficial 1 do "Teste seu conhecimento" (a primeira coisa que a IA faz é quebrar o texto em tokens) e perguntas sobre tipos de IA e tokens. Cada aluno joga pelo celular.'],
-        recursos: [kahootRecurso('Kahoot "Tipos de IA e tokens"', KAHOOT.e1)],
+        inicio: 90, fim: 125, titulo: 'tldraw · Atividade 2 — O caminho da resposta', ferramenta: 'tldraw, em duplas',
+        descricao: [
+          'Objetivo: representar visualmente as etapas do material didático. Cada dupla usa a ferramenta de retângulos para criar as 5 etapas — (1) quebra em tokens, (2) vira números (embeddings), (3) cálculo de padrões, (4) palavra por palavra, (5) resposta pronta — e a ferramenta de setas para conectá-las.',
+          'Pergunta de exemplo: "Explique por que o açaí é importante para a economia do Pará." A dupla mostra como essa pergunta seria tokenizada, processada matematicamente e usada pelo modelo para produzir a resposta aos poucos.',
+          'Ao final, cada dupla apresenta o diagrama, explica as etapas e posta a imagem no Padlet, na coluna "tldraw · O caminho da resposta".',
+        ],
+        recursos: [
+          { nome: 'tldraw (quadro em branco)', ferramenta: 'tldraw', url: 'https://www.tldraw.com/' },
+          { nome: 'Padlet — coluna "tldraw · O caminho da resposta"', ferramenta: 'Padlet', url: PADLET.e1, coleta: COLETA_PADLET },
+        ],
       },
       {
-        inicio: 130, fim: 145, titulo: 'Bilhete de saída', ferramenta: 'Mentimeter',
-        descricao: ['Autoavaliação de 1 a 5 ("sei citar 3 tipos de IA", "sei explicar o que é um token") e uma frase sobre o que cada um leva da aula.'],
-        recursos: [mentiRecurso('Mentimeter do Encontro 1 (slides 6–7)', 'e1')],
+        inicio: 125, fim: 145, titulo: 'Avaliação gamificada — Quiz + bilhete de saída', ferramenta: 'Kahoot + Mentimeter',
+        descricao: [
+          'Quiz de 10 itens com a pergunta oficial 1 do "Teste seu conhecimento" (a primeira coisa que a IA faz é quebrar o texto em tokens) e perguntas sobre tipos de IA e tokens. Cada aluno joga pelo celular.',
+          'Bilhete de saída no Menti: autoavaliação de 1 a 5 e uma frase sobre o que cada um leva da aula.',
+        ],
+        recursos: [kahootRecurso('Kahoot "Tipos de IA e tokens"', KAHOOT.e1), mentiRecurso('Mentimeter do Encontro 1 (slides 6–7)', 'e1')],
       },
       {
         inicio: 145, fim: 150, titulo: 'Selo digital + gancho para o Encontro 2', ferramenta: 'Site',
         descricao: [
-          'Os alunos geram o selo "Explorador de Tokens — Nível 1" na página da turma e salvam a imagem. Reconheça a dupla com a ficha mais caprichada no Padlet.',
+          'Os alunos geram o selo "Explorador de Tokens — Nível 1" na página da turma e salvam a imagem. Reconheça a dupla com o diagrama do caminho da resposta mais claro.',
           'Anuncie: "no próximo encontro vamos abrir a máquina e seguir o caminho da sua pergunta até a resposta".',
         ],
         recursos: [{ nome: 'Gerador do selo — Nível 1', ferramenta: 'Site', ancora: 'selo-1' }],
       },
     ],
     registro: [
-      'Padlet: posts dos grupos nas 6 colunas + ficha de cada dupla (com nome e turma).',
+      'Padlet: posts dos grupos nas 6 colunas + ficha dos tokens de cada dupla (com nome e turma).',
+      'Padlet: imagens dos dois quadros do tldraw de cada dupla (mapa de significados e caminho da resposta).',
       'Kahoot: nota e acertos de cada aluno no relatório do jogo.',
       'Mentimeter: nuvem de palavras, respostas abertas e autoavaliação da turma.',
     ],
-    recompensa: 'Selo digital "Explorador de Tokens — Nível 1" + reconhecimento da dupla com a ficha mais completa no Padlet.',
+    recompensa: 'Selo digital "Explorador de Tokens — Nível 1" + reconhecimento da dupla com o diagrama do caminho da resposta mais claro.',
   },
   {
     id: 'encontro-2',

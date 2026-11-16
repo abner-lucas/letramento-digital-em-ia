@@ -64,6 +64,27 @@ function CodigoNaTela({ ferramenta, site }: { ferramenta: string; site: string }
   );
 }
 
+/** Como usar o tldraw: as 4 ações que as atividades pedem. */
+function GuiaTldraw() {
+  const passos = [
+    ['Selecionar', 'clique ou toque nos elementos para movimentá-los.'],
+    ['Formas', 'desenhe retângulos para representar conceitos ou etapas.'],
+    ['Texto', 'escreva os conceitos dentro ou perto das formas.'],
+    ['Setas', 'conecte os elementos para indicar relações e sequências.'],
+  ];
+  return (
+    <div className="rounded-2xl border border-[#313131] bg-[#1F1F1F] p-5">
+      <p className="text-xs font-semibold uppercase tracking-wider text-sky-300">Como usar o tldraw</p>
+      <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+        {passos.map(([t, d]) => (
+          <li key={t} className="text-sm text-slate-300"><strong className="text-white">{t}:</strong> {d}</li>
+        ))}
+      </ul>
+      <p className="mt-3 text-xs text-slate-400">Para entregar: Menu ☰ → Exportar → PNG (ou um print da tela) e poste a imagem no Padlet.</p>
+    </div>
+  );
+}
+
 function Cabecalho({ id, numero, titulo }: { id: string; numero: number; titulo: string }) {
   return (
     <Revelar>
@@ -77,6 +98,8 @@ const SECOES = [
   { id: 'encontro-1', rotulo: 'Encontro 1' },
   { id: 'tipos-ia', rotulo: 'Tipos de IA' },
   { id: 'tokens', rotulo: 'Tokens' },
+  { id: 'tldraw-mapa', rotulo: 'tldraw: mapa' },
+  { id: 'tldraw-caminho', rotulo: 'tldraw: caminho' },
   { id: 'encontro-2', rotulo: 'Encontro 2' },
   { id: 'embeddings', rotulo: 'Embeddings' },
   { id: 'pipeline', rotulo: 'Caminho' },
@@ -90,6 +113,7 @@ export default function TurmaModulo1() {
   const padletE1 = porNome('Padlet "Tipos de IA');
   const padletE23 = { ...porNome('Padlet — colunas "E2'), nome: 'Murais dos Encontros 2 e 3' };
   const tokenizadores = porFerramenta('Tokenizador');
+  const tldraw = porFerramenta('tldraw')[0];
   const ias = porFerramenta('IA');
   const [e1, e2, e3] = ENCONTROS;
 
@@ -133,13 +157,53 @@ export default function TurmaModulo1() {
             </Bloco>
             <Bloco
               id="tokens"
-              minutos="35–80 min"
+              minutos="30–60 min"
               titulo="Oficina dos tokens"
               texto="Em dupla, abra um tokenizador e teste açaí, igarapé, Guamá (ou cupuaçu), computador, felicidade e inteligência. Depois poste a ficha da dupla no Padlet, na coluna “Ficha · Oficina dos tokens”, copiando o modelo fixado lá."
             >
               <Abrir itens={[...tokenizadores, { ...padletE1, nome: 'Padlet: postar a ficha' }]} />
             </Bloco>
-            <Bloco id="quiz-1" minutos="100–130 min" titulo="Quiz do Encontro 1">
+            <Bloco
+              id="tldraw-mapa"
+              minutos="60–90 min"
+              titulo="tldraw · Mapa de significados"
+              texto="Em dupla, abra o tldraw e crie um cartão para cada palavra abaixo. Aproxime as que têm significado parecido, desenhe um círculo em volta de cada grupo e prepare-se para explicar por que umas ficaram perto e outras longe."
+            >
+              <div className="space-y-4">
+                <GuiaTldraw />
+                <ul className="flex flex-wrap gap-2" aria-label="Palavras do mapa">
+                  {['açaí', 'cupuaçu', 'bacuri', 'rio', 'igarapé', 'furo', 'barco', 'ônibus', 'bicicleta', 'escola', 'professor', 'aluno'].map((p) => (
+                    <li key={p} className="rounded-lg border border-[#313131] bg-[#272727] px-3 py-1.5 font-mono text-sm text-slate-200">{p}</li>
+                  ))}
+                </ul>
+                <p className="rounded-xl border border-sky-500/20 bg-sky-500/5 p-4 text-sm text-slate-300">
+                  Pense: <strong className="text-white">por que rio e igarapé ficaram próximos, enquanto cupuaçu e bicicleta ficaram afastados?</strong>
+                </p>
+                <Abrir itens={[tldraw, { ...padletE1, nome: 'Padlet: postar a imagem do mapa' }]} />
+              </div>
+            </Bloco>
+            <Bloco
+              id="tldraw-caminho"
+              minutos="90–125 min"
+              titulo="tldraw · O caminho da resposta"
+              texto="Use retângulos para criar as 5 etapas e setas para ligá-las. Mostre como a IA tokeniza, processa e responde, aos poucos, a pergunta abaixo. No fim, a dupla apresenta o diagrama."
+            >
+              <div className="space-y-4">
+                <p className="rounded-xl border border-sky-500/20 bg-sky-500/5 p-4 text-sm text-slate-200">
+                  Pergunta: <strong className="text-white">“Explique por que o açaí é importante para a economia do Pará.”</strong>
+                </p>
+                <ol className="grid gap-2 sm:grid-cols-5">
+                  {['Quebra em tokens', 'Vira números (embeddings)', 'Cálculo de padrões', 'Palavra por palavra', 'Resposta pronta'].map((etapa, i) => (
+                    <li key={etapa} className="rounded-lg border border-[#313131] bg-[#272727] p-3 text-sm text-slate-200">
+                      <span className="block font-mono text-xs text-sky-300">0{i + 1}</span>
+                      {etapa}
+                    </li>
+                  ))}
+                </ol>
+                <Abrir itens={[tldraw, { ...padletE1, nome: 'Padlet: postar a imagem do diagrama' }]} />
+              </div>
+            </Bloco>
+            <Bloco id="quiz-1" minutos="125–145 min" titulo="Quiz do Encontro 1">
               <CodigoNaTela ferramenta="Kahoot" site="kahoot.it" />
             </Bloco>
             <Bloco id="selo-1" minutos="145–150 min" titulo={`Seu selo: ${e1.selo}`}>

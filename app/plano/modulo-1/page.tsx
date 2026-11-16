@@ -22,6 +22,7 @@ const COR: Record<Ferramenta, string> = {
   Site: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
   IA: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
   Tokenizador: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+  tldraw: 'border-sky-500/30 bg-sky-500/10 text-sky-300',
 };
 
 function CartaoRecurso({ r }: { r: Recurso }) {
