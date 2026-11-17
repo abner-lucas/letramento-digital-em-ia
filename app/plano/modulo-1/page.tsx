@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ClipboardList, Clock, ExternalLink, Inbox, MonitorSmartphone, Sparkles, Target, Trophy, Wrench } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle2, ClipboardList, Clock, ExternalLink, FileText, Inbox, KeyRound, MonitorSmartphone, Presentation, Sparkles, Target, Trophy, Wrench } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import QRCode from '@/components/plano/QRCode';
 import { Cascata, ItemCascata, Revelar } from '@/components/movimento/Revelar';
 import { IndicadorSecoes } from '@/components/movimento/Navegacao';
-import { ENCONTROS_VISIVEIS as ENCONTROS, LINKS_PROFESSOR, NOTION_URL, PLANO, SITE_URL, type Ferramenta, type Recurso } from '@/data/planoModulo1';
+import { ENCONTROS_VISIVEIS as ENCONTROS, LINKS_PROFESSOR, NOTION_URL, PLANO, SITE_URL, type Ferramenta, type Material, type Recurso } from '@/data/planoModulo1';
 
 export const metadata: Metadata = {
   title: 'Plano de aula do Módulo 1 (Roteiro do Professor)',
@@ -24,6 +24,34 @@ const COR: Record<Ferramenta, string> = {
   Tokenizador: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
   tldraw: 'border-sky-500/30 bg-sky-500/10 text-sky-300',
 };
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+const ICONE_MATERIAL = { Apostila: FileText, Site: BookOpen, Projetar: Presentation } as const;
+
+function CartaoMaterial({ m }: { m: Material }) {
+  const Icone = ICONE_MATERIAL[m.tipo];
+  const pdf = m.href.endsWith('.pdf');
+  const conteudo = (
+    <>
+      <span className="flex items-center gap-2">
+        <Icone className="h-4 w-4 shrink-0 text-emerald-400" />
+        <span className="flex-1 font-semibold text-slate-100">{m.nome}</span>
+        {pdf ? <ExternalLink className="h-3.5 w-3.5 shrink-0" /> : <ArrowRight className="h-3.5 w-3.5 shrink-0" />}
+      </span>
+      <span className="mt-1 block text-[11px] uppercase tracking-wide text-slate-500">{m.tipo}</span>
+      {m.nota && <span className="mt-1 block text-xs leading-snug text-slate-400">{m.nota}</span>}
+    </>
+  );
+  const classe = 'block rounded-xl border border-[#313131] bg-[#181818] px-4 py-3 text-sm text-slate-200 transition-colors hover:border-slate-500';
+  return pdf ? (
+    <a href={`${BASE}${m.href}`} target="_blank" rel="noopener noreferrer" className={classe}>
+      {conteudo}
+      <span className="sr-only"> (abre em nova aba)</span>
+    </a>
+  ) : (
+    <Link href={m.href} className={classe}>{conteudo}</Link>
+  );
+}
 
 function CartaoRecurso({ r }: { r: Recurso }) {
   const destino = r.urlProfessor ?? r.url ?? (r.ancora ? `${TURMA}#${r.ancora}` : undefined);
@@ -144,6 +172,34 @@ export default function PlanoModulo1() {
                   </ul>
                 </Revelar>
               </div>
+
+              {(e.material || e.gabarito) && (
+                <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                  {e.material && (
+                    <Revelar className="rounded-2xl border border-[#313131] bg-[#272727] p-5">
+                      <h3 className="flex items-center gap-2 text-sm font-bold text-white"><BookOpen className="h-4 w-4 text-emerald-400" /> Material do professor</h3>
+                      <div className="mt-3 grid gap-2">
+                        {e.material.map((m) => <CartaoMaterial key={m.href} m={m} />)}
+                      </div>
+                    </Revelar>
+                  )}
+                  {e.gabarito && (
+                    <Revelar atraso={0.08} className="rounded-2xl border border-[#313131] bg-[#272727] p-5">
+                      <h3 className="flex items-center gap-2 text-sm font-bold text-white"><KeyRound className="h-4 w-4 text-emerald-400" /> Gabarito e respostas esperadas</h3>
+                      <div className="mt-3 space-y-4">
+                        {e.gabarito.map((g) => (
+                          <div key={g.titulo}>
+                            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-300">{g.titulo}</p>
+                            <ul className="mt-1.5 space-y-1 text-sm leading-relaxed text-slate-300">
+                              {g.itens.map((i) => <li key={i} className="flex gap-2"><CheckCircle2 className="mt-1 h-3.5 w-3.5 shrink-0 text-emerald-400" />{i}</li>)}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </Revelar>
+                  )}
+                </div>
+              )}
 
               <Revelar className="mt-10">
                 <div className="flex h-2 overflow-hidden rounded-full bg-[#272727]" aria-hidden>

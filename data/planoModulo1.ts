@@ -15,6 +15,14 @@ export const SITE_URL = 'https://abner-lucas.github.io/letramento-digital-em-ia'
 export const NOTION_URL =
   'https://app.notion.com/p/profbrunopereira/M-dulo-1-Fundamentos-Roteiro-do-Professor-3f2dde8b8c80819b8686d7c7183ad651';
 
+export type Material = {
+  tipo: 'Apostila' | 'Site' | 'Projetar';
+  nome: string;
+  /** Caminho interno do site (sem basePath). PDFs começam com /apostilas/. */
+  href: string;
+  nota?: string;
+};
+
 export type Ferramenta = 'Mentimeter' | 'Padlet' | 'Kahoot' | 'Site' | 'IA' | 'Tokenizador' | 'tldraw';
 
 export interface Recurso {
@@ -55,6 +63,10 @@ export interface Encontro {
   /** Como a participação de cada aluno fica registrada para o professor. */
   registro: string[];
   recompensa: string;
+  /** Material de apoio do professor: apostila, seções do site e o que projetar. */
+  material?: Material[];
+  /** Gabarito / respostas esperadas para conduzir as atividades. */
+  gabarito?: { titulo: string; itens: string[] }[];
 }
 
 export const PLANO = {
@@ -299,6 +311,43 @@ export const ENCONTROS: Encontro[] = [
       'Mentimeter: votações, ranking e autoavaliação da turma.',
     ],
     recompensa: 'Selo digital "Navegador do Pipeline — Nível 2" + reconhecimento do grupo com a explicação mais clara do caminho da resposta.',
+    material: [
+      { tipo: 'Apostila', nome: 'Apostila do Módulo 1 (PDF oficial)', href: '/apostilas/modulo-1-fundamentos.pdf', nota: 'Tópico 5 — O passo a passo: o que acontece quando você digita.' },
+      { tipo: 'Site', nome: 'Seção 5 — Os Embeddings (mapa de coordenadas)', href: '/modulo/1#embeddings-floresta', nota: 'Texto-base para revelar o conceito depois do agrupamento.' },
+      { tipo: 'Site', nome: 'Seção 6 — Probabilidade e limites', href: '/modulo/1#alucinacoes', nota: 'Apoio para "a próxima palavra mais provável" (40–55 min).' },
+      { tipo: 'Projetar', nome: 'Mapa das palavras (para projetar)', href: '/plano/modulo-1/turma#embeddings', nota: 'Mesma atividade dos alunos; use para a revelação no telão.' },
+      { tipo: 'Projetar', nome: 'Caminho da resposta animado (para projetar)', href: '/plano/modulo-1/turma#pipeline', nota: 'Frase "Escreva um poema sobre o rio Guamá" pelos 5 passos.' },
+      { tipo: 'Projetar', nome: 'Gerador do selo — Nível 2', href: '/plano/modulo-1/turma#selo-2' },
+    ],
+    gabarito: [
+      {
+        titulo: 'Mapa das palavras — agrupamento esperado',
+        itens: [
+          'Água: rio, igarapé, furo',
+          'Frutas: açaí, cupuaçu, bacuri',
+          'Transporte: carro, ônibus, bicicleta',
+          'Escola: escola, professor, aluno',
+          'Outros agrupamentos bem justificados também valem: o ponto é perceber que "significado parecido = perto no mapa".',
+        ],
+      },
+      {
+        titulo: 'A próxima palavra mais provável',
+        itens: [
+          '"O açaí é uma fruta típica da…" → "Amazônia" (muito provável), "região Norte" (provável), "Europa" (muito improvável).',
+          'A IA escolhe o token mais provável pelos padrões que aprendeu — não verifica se é verdade.',
+        ],
+      },
+      {
+        titulo: 'Os 5 passos, na ordem (colunas "E2 · 1 a 5" do Padlet)',
+        itens: [
+          '1. Quebra em tokens — a frase é ralada em pedacinhos, como a mandioca.',
+          '2. Vira números (embeddings) — cada token ganha um "endereço" no mapa da linguagem.',
+          '3. Cálculo de padrões — compara com o que aprendeu e calcula o token mais provável.',
+          '4. Palavra por palavra — escolhe o próximo token, depois o próximo.',
+          '5. Resposta pronta — os tokens viram texto de novo na tela.',
+        ],
+      },
+    ],
   },
   {
     id: 'encontro-3',
