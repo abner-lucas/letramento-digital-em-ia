@@ -110,7 +110,7 @@ const kahootRecurso = (nome: string, url: string): Recurso => ({
  * Encontros em exibição nas páginas do plano. Os demais continuam completos
  * aqui nos dados, apenas ocultos. Para liberar, acrescente o número: [1, 2].
  */
-export const ENCONTROS_LIBERADOS: number[] = [1];
+export const ENCONTROS_LIBERADOS: number[] = [1, 2];
 export const encontroLiberado = (numero: number) => ENCONTROS_LIBERADOS.includes(numero);
 
 const LINKS_PROFESSOR_TODOS = [

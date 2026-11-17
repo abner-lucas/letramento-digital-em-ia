@@ -10,7 +10,7 @@ import { ENCONTROS, ENCONTROS_VISIVEIS, encontroLiberado, type Recurso } from '@
 
 export const metadata: Metadata = {
   title: 'Módulo 1 — Atividades da turma',
-  description: 'Atividades no celular do Encontro 1 do Módulo 1: tipos de IA, tokens, mapa de significados e caminho da resposta no tldraw.',
+  description: 'Atividades no celular dos Encontros 1 e 2 do Módulo 1: tipos de IA, tokens, tldraw, embeddings e o caminho da resposta.',
 };
 
 const recursos = ENCONTROS.flatMap((e) => e.blocos.flatMap((b) => b.recursos ?? []));
@@ -133,7 +133,7 @@ export default function TurmaModulo1() {
               Atividades da turma
             </h1>
             <p className="mt-4 text-base text-slate-300">
-              Tudo o que vamos usar no encontro, direto no celular. Siga o professor e role até a atividade da vez. Suas respostas vão para o
+              Tudo o que vamos usar nos encontros, direto no celular. Siga o professor e role até a atividade da vez. Suas respostas vão para o
               Padlet, o Mentimeter e o Kahoot — este site não guarda nada.
             </p>
             <nav aria-label="Encontros" className="mt-6 flex flex-wrap justify-center gap-3">
