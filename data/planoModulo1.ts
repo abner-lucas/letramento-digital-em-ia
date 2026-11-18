@@ -122,7 +122,7 @@ const kahootRecurso = (nome: string, url: string): Recurso => ({
  * Encontros em exibição nas páginas do plano. Os demais continuam completos
  * aqui nos dados, apenas ocultos. Para liberar, acrescente o número: [1, 2].
  */
-export const ENCONTROS_LIBERADOS: number[] = [1, 2];
+export const ENCONTROS_LIBERADOS: number[] = [1, 2, 3];
 export const encontroLiberado = (numero: number) => ENCONTROS_LIBERADOS.includes(numero);
 
 const LINKS_PROFESSOR_TODOS = [
@@ -439,6 +439,39 @@ export const ENCONTROS: Encontro[] = [
       'Mentimeter: nuvem das alucinações, discussão, ranking e autoavaliação.',
     ],
     recompensa: 'Selo digital "Pensador Crítico de IA — Nível 3" + reconhecimento da dupla que melhor flagrou uma alucinação real.',
+    material: [
+      { tipo: 'Apostila', nome: 'Apostila do Módulo 1 (PDF oficial)', href: '/apostilas/modulo-1-fundamentos.pdf', nota: 'Tópicos 6 a 8 — alucinações, a IA não pensa como gente e as 4 regras de ouro.' },
+      { tipo: 'Site', nome: 'Seção 6 — Alucinações e limites', href: '/modulo/1#alucinacoes', nota: 'Base para a caça às alucinações e o arriscado × seguro.' },
+      { tipo: 'Site', nome: 'Seção 7 — A IA não pensa como gente', href: '/modulo/1#ia-nao-pensa', nota: 'Apoio para a discussão dos 55–70 min.' },
+      { tipo: 'Site', nome: 'Seção 8 — As 4 regras de ouro', href: '/modulo/1#regras-de-ouro', nota: 'Texto-base antes do Kahoot "Casos do dia a dia".' },
+      { tipo: 'Projetar', nome: 'Arriscado × seguro (para projetar)', href: '/plano/modulo-1/turma#arriscado-seguro', nota: 'Treine com a turma antes de postarem no Padlet.' },
+      { tipo: 'Projetar', nome: 'Gerador do selo — Nível 3', href: '/plano/modulo-1/turma#selo-3' },
+    ],
+    gabarito: [
+      {
+        titulo: 'Quando desconfiar mais — as 4 categorias de risco',
+        itens: [
+          'Números específicos (ex.: quantos habitantes tem o bairro do Guamá exatamente?)',
+          'Fatos recentes (ex.: quem ganhou o jogo de ontem à noite?)',
+          'Assuntos muito locais (ex.: horário exato do posto de saúde da minha rua)',
+          'Citações e referências (ex.: qual livro e qual página — a IA às vezes inventa)',
+          'Perguntas seguras pedem conceitos e explicações gerais — mesmo assim, confira.',
+        ],
+      },
+      {
+        titulo: 'As 4 regras de ouro (para corrigir os casos)',
+        itens: [
+          'Confira sempre: a IA erra e alucina; nunca entregue um trabalho ou tome decisão importante sem conferir em fontes oficiais.',
+          'Assuma a autoria com honestidade: usar a IA para aprender é ótimo; copiar e colar sem entender é desonesto.',
+          'Proteja seus dados pessoais: nunca compartilhe senhas, CPF, endereço ou dados de terceiros.',
+          'Respeite as pessoas e sua comunidade: não use a IA para difamar, enganar, desinformar ou reforçar preconceitos.',
+        ],
+      },
+      {
+        titulo: 'Frase-síntese do encontro',
+        itens: ['“A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua.”'],
+      },
+    ],
   },
 ];
 
