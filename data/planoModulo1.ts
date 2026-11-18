@@ -419,7 +419,7 @@ export const ENCONTROS: Encontro[] = [
       {
         inicio: 130, fim: 145, titulo: 'Quiz final', ferramenta: 'Kahoot + Mentimeter',
         descricao: [
-          'Quiz cobrindo os Tópicos 6 a 8, incluindo a pergunta oficial 2 do "Teste seu conhecimento" (o rio Guamá com "1.247 km" inventados).',
+          'Quiz de 11 perguntas com situações novas sobre os Tópicos 6 a 8 (conferir em fonte oficial, links inventados, pedidos de menor risco, autoria, imagem falsa viralizando, dados de colegas). Nenhuma repete o site, o Menti ou o Kahoot "Casos do dia a dia".',
           'Bilhete de saída no Menti: ranking da regra de ouro mais difícil, autoavaliação e "qual descoberta você vai contar em casa?".',
         ],
         recursos: [kahootRecurso('Kahoot "Quiz final"', KAHOOT.e3final), mentiRecurso('Mentimeter do Encontro 3 (slides 7–9)', 'e3')],
