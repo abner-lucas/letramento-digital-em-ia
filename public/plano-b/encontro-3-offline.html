@@ -1,0 +1,1332 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plano B · Encontro 3 offline</title>
+<meta name="description" content="Encontro 3 do Módulo 1 (Letramento Digital em IA) reformulado para laboratório de informática sem internet: plano do professor, laboratório da turma e modo projeção em um único arquivo.">
+<style>
+:root{
+  --bg:#181818;--card:#1f1f1f;--card2:#272727;--borda:#313131;--borda2:#3d3d3d;
+  --texto:#e5e7eb;--sub:#a1a1aa;--fraco:#71717a;
+  --verde:#34d399;--verde2:#10b981;--verde-fundo:rgba(16,185,129,.08);--verde-borda:rgba(52,211,153,.3);
+  --ambar:#fcd34d;--ambar-fundo:rgba(252,211,77,.08);--ambar-borda:rgba(252,211,77,.3);
+  --vermelho:#f87171;--vermelho-fundo:rgba(248,113,113,.08);--vermelho-borda:rgba(248,113,113,.3);
+  --azul:#7dd3fc;--azul-fundo:rgba(125,211,252,.08);--azul-borda:rgba(125,211,252,.3);
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,"Liberation Mono",monospace;
+  --raio:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+@media(max-width:719px){html{scroll-padding-top:12px}.topo{position:static!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--texto);font-family:var(--sans);font-size:16px;line-height:1.6}
+a{color:var(--verde)}
+h1,h2,h3,h4{line-height:1.2;margin:0;color:#fff;text-wrap:balance}
+p{margin:.5em 0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+.pular{position:absolute;left:-999px;top:8px;background:var(--verde);color:#062;padding:8px 12px;border-radius:8px;z-index:99}
+.pular:focus{left:8px}
+.container{max-width:72rem;margin:0 auto;padding:0 16px}
+.estreito{max-width:52rem}
+
+/* Topo */
+.topo{position:sticky;top:0;z-index:20;background:rgba(24,24,24,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--borda)}
+.topo .container{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.marca{display:flex;align-items:center;gap:10px;font-weight:800;color:#fff;margin-right:auto;min-width:0}
+.marca small{display:block;font-weight:600;color:var(--sub);font-size:12px}
+.selo-off{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--verde);border:1px solid var(--verde-borda);background:var(--verde-fundo);padding:3px 10px;border-radius:999px;white-space:nowrap}
+.abas{display:flex;gap:4px;background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:4px;overflow-x:auto;max-width:100%}
+.abas a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border-radius:9px;text-decoration:none;color:var(--sub);font-weight:700;font-size:14px;white-space:nowrap}
+.abas .rot-c{display:none}
+@media(max-width:600px){.abas{width:100%}.abas a{flex:1;justify-content:center;padding:0 8px}.abas .rot-l{display:none}.abas .rot-c{display:inline}}
+.abas a[aria-current="page"]{background:var(--verde);color:#052e1f}
+.abas a:not([aria-current="page"]):hover{color:#fff;background:var(--card2)}
+
+/* Genéricos */
+.vista{display:none}
+.vista.ativa{display:block}
+.hero{padding:48px 0 32px;border-bottom:1px solid var(--borda)}
+.rotulo{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--verde)}
+.hero h1{font-size:clamp(28px,5vw,48px);margin-top:10px;letter-spacing:-.02em}
+.hero p.lead{font-size:18px;color:#d4d4d8;max-width:46rem}
+.secao{padding:40px 0;border-bottom:1px solid var(--borda)}
+.secao:nth-of-type(even){background:var(--card)}
+.secao h2{font-size:clamp(22px,3.4vw,32px);margin:6px 0 14px}
+.secao h3{font-size:19px;margin:0 0 8px}
+.grade{display:grid;gap:14px}
+@media(min-width:720px){.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.cartao{background:var(--card2);border:1px solid var(--borda);border-radius:var(--raio);padding:18px;min-width:0}
+.secao:nth-of-type(even) .cartao{background:var(--bg)}
+.cartao.verde{background:var(--verde-fundo);border-color:var(--verde-borda)}
+.cartao.ambar{background:var(--ambar-fundo);border-color:var(--ambar-borda)}
+.cartao.azul{background:var(--azul-fundo);border-color:var(--azul-borda)}
+.cartao.vermelho{background:var(--vermelho-fundo);border-color:var(--vermelho-borda)}
+.sub{color:var(--sub)}
+.peq{font-size:14px}
+.mono{font-family:var(--mono)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border:1px solid var(--borda2);border-radius:999px;padding:2px 10px;color:var(--sub);white-space:nowrap}
+.chip.verde{color:var(--verde);border-color:var(--verde-borda)}
+.chip.ambar{color:var(--ambar);border-color:var(--ambar-borda)}
+.chip.vermelho{color:var(--vermelho);border-color:var(--vermelho-borda)}
+.chip.azul{color:var(--azul);border-color:var(--azul-borda)}
+ul.lista,ol.lista{padding-left:1.2em;margin:.4em 0}
+ul.lista li,ol.lista li{margin:.25em 0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--borda);vertical-align:top}
+th{color:var(--sub);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.tabela-rola{overflow-x:auto;border:1px solid var(--borda);border-radius:var(--raio)}
+.tabela-rola table{min-width:520px}
+blockquote,.fala{margin:10px 0;padding:12px 16px;border-left:3px solid var(--verde);background:var(--verde-fundo);border-radius:0 12px 12px 0;color:#f4f4f5}
+.fala::before{content:"Fala do professor";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:4px}
+.esperado{margin:10px 0;padding:12px 16px;border-left:3px solid var(--ambar);background:var(--ambar-fundo);border-radius:0 12px 12px 0}
+.esperado::before{content:"Resposta esperada";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ambar);margin-bottom:4px}
+.evidencia{margin-top:12px;padding:12px 16px;border:1px dashed var(--verde-borda);border-radius:12px}
+.evidencia::before{content:"Evidência de aprendizagem";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:4px}
+.aviso-ficticio{font-size:13px;color:var(--fraco);font-style:normal;margin-top:6px}
+.aviso-ficticio::before{content:"⚑ "}
+.botao{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;border:1px solid var(--borda2);background:var(--card2);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.botao:hover{background:#333}
+.botao.primario{background:var(--verde);border-color:var(--verde);color:#052e1f}
+.botao.primario:hover{background:#6ee7b7}
+.botao.perigo{border-color:var(--vermelho-borda);color:var(--vermelho);background:transparent}
+.botao:disabled{opacity:.45;cursor:not-allowed}
+.botao.pequeno{min-height:36px;padding:0 12px;font-size:14px;border-radius:10px}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+
+/* Linha do tempo */
+.tempo{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--card2);margin:18px 0 8px}
+.tempo span{display:block;height:100%;border-right:2px solid var(--bg)}
+.programa{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.programa li{display:grid;grid-template-columns:7.5rem 1fr auto;gap:12px;align-items:center;background:var(--card2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px}
+.programa .min{font-family:var(--mono);font-weight:700;color:var(--verde);font-size:14px}
+.programa .dur{font-family:var(--mono);color:var(--sub);font-size:13px}
+@media(max-width:560px){.programa li{grid-template-columns:1fr auto}.programa .min{grid-column:1/-1}}
+.progressao{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;list-style:none;padding:0}
+.progressao li{background:var(--card2);border:1px solid var(--borda);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+.progressao li+li::before{content:"→";color:var(--verde);margin-right:8px}
+
+/* Atividade (professor) */
+.atv{border:1px solid var(--borda);border-radius:20px;background:var(--card2);padding:22px;margin-top:18px}
+.secao:nth-of-type(even) .atv{background:var(--bg)}
+.atv-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.atv-num{font-family:var(--mono);font-size:13px;color:var(--verde);font-weight:700}
+.passo{margin-top:16px;padding-top:14px;border-top:1px solid var(--borda)}
+.passo h4{font-size:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+.passo h4 .mono{color:var(--sub);font-size:13px;font-weight:600}
+details{border:1px solid var(--borda);border-radius:12px;padding:0 16px;background:var(--card)}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700;padding:12px 0;color:#fff}
+details[open]{padding-bottom:12px}
+
+/* Checklist */
+.checklist{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.checklist label{display:flex;gap:12px;align-items:flex-start;background:var(--card2);border:1px solid var(--borda);border-radius:12px;padding:12px 14px;cursor:pointer}
+.checklist input{width:20px;height:20px;margin-top:2px;accent-color:var(--verde);flex-shrink:0}
+.checklist input:checked+span{color:var(--sub);text-decoration:line-through}
+.contador{font-family:var(--mono);color:var(--verde);font-weight:700}
+
+/* Laboratório */
+.ident{display:grid;gap:12px}
+@media(min-width:720px){.ident{grid-template-columns:2fr 1fr 1fr}}
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0}
+.campo>span,.campo legend{font-size:14px;font-weight:700;color:#e4e4e7}
+input[type=text],textarea,select{width:100%;background:var(--bg);border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;color:#fff}
+.secao:nth-of-type(even) input[type=text],.secao:nth-of-type(even) textarea,.secao:nth-of-type(even) select{background:var(--card2)}
+textarea{min-height:88px;resize:vertical}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.opcoes label{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 14px;border:1px solid var(--borda2);border-radius:10px;cursor:pointer;background:var(--card2);font-weight:600;font-size:15px}
+.secao:nth-of-type(even) .opcoes label{background:var(--bg)}
+.opcoes input{accent-color:var(--verde);width:18px;height:18px}
+.opcoes label:has(input:checked){border-color:var(--verde);background:var(--verde-fundo);color:#fff}
+.ia-resposta{border:1px solid var(--azul-borda);background:var(--azul-fundo);border-radius:14px;padding:14px 16px}
+.ia-resposta::before{content:"Resposta simulada de IA";display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--azul);margin-bottom:4px}
+.documento{border:1px solid var(--borda2);background:#f4f1ea;color:#1c1917;border-radius:10px;padding:14px 16px;box-shadow:0 1px 0 #0003}
+.documento .doc-tit{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#57534e;margin-bottom:4px}
+.documento .aviso-ficticio{color:#78716c}
+.pergunta-aluno{font-size:17px;font-weight:700;color:#fff}
+.retorno{margin-top:12px;border-radius:12px;padding:12px 14px;display:none}
+.retorno.mostrar{display:block}
+.retorno.certo{background:var(--verde-fundo);border:1px solid var(--verde-borda)}
+.retorno.revisar{background:var(--ambar-fundo);border:1px solid var(--ambar-borda)}
+.retorno strong{color:#fff}
+.oculto{display:none!important}
+.barra-salvar{position:sticky;bottom:0;z-index:15;background:rgba(24,24,24,.95);backdrop-filter:blur(8px);border-top:1px solid var(--borda)}
+.barra-salvar .container{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px}
+.barra-salvar .estado{margin-right:auto;font-size:13px;color:var(--sub)}
+.casos-abas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.casos-abas button{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--borda2);background:var(--card2);color:var(--sub);font-weight:700;cursor:pointer}
+.casos-abas button[aria-selected="true"]{background:var(--verde);border-color:var(--verde);color:#052e1f}
+.lacuna{display:inline-block;min-width:8rem;border-bottom:2px dashed var(--verde);color:var(--verde);font-weight:700;padding:0 4px}
+
+/* Simulador */
+.sim{display:grid;gap:16px}
+.sim-entrada{font-size:clamp(20px,3.5vw,30px);font-weight:800;color:#fff;background:var(--bg);border:1px solid var(--borda);border-radius:14px;padding:16px 18px}
+.secao:nth-of-type(even) .sim-entrada{background:var(--card2)}
+.sim-saida{display:inline-block;min-width:5ch;border-bottom:3px solid var(--verde);color:var(--verde);transition:transform .2s}
+.sim-saida.pulso{transform:scale(1.12)}
+.pipeline{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0}
+.pipeline li{font-size:13px;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid var(--borda2);color:var(--sub);transition:background .15s,color .15s,border-color .15s}
+.pipeline li.aceso{background:var(--verde);border-color:var(--verde);color:#052e1f}
+.sim-controles{display:grid;gap:14px}
+@media(min-width:820px){.sim-controles{grid-template-columns:1.4fr 1fr}}
+.controle{display:grid;grid-template-columns:6.5rem 1fr 3.2rem;gap:10px;align-items:center}
+.controle label{font-weight:700}
+.controle output{font-family:var(--mono);text-align:right;color:var(--verde);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--verde);min-height:28px}
+.barras{display:grid;gap:10px}
+.barra-linha{display:grid;grid-template-columns:6.5rem 1fr 4.2rem;gap:10px;align-items:center}
+.barra-trilho{height:26px;background:var(--bg);border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+.secao:nth-of-type(even) .barra-trilho{background:var(--card2)}
+.barra-cheia{height:100%;background:linear-gradient(90deg,var(--verde2),var(--verde));width:0;transition:width .35s cubic-bezier(.32,.72,0,1)}
+.barra-linha .pct{font-family:var(--mono);font-weight:700;text-align:right}
+.contagem{font-family:var(--mono);font-size:14px;color:var(--sub)}
+.formula{font-family:var(--mono);font-size:16px;background:var(--bg);border:1px solid var(--borda);border-radius:12px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
+.formula sup,.formula sub{font-size:.75em}
+
+/* Projeção */
+#projetar{background:#111}
+.palco{min-height:calc(100vh - 140px);display:flex;align-items:center;padding:24px 0}
+.slide{display:none;width:100%}
+.slide.ativo{display:block;animation:entra .35s cubic-bezier(.32,.72,0,1)}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.slide h2{font-size:clamp(28px,4.6vw,56px);letter-spacing:-.02em;margin-bottom:18px}
+.slide .grande{font-size:clamp(20px,2.6vw,30px);line-height:1.45}
+.slide .ia-resposta,.slide .documento{font-size:clamp(18px,2.3vw,26px)}
+.controles-proj{position:sticky;bottom:0;background:rgba(17,17,17,.95);border-top:1px solid var(--borda)}
+.controles-proj .container{display:flex;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.controles-proj .pos{margin-right:auto;font-family:var(--mono);color:var(--sub)}
+
+/* Rodapé */
+.rodape{padding:28px 0 90px;color:var(--fraco);font-size:13px}
+
+/* Impressão */
+@media print{
+  body{background:#fff;color:#111;font-size:12pt}
+  .topo,.barra-salvar,.controles-proj,.nao-imprimir,.pular{display:none!important}
+  .secao,.secao:nth-of-type(even),.cartao,.atv,details,.programa li,.checklist label,.sim-entrada{background:#fff!important;color:#111;border-color:#bbb}
+  h1,h2,h3,h4,.pergunta-aluno,summary,.sim-entrada{color:#111}
+  .sub,.peq{color:#444}
+  details{display:block}details>*{display:block}
+  textarea,input[type=text],select{background:#fff!important;border:1px solid #888;color:#111;min-height:2.2em}
+  textarea{min-height:7em}
+  .retorno{display:none!important}
+  [role=tabpanel][hidden]{display:block!important;margin-top:12px}
+  .casos-abas,.acoes{display:none!important}
+  .secao{break-inside:avoid-page;padding:16px 0}
+  .ia-resposta{background:#eef6fb!important;color:#111}
+  a{color:#111}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#principal">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="container">
+    <div class="marca">
+      <span aria-hidden="true" style="display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--verde-fundo);border:1px solid var(--verde-borda);color:var(--verde);font-family:var(--mono)">IA</span>
+      <span>Encontro 3 · Plano B<small>Módulo 1 · Letramento Digital em IA</small></span>
+    </div>
+    <span class="selo-off" title="Este arquivo não faz nenhuma conexão com a internet">● 100% offline</span>
+    <nav class="abas" aria-label="Telas do arquivo">
+      <a href="#professor" data-vista="professor"><span class="rot-l">Plano do professor</span><span class="rot-c">Professor</span></a>
+      <a href="#laboratorio" data-vista="laboratorio"><span class="rot-l">Laboratório da turma</span><span class="rot-c">Laboratório</span></a>
+      <a href="#projetar" data-vista="projetar">Projetar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="principal">
+
+<!-- ============================================================ -->
+<!-- PLANO DO PROFESSOR                                            -->
+<!-- ============================================================ -->
+<div class="vista" id="professor" data-vista-id="professor">
+
+  <section class="hero">
+    <div class="container">
+      <span class="rotulo">Plano B · laboratório sem internet · 150 minutos</span>
+      <h1>Encontro 3 — Limites, pensamento crítico e uso ético da IA</h1>
+      <p class="lead">Sem internet, a aula não pode depender de acessar uma IA, mas continua experimental: a turma simula a escolha do próximo token, investiga respostas inventadas com documentos e decide como usar a IA com responsabilidade.</p>
+      <div class="acoes nao-imprimir">
+        <a class="botao primario" href="#laboratorio">Abrir o laboratório da turma</a>
+        <a class="botao" href="#projetar">Abrir o modo projeção</a>
+        <button class="botao" type="button" data-imprimir="professor">Imprimir este plano</button>
+      </div>
+      <div class="grade g3" style="margin-top:24px">
+        <div class="cartao"><strong>Um arquivo só.</strong> <span class="sub peq">Funciona com dois cliques em qualquer navegador (Chrome, Firefox, Edge), sem instalar nada, sem conta e sem rede.</span></div>
+        <div class="cartao"><strong>Três telas.</strong> <span class="sub peq">Plano do professor, laboratório para os alunos nos computadores e projeção em tela cheia para o telão.</span></div>
+        <div class="cartao"><strong>Respostas em arquivo.</strong> <span class="sub peq">Cada computador salva um .txt com tudo o que a dupla registrou. Você recolhe com pendrive no fim da aula.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <span class="rotulo">A lógica da aula</span>
+      <h2>Primeiro a resposta parece verdadeira. Depois a turma descobre por quê.</h2>
+      <p class="estreito">Os objetivos dos Tópicos 6, 7 e 8 continuam os mesmos. O que muda é a ordem: o estudante primeiro presencia uma resposta inventada, depois vê como um modelo gera texto, aprende a verificar afirmações e só então discute os limites da IA e as regras de uso responsável.</p>
+      <ol class="progressao" aria-label="Progressão da aula">
+        <li>A resposta parece verdadeira</li>
+        <li>Descubro como ela é gerada</li>
+        <li>Investigo as evidências</li>
+        <li>Reconheço os limites da IA</li>
+        <li>Decido como usar com responsabilidade</li>
+      </ol>
+      <div class="cartao ambar" style="margin-top:18px">
+        <strong>Transparência com a turma.</strong> O simulador mostra de forma simplificada alguns mecanismos matemáticos de um modelo de linguagem; ele <em>não</em> é uma IA. As respostas de IA dos casos foram <em>escritas para a aula</em>, e todos os nomes, lugares e documentos são fictícios. Diga isso logo no começo: é o que garante o rigor da atividade.
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="programacao">
+    <div class="container">
+      <span class="rotulo">Programação completa</span>
+      <h2>Sete atividades em 150 minutos</h2>
+      <div class="tempo" aria-hidden="true">
+        <span style="width:10%;background:#34d399"></span><span style="width:20%;background:#10b981"></span><span style="width:16.67%;background:#34d399"></span><span style="width:10%;background:#10b981"></span><span style="width:13.33%;background:#34d399"></span><span style="width:20%;background:#10b981"></span><span style="width:10%;background:#34d399"></span>
+      </div>
+      <ol class="programa">
+        <li><span class="min">0–15 min</span><span><strong>1. Uma resposta convincente pode estar errada?</strong> <span class="sub peq">· individual + coletiva</span></span><span class="dur">15 min</span></li>
+        <li><span class="min">15–45 min</span><span><strong>2. Laboratório: como a IA escolhe o próximo token?</strong> <span class="sub peq">· duplas</span></span><span class="dur">30 min</span></li>
+        <li><span class="min">45–70 min</span><span><strong>3. Caça às alucinações sem internet</strong> <span class="sub peq">· duplas</span></span><span class="dur">25 min</span></li>
+        <li><span class="min">70–85 min</span><span><strong>4. Por que a IA erra e não pensa como uma pessoa?</strong> <span class="sub peq">· coletiva</span></span><span class="dur">15 min</span></li>
+        <li><span class="min">85–105 min</span><span><strong>5. As quatro regras de ouro na prática</strong> <span class="sub peq">· duplas + discussão</span></span><span class="dur">20 min</span></li>
+        <li><span class="min">105–135 min</span><span><strong>6. Crie, troque e julgue um caso</strong> <span class="sub peq">· duplas, trocando de computador</span></span><span class="dur">30 min</span></li>
+        <li><span class="min">135–150 min</span><span><strong>7. Avaliação individual e síntese</strong> <span class="sub peq">· individual</span></span><span class="dur">15 min</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <span class="rotulo">Antes da aula</span>
+      <h2>Recursos necessários</h2>
+      <div class="grade g2">
+        <div class="tabela-rola">
+          <table>
+            <thead><tr><th>Recurso</th><th>Uso na aula</th></tr></thead>
+            <tbody>
+              <tr><td>Computadores (1 por dupla)</td><td>Laboratório da turma: experimentos, fichas e registros</td></tr>
+              <tr><td>Navegador já instalado</td><td>Abrir este arquivo, sem internet</td></tr>
+              <tr><td>Projetor</td><td>Tela “Projetar”: situações, documentos e simulador</td></tr>
+              <tr><td>Pendrive</td><td>Copiar o arquivo para as máquinas e recolher os .txt</td></tr>
+              <tr><td>Folhas impressas (reserva)</td><td>Plano C, se algum computador falhar</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cartao">
+          <h3>O que <em>não</em> será usado</h3>
+          <p class="sub">ChatGPT, Gemini, Claude, DeepSeek, Mentimeter, Padlet e Kahoot ficam de fora, e nenhum modelo de IA precisa estar instalado. Calc/Excel e editor de texto são opcionais: tudo o que a turma precisa está dentro do laboratório.</p>
+          <h3 style="margin-top:14px">Como levar para o laboratório</h3>
+          <ol class="lista sub">
+            <li>Copie este arquivo para o pendrive.</li>
+            <li>Em cada computador, cole na Área de Trabalho e abra com dois cliques.</li>
+            <li>Na aba “Laboratório da turma”, confira se os controles do simulador se mexem.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="roteiro">
+    <div class="container">
+      <span class="rotulo">Roteiro detalhado</span>
+      <h2>Passo a passo de cada atividade</h2>
+      <p class="sub estreito">Cada atividade tem o seu bloco no laboratório da turma e, quando faz sentido, um slide na tela “Projetar”.</p>
+
+      <!-- Atividade 1 -->
+      <article class="atv" id="p-a1">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 1 · 0–15 MIN</span><span class="chip">Individual + coletiva</span></div>
+        <h3>Uma resposta convincente pode estar errada?</h3>
+        <p><strong>Objetivo:</strong> mostrar que uma resposta bem escrita, detalhada e segura pode conter informações inventadas.</p>
+        <div class="passo">
+          <h4>Passo 1 · Apresente o problema <span class="mono">3 min</span></h4>
+          <p>Projete a situação (slides 2 e 3 do modo projeção). A pergunta é sobre a <strong>Biblioteca Comunitária Sol Nascente</strong>, do município fictício de Santa Aurora, e a resposta simulada diz que ela foi inaugurada em 1992, por um grupo de pescadores, com cerca de 500 livros.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Julgamento individual <span class="mono">4 min</span></h4>
+          <p class="fala">Leiam a resposta. Sem consultar outra fonte, registrem no laboratório se ela está correta, incorreta ou se não dá para decidir — e por quê.</p>
+          <p class="sub peq">O objetivo não é que todos marquem “incorreta”. O importante é perceber que <strong>ainda não há elementos para confirmar</strong>.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Revele a evidência <span class="mono">4 min</span></h4>
+          <p>Mostre o registro histórico simulado (slide 4): a biblioteca abriu em <strong>5 de agosto de 2011, com 180 livros</strong> doados pela escola do bairro. Libere também o botão “Ver o documento” no laboratório.</p>
+          <p class="fala">Depois de conhecer o registro, o que podemos afirmar sobre a resposta anterior?</p>
+          <p class="esperado">O ano (1992) e o acervo inicial (500 livros) são incompatíveis com o registro. Já a história dos pescadores não aparece no documento: não há evidência nem a favor nem contra.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 4 · Explicação e fechamento <span class="mono">4 min</span></h4>
+          <blockquote><strong>Alucinação de IA:</strong> quando um sistema generativo apresenta conteúdo incorreto ou sem sustentação como se fosse informação factual.</blockquote>
+          <p>Deixe claro que nem toda informação não verificada é falsa: <strong>verificar é o que permite separar os casos</strong>. As três situações que apareceram aqui (contradito, contradito, sem evidência) voltam na Atividade 3.</p>
+        </div>
+        <p class="evidencia">O estudante explica por que a qualidade da escrita, o nível de detalhe e a segurança aparente de uma resposta não bastam para provar que ela é verdadeira.</p>
+      </article>
+
+      <!-- Atividade 2 -->
+      <article class="atv" id="p-a2">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 2 · 15–45 MIN</span><span class="chip">Duplas · simulador</span></div>
+        <h3>Laboratório de probabilidades: como a IA gera texto?</h3>
+        <p><strong>Objetivo:</strong> mostrar, de forma simplificada, como um modelo escolhe o próximo token — deixando claro que o simulador não é um modelo de linguagem real.</p>
+        <div class="passo">
+          <h4>Passo 1 · Apresente a entrada <span class="mono">5 min</span></h4>
+          <p>Projete o simulador com a frase <strong>“A capital do Pará é …”</strong>. O modelo precisa escolher o próximo token entre Belém, Santarém e Manaus.</p>
+          <p class="fala">Texto → tokens → números → cálculos → pontuações → probabilidades → sorteio → novo token. Um token pode ser uma palavra, um pedaço de palavra ou outro fragmento, dependendo do tokenizador.</p>
+          <p class="sub peq">É a mesma cadeia do Encontro 2, agora com os números aparecendo de verdade.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Explorem as pontuações <span class="mono">10 min</span></h4>
+          <p>As duplas mexem nas pontuações (logits) e na temperatura e observam as probabilidades. Peça que usem “Sortear 50 vezes”: mesmo com pouca chance, Santarém e Manaus às vezes saem. <strong>Uma escolha probabilística não é uma consulta à verdade.</strong></p>
+          <p class="cartao ambar peq" style="margin-top:8px">Evite a conclusão errada de que toda alucinação acontece porque o modelo sorteou uma palavra pouco provável. Um modelo pode afirmar algo falso mesmo escolhendo sempre a opção mais provável.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Três experimentos orientados <span class="mono">10 min</span></h4>
+          <div class="tabela-rola">
+            <table>
+              <thead><tr><th>Exp.</th><th>Alteração</th><th>Pergunta</th><th>O que deve aparecer</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">A</td><td>Temperatura 0,2</td><td>Qual token concentra a probabilidade?</td><td>Belém ≈ 99,3% · Santarém ≈ 0,7% · Manaus ≈ 0,0%</td></tr>
+                <tr><td class="mono">B</td><td>Temperatura 2,0</td><td>O que muda na distribuição?</td><td>Fica mais espalhada: Belém ≈ 50,6% · Santarém ≈ 30,7% · Manaus ≈ 18,6%</td></tr>
+                <tr><td class="mono">C</td><td>Manaus com pontuação 4 (temp. 1)</td><td>O token mais provável é necessariamente verdadeiro?</td><td>Manaus ≈ 84,4% e é falso: Manaus é a capital do Amazonas. Mais provável ≠ verdadeiro.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="sub peq">Cada experimento tem um botão que já aplica os valores e um campo para a conclusão da dupla.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 4 · Conecte a matemática à alucinação <span class="mono">5 min</span></h4>
+          <p>Com as pontuações iniciais (Belém 2, Santarém 1, Manaus 0) e temperatura 1, a função softmax dá:</p>
+          <p class="formula">P(i) = e<sup>z<sub>i</sub>/T</sup> ÷ Σ<sub>j</sub> e<sup>z<sub>j</sub>/T</sup> &nbsp;→&nbsp; Belém 66,5% · Santarém 24,5% · Manaus 9,0%</p>
+          <p class="sub peq">É um conjunto ilustrativo de três opções. Em um modelo real, a distribuição cobre um vocabulário de milhares de tokens, e as pontuações são aprendidas no treinamento — aqui elas foram definidas para a aula.</p>
+        </div>
+        <div class="passo">
+          <h4>Fechamento <span class="mono">5 min</span></h4>
+          <p class="fala">Se um modelo dá 90% de probabilidade a uma palavra, a frase formada tem 90% de chance de ser verdadeira?</p>
+          <p class="esperado">Não. A probabilidade se refere à escolha do token dentro da distribuição calculada, não à veracidade da frase.</p>
+        </div>
+        <p class="evidencia">O aluno explica que o modelo gera sequências a partir de números e probabilidades, e que uma escolha estatisticamente favorecida não é uma informação comprovada.</p>
+      </article>
+
+      <!-- Atividade 3 -->
+      <article class="atv" id="p-a3">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 3 · 45–70 MIN</span><span class="chip">Duplas · investigação documental</span></div>
+        <h3>Caça às alucinações sem internet</h3>
+        <p><strong>Objetivo:</strong> comparar afirmações com um conjunto fechado de evidências e reconhecer o limite do que se pode concluir.</p>
+        <div class="passo">
+          <h4>Passo 1 · Entregue o desafio <span class="mono">3 min</span></h4>
+          <p class="fala">Vocês são verificadores de informação. Para cada resposta da IA, procurem a evidência no documento e classifiquem: confirmada, contradita ou não verificável.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Investigação dos três casos <span class="mono">15 min</span></h4>
+          <div class="grade g3">
+            <div class="cartao"><span class="chip vermelho">Caso A · erro numérico</span><p class="peq">IA: a Escola Rio das Pedras foi inaugurada em 1987, com 40 estudantes. Documento: começou em março de 2004, com 26 estudantes.</p><p class="peq"><strong>Gabarito:</strong> contradita (ano e matrícula).</p></div>
+            <div class="cartao"><span class="chip vermelho">Caso B · referência inventada</span><p class="peq">IA: o Relatório Educacional de Santa Aurora (2023), p. 17, diz que todas as escolas têm laboratório. Documento: o relatório tem 12 páginas; 3 de 8 escolas têm laboratório.</p><p class="peq"><strong>Gabarito:</strong> contradita, com citação impossível (página 17 de 12) e generalização falsa.</p></div>
+            <div class="cartao"><span class="chip ambar">Caso C · sem confirmação</span><p class="peq">IA: a primeira diretora foi Maria das Flores. Documento: traz ano e matrícula, mas não cita a diretora.</p><p class="peq"><strong>Gabarito:</strong> não verificável com os documentos disponíveis.</p></div>
+          </div>
+          <p class="aviso-ficticio">Todos os nomes, datas, instituições e documentos dos casos são fictícios, criados para a sala de aula.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Registrem a investigação <span class="mono">5 min</span></h4>
+          <p>A ficha de cada caso está no laboratório: classificação + justificativa com a evidência. O botão “Conferir” dá um retorno comentado, sem revelar a resposta antes de a dupla decidir.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 4 · Correção coletiva <span class="mono">2 min</span></h4>
+          <p>Peça a uma dupla que explique o Caso C.</p>
+          <p class="fala">Se não encontramos o nome da diretora, podemos afirmar que a IA mentiu?</p>
+          <p class="esperado">Não necessariamente. A falta de confirmação não prova que a informação é falsa — só que ela ainda não pode ser usada como fato.</p>
+        </div>
+        <p class="evidencia">O estudante compara afirmações com evidências, localiza contradições e reconhece os limites do que pode concluir.</p>
+      </article>
+
+      <!-- Atividade 4 -->
+      <article class="atv" id="p-a4">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 4 · 70–85 MIN</span><span class="chip">Discussão coletiva</span></div>
+        <h3>Por que a IA erra e não pensa como uma pessoa?</h3>
+        <p><strong>Objetivo:</strong> entender que gerar texto por probabilidade não equivale à compreensão humana dos fatos, mesmo quando a resposta parece coerente.</p>
+        <div class="passo">
+          <h4>Passo 1 · Compare duas respostas <span class="mono">5 min</span></h4>
+          <p>Projete as duas saídas fictícias para “Como os estudantes de uma comunidade ribeirinha chegam à escola?” (slide 8).</p>
+          <p class="fala">Qual resposta é mais cuidadosa? Por quê?</p>
+          <p class="esperado">A resposta B evita a generalização “todos usam barco”. Mesmo assim, para falar de uma comunidade específica, ela também precisaria de evidências.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Identifiquem os problemas <span class="mono">7 min</span></h4>
+          <p>Cada dupla registra três motivos para uma IA dar uma resposta inadequada.</p>
+          <p class="esperado">Pergunta com pouca informação; padrões incompletos ou enviesados aprendidos no treinamento; dificuldade de recuperar fatos específicos; nenhuma verificação externa.</p>
+          <p class="sub peq">A IA faz cálculos e inferências sofisticadas, mas não tem experiência direta com a comunidade descrita.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Síntese <span class="mono">3 min</span></h4>
+          <p class="fala">“Uma resposta de IA pode parecer correta porque ______, mas precisamos verificar ______.”</p>
+          <p>Leia em voz alta: <em>“A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua.”</em></p>
+        </div>
+        <p class="evidencia">O estudante identifica que uma resposta pode ser fluente e contextualizada sem ter sustentação factual suficiente.</p>
+      </article>
+
+      <!-- Atividade 5 -->
+      <article class="atv" id="p-a5">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 5 · 85–105 MIN</span><span class="chip">Duplas + discussão</span></div>
+        <h3>As quatro regras de ouro na prática</h3>
+        <p><strong>Objetivo:</strong> aplicar as regras a situações concretas e propor a conduta responsável. Substitui o Kahoot.</p>
+        <div class="passo">
+          <h4>Passo 1 · Explique as regras <span class="mono">5 min</span></h4>
+          <div class="grade g4">
+            <div class="cartao"><strong>Confira sempre</strong><p class="sub peq">Busque evidências para afirmações importantes.</p></div>
+            <div class="cartao"><strong>Assuma a autoria com honestidade</strong><p class="sub peq">Respeite as regras de autoria e entenda o que você entrega.</p></div>
+            <div class="cartao"><strong>Proteja seus dados pessoais</strong><p class="sub peq">Não exponha informações privadas suas ou de outras pessoas.</p></div>
+            <div class="cartao"><strong>Respeite as pessoas e a comunidade</strong><p class="sub peq">Não use IA para enganar, discriminar ou prejudicar.</p></div>
+          </div>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Cinco situações <span class="mono">10 min</span></h4>
+          <div class="tabela-rola">
+            <table>
+              <thead><tr><th>Situação</th><th>Regra principal</th></tr></thead>
+              <tbody>
+                <tr><td>Compartilhar uma notícia criada por IA sem verificar.</td><td>Confira sempre</td></tr>
+                <tr><td>Entregar um trabalho todo gerado por IA como se fosse seu, contra as orientações.</td><td>Assuma a autoria</td></tr>
+                <tr><td>Enviar à IA os CPFs dos colegas para organizar uma lista.</td><td>Proteja seus dados</td></tr>
+                <tr><td>Criar uma imagem falsa para ridicularizar um colega.</td><td>Respeite as pessoas</td></tr>
+                <tr><td>Usar IA para entender um assunto e depois escrever a própria explicação, seguindo as orientações.</td><td>Uso responsável (autoria respeitada)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Correção justificada <span class="mono">5 min</span></h4>
+          <p>Em vez de só revelar a regra, peça que as duplas expliquem <strong>o que a pessoa deveria ter feito</strong> em cada situação. O laboratório pede essa conduta junto com a escolha da regra.</p>
+        </div>
+        <p class="evidencia">O estudante identifica a regra aplicável e propõe uma conduta responsável.</p>
+      </article>
+
+      <!-- Atividade 6 -->
+      <article class="atv" id="p-a6">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 6 · 105–135 MIN</span><span class="chip">Duplas · troca de computador</span></div>
+        <h3>Crie, troque e julgue um caso</h3>
+        <p><strong>Objetivo:</strong> aplicar os princípios éticos a situações que o professor não apresentou. Substitui o Padlet.</p>
+        <div class="passo">
+          <h4>Passo 1 · Criem uma situação <span class="mono">10 min</span></h4>
+          <p>Cada dupla escreve, no próprio computador, uma situação inédita de uso de IA <strong>sem dizer se a atitude foi certa ou errada</strong>. O caso precisa conter uma decisão a ser avaliada, não só citar uma ferramenta.</p>
+          <p class="sub peq">Exemplo: “Um aluno recebeu uma mensagem que parecia oficial dizendo que o calendário escolar mudou. Pediu à IA um comunicado e mandou para a turma toda sem consultar a direção.”</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 2 · Troquem de computador <span class="mono">5 min</span></h4>
+          <p>Cada dupla se levanta e senta no computador da dupla ao lado (sentido horário). Não é preciso rede: o caso e a avaliação ficam salvos na mesma máquina.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 3 · Analisem e respondam <span class="mono">10 min</span></h4>
+          <p>A dupla avaliadora responde no bloco “Avaliação”: a conduta foi responsável, irresponsável ou depende? Qual regra está envolvida? Por quê? O que a pessoa deveria fazer?</p>
+          <p class="esperado">Ex.: irresponsável, porque divulgou uma mudança de calendário sem confirmação oficial. Regra: Confira sempre. O certo seria consultar a direção ou os canais oficiais antes de divulgar.</p>
+        </div>
+        <div class="passo">
+          <h4>Passo 4 · Discussão <span class="mono">5 min</span></h4>
+          <p>Escolha dois casos: um claramente inadequado e outro que dependa das condições de uso. Depois, cada dupla volta ao seu computador e lê a avaliação recebida.</p>
+        </div>
+        <p class="evidencia">O estudante aplica as regras de ouro a situações novas, justificando a decisão.</p>
+      </article>
+
+      <!-- Atividade 7 -->
+      <article class="atv" id="p-a7">
+        <div class="atv-cab"><span class="atv-num">ATIVIDADE 7 · 135–150 MIN</span><span class="chip">Individual</span></div>
+        <h3>Avaliação individual e síntese</h3>
+        <p><strong>Objetivo:</strong> verificar o que cada estudante compreendeu, independentemente da dupla. Se houver um computador por dupla, os dois respondem um de cada vez, cada um com o seu nome, ou um responde no papel (Plano C).</p>
+        <ol class="lista">
+          <li>Uma IA diz que uma escola foi fundada em 1995, mas você não tem nenhum documento sobre ela. A resposta é verdadeira, falsa ou ainda não verificada? Justifique.</li>
+          <li>Um sistema deu 80% de probabilidade a um token. A afirmação produzida tem 80% de chance de ser verdadeira? Explique.</li>
+          <li>Qual é a principal diferença entre uma resposta coerente e uma resposta comprovadamente correta?</li>
+          <li>Dê um exemplo de informação que exige cuidado especial ao ser pedida a uma IA e explique por quê.</li>
+          <li>Escolha uma regra de ouro e descreva uma situação em que ela deve ser aplicada.</li>
+        </ol>
+        <p>Para fechar: <em>“A descoberta mais importante que fiz hoje sobre IA foi…”</em>. Retome a ideia de que a IA pode ser uma ferramenta poderosa para aprender, mas quem usa continua responsável por avaliar o resultado.</p>
+        <details style="margin-top:12px">
+          <summary>Respostas de referência da avaliação</summary>
+          <ol class="lista sub">
+            <li>Ainda não verificada: sem documento, não há como confirmar nem contradizer. Não deve ser usada como fato até ser conferida.</li>
+            <li>Não. Os 80% medem a chance de escolher aquele token na distribuição calculada, não a chance de a frase ser verdadeira.</li>
+            <li>Coerente é bem encadeada e plausível; comprovadamente correta tem evidência que a sustenta. Fluência não é prova.</li>
+            <li>Números exatos, fatos recentes, assuntos muito locais ou citações e referências — são os casos em que a IA mais inventa.</li>
+            <li>Qualquer situação coerente com a regra escolhida, com a conduta correta descrita.</li>
+          </ol>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section class="secao" id="avaliacao">
+    <div class="container">
+      <span class="rotulo">Avaliação da aprendizagem</span>
+      <h2>Avalie as evidências, não a quantidade de atividades</h2>
+      <div class="tabela-rola">
+        <table>
+          <thead><tr><th>Critério</th><th>Alcançou</th><th>Em construção</th><th>Ainda não</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Compreensão matemática</strong></td><td>Explica que o modelo usa tokens e probabilidades para gerar texto.</td><td>Cita probabilidade, mas confunde com “certeza”.</td><td>Acha que a IA busca a resposta pronta.</td></tr>
+            <tr><td><strong>Reconhecimento de alucinações</strong></td><td>Aponta afirmações incompatíveis com as evidências.</td><td>Encontra parte das contradições.</td><td>Aceita a resposta por parecer segura.</td></tr>
+            <tr><td><strong>Pensamento crítico</strong></td><td>Diferencia falso de ainda não verificado.</td><td>Classifica, mas sem justificar com a evidência.</td><td>Trata tudo o que não confirmou como falso.</td></tr>
+            <tr><td><strong>Limites da IA</strong></td><td>Reconhece que fluência e plausibilidade não garantem verdade.</td><td>Reconhece em exemplos dados, não em novos.</td><td>Considera a IA uma fonte confiável por padrão.</td></tr>
+            <tr><td><strong>Uso ético</strong></td><td>Aplica as regras de ouro a casos novos e propõe a conduta.</td><td>Identifica a regra, sem propor a conduta.</td><td>Não relaciona o caso a nenhuma regra.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="recolher">
+    <div class="container">
+      <span class="rotulo">Sem rede, sem formulário online</span>
+      <h2>Como você recebe as respostas da turma</h2>
+      <div class="grade g3">
+        <div class="cartao verde"><h3>1. Arquivo por computador</h3><p class="peq">No fim do laboratório, a dupla clica em <strong>“Salvar arquivo com as respostas”</strong>. O navegador grava um .txt (normalmente na pasta Downloads) com nomes, turma, número do computador e tudo o que foi registrado.</p></div>
+        <div class="cartao verde"><h3>2. Recolha com pendrive</h3><p class="peq">Passe nos computadores e copie os .txt para uma pasta da turma. Se o laboratório tiver rede interna (mesmo sem internet), use a pasta compartilhada da escola.</p></div>
+        <div class="cartao"><h3>3. Nada se perde no caminho</h3><p class="peq">As respostas ficam guardadas no próprio navegador enquanto a aula acontece, mesmo se a página for fechada sem querer. Depois de recolher, clique em <strong>“Limpar para a próxima turma”</strong>.</p></div>
+      </div>
+      <div class="cartao ambar" style="margin-top:14px">
+        <strong>Plano C — se um computador falhar:</strong> use o botão abaixo para imprimir o laboratório como ficha em papel (com os campos em branco) e entregue às duplas sem máquina.
+        <div class="acoes"><button class="botao" type="button" data-imprimir="laboratorio">Imprimir o laboratório como ficha em papel</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="checklist">
+    <div class="container">
+      <span class="rotulo">Checklist de preparação</span>
+      <h2>Antes de entrar no laboratório <span class="contador" id="contador-check">0/8</span></h2>
+      <ul class="checklist" id="lista-check">
+        <li><label><input type="checkbox" data-campo="prof.check1"><span>Ler os três casos de investigação e os gabaritos desta página.</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check2"><span>Copiar este arquivo para o pendrive.</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check3"><span>Colar e abrir o arquivo em todos os computadores (Área de Trabalho).</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check4"><span>Desligar o Wi-Fi/cabo de um computador e testar o simulador e o botão de salvar.</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check5"><span>Abrir a tela “Projetar” no computador do projetor e testar as setas do teclado.</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check6"><span>Numerar os computadores e definir o sentido da troca da Atividade 6.</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check7"><span>Imprimir algumas fichas em papel como reserva (Plano C).</span></label></li>
+        <li><label><input type="checkbox" data-campo="prof.check8"><span>Levar o pendrive para recolher os arquivos .txt no fim da aula.</span></label></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- LABORATÓRIO DA TURMA                                          -->
+<!-- ============================================================ -->
+<div class="vista" id="laboratorio" data-vista-id="laboratorio">
+
+  <section class="hero">
+    <div class="container">
+      <span class="rotulo">Laboratório da turma · Encontro 3</span>
+      <h1>A IA erra? Vamos investigar.</h1>
+      <p class="lead">Siga o professor e faça uma atividade de cada vez. Tudo o que vocês escreverem fica guardado neste computador e, no final, vira um arquivo para o professor.</p>
+      <p class="aviso-ficticio">Este laboratório não usa IA nem internet. O simulador é uma conta matemática simplificada, e as “respostas de IA” foram escritas para a aula. Nomes, lugares e documentos são fictícios.</p>
+      <div class="cartao" style="margin-top:20px">
+        <h3>Quem está neste computador?</h3>
+        <div class="ident" style="margin-top:10px">
+          <label class="campo"><span>Nomes da dupla</span><input type="text" data-campo="id.nomes" data-rotulo="Nomes da dupla" autocomplete="off" placeholder="Ex.: Ana Souza e João Lima"></label>
+          <label class="campo"><span>Turma</span><input type="text" data-campo="id.turma" data-rotulo="Turma" autocomplete="off" placeholder="Ex.: 2º A"></label>
+          <label class="campo"><span>Nº do computador</span><input type="text" data-campo="id.pc" data-rotulo="Computador" autocomplete="off" inputmode="numeric" placeholder="Ex.: 07"></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L1 -->
+  <section class="secao" id="l-a1">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 1 · 0–15 min · individual</span>
+      <h2>Uma resposta convincente pode estar errada?</h2>
+      <p class="pergunta-aluno">“Em que ano foi inaugurada a Biblioteca Comunitária Sol Nascente, no município de Santa Aurora?”</p>
+      <div class="ia-resposta">A Biblioteca Comunitária Sol Nascente foi inaugurada em 1992, por iniciativa de um grupo de pescadores da região, e começou com um acervo de cerca de 500 livros doados.</div>
+      <p class="aviso-ficticio">Resposta fictícia, escrita para a aula. Santa Aurora é um município inventado.</p>
+      <fieldset style="margin-top:14px">
+        <legend class="campo"><span>Sem consultar nada: essa resposta está…</span></legend>
+        <div class="opcoes">
+          <label><input type="radio" name="a1.julgamento" value="Correta" data-campo="a1.julgamento" data-rotulo="A1 · Julgamento"> Correta</label>
+          <label><input type="radio" name="a1.julgamento" value="Incorreta" data-campo="a1.julgamento" data-rotulo="A1 · Julgamento"> Incorreta</label>
+          <label><input type="radio" name="a1.julgamento" value="Não dá para decidir" data-campo="a1.julgamento" data-rotulo="A1 · Julgamento"> Não dá para decidir</label>
+        </div>
+      </fieldset>
+      <label class="campo" style="margin-top:12px"><span>Por quê?</span><textarea data-campo="a1.porque" data-rotulo="A1 · Por quê"></textarea></label>
+      <div class="acoes"><button class="botao" type="button" id="a1-ver-doc" disabled>Ver o documento (quando o professor pedir)</button></div>
+      <div id="a1-doc" class="oculto" style="margin-top:14px">
+        <div class="documento">
+          <div class="doc-tit">Secretaria Municipal de Cultura de Santa Aurora · Registro histórico simulado</div>
+          A Biblioteca Comunitária Sol Nascente abriu as portas em 5 de agosto de 2011, com 180 livros doados pela escola municipal do bairro.
+          <p class="aviso-ficticio">Documento inventado para a simulação. Não é uma fonte oficial verdadeira.</p>
+        </div>
+        <label class="campo" style="margin-top:12px"><span>Depois do registro, o que podemos afirmar sobre a resposta da IA?</span><textarea data-campo="a1.depois" data-rotulo="A1 · Depois do documento"></textarea></label>
+        <div class="cartao verde" style="margin-top:12px"><strong>Alucinação de IA</strong> é quando um sistema generativo apresenta conteúdo incorreto ou sem sustentação como se fosse informação factual. Atenção: nem tudo o que não foi verificado é falso — <strong>verificar</strong> é o que separa os casos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L2 -->
+  <section class="secao" id="l-a2">
+    <div class="container">
+      <span class="rotulo">Atividade 2 · 15–45 min · dupla</span>
+      <h2>Laboratório: como a IA escolhe o próximo token?</h2>
+      <p class="sub estreito">Mexam nas pontuações e na temperatura, sorteiem e observem. Lembrem: é um modelo de brinquedo com 3 opções — uma IA de verdade calcula isso para milhares de tokens.</p>
+      <div id="sim-lab"></div>
+
+      <h3 style="margin-top:28px">Três experimentos</h3>
+      <div class="grade g3" style="margin-top:10px">
+        <div class="cartao">
+          <span class="chip verde">Experimento A</span>
+          <p class="peq"><strong>Temperatura 0,2.</strong> Qual token concentra mais probabilidade?</p>
+          <button class="botao pequeno" type="button" data-preset="A">Aplicar no simulador</button>
+          <label class="campo" style="margin-top:10px"><span class="peq">Conclusão da dupla</span><textarea data-campo="a2.expA" data-rotulo="A2 · Experimento A"></textarea></label>
+        </div>
+        <div class="cartao">
+          <span class="chip verde">Experimento B</span>
+          <p class="peq"><strong>Temperatura 2,0.</strong> O que muda na distribuição das probabilidades?</p>
+          <button class="botao pequeno" type="button" data-preset="B">Aplicar no simulador</button>
+          <label class="campo" style="margin-top:10px"><span class="peq">Conclusão da dupla</span><textarea data-campo="a2.expB" data-rotulo="A2 · Experimento B"></textarea></label>
+        </div>
+        <div class="cartao">
+          <span class="chip verde">Experimento C</span>
+          <p class="peq"><strong>Manaus com pontuação 4.</strong> O token mais provável é necessariamente verdadeiro?</p>
+          <button class="botao pequeno" type="button" data-preset="C">Aplicar no simulador</button>
+          <label class="campo" style="margin-top:10px"><span class="peq">Conclusão da dupla</span><textarea data-campo="a2.expC" data-rotulo="A2 · Experimento C"></textarea></label>
+        </div>
+      </div>
+      <div class="cartao" style="margin-top:14px">
+        <h3>A conta por trás das barras</h3>
+        <p class="formula">P(i) = e<sup>z<sub>i</sub>/T</sup> ÷ Σ<sub>j</sub> e<sup>z<sub>j</sub>/T</sup></p>
+        <p class="sub peq">z = pontuação (logit) de cada token · T = temperatura · e ≈ 2,718. Com Belém 2, Santarém 1, Manaus 0 e T = 1: 66,5% · 24,5% · 9,0%.</p>
+      </div>
+      <label class="campo" style="margin-top:14px"><span>Se um modelo dá 90% de probabilidade a uma palavra, a frase formada tem 90% de chance de ser verdadeira? Expliquem.</span><textarea data-campo="a2.fechamento" data-rotulo="A2 · Fechamento (90%)"></textarea></label>
+    </div>
+  </section>
+
+  <!-- L3 -->
+  <section class="secao" id="l-a3">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 3 · 45–70 min · dupla</span>
+      <h2>Caça às alucinações sem internet</h2>
+      <p>Vocês são verificadores de informação. Para cada caso, comparem a resposta da IA com o documento e classifiquem: <strong>confirmada</strong>, <strong>contradita</strong> ou <strong>não verificável</strong>.</p>
+      <div class="casos-abas" role="tablist" aria-label="Casos">
+        <button type="button" role="tab" id="aba-A" aria-controls="caso-A" aria-selected="true">Caso A</button>
+        <button type="button" role="tab" id="aba-B" aria-controls="caso-B" aria-selected="false" tabindex="-1">Caso B</button>
+        <button type="button" role="tab" id="aba-C" aria-controls="caso-C" aria-selected="false" tabindex="-1">Caso C</button>
+      </div>
+      <div id="casos"></div>
+      <p class="aviso-ficticio">Todos os nomes, datas, instituições e documentos destes casos são fictícios, criados para a sala de aula.</p>
+    </div>
+  </section>
+
+  <!-- L4 -->
+  <section class="secao" id="l-a4">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 4 · 70–85 min · dupla</span>
+      <h2>Por que a IA erra e não pensa como uma pessoa?</h2>
+      <p class="pergunta-aluno">“Como os estudantes de uma comunidade ribeirinha chegam à escola?”</p>
+      <div class="grade g2" style="margin-top:10px">
+        <div class="ia-resposta"><strong>Resposta A.</strong> Todos os estudantes das comunidades ribeirinhas usam barcos diariamente para chegar à escola.</div>
+        <div class="ia-resposta"><strong>Resposta B.</strong> O deslocamento depende da localização e das condições da comunidade. Alguns estudantes usam embarcações; outros chegam caminhando ou por outros meios de transporte.</div>
+      </div>
+      <fieldset style="margin-top:14px">
+        <legend class="campo"><span>Qual resposta é mais cuidadosa?</span></legend>
+        <div class="opcoes">
+          <label><input type="radio" name="a4.escolha" value="Resposta A" data-campo="a4.escolha" data-rotulo="A4 · Mais cuidadosa"> Resposta A</label>
+          <label><input type="radio" name="a4.escolha" value="Resposta B" data-campo="a4.escolha" data-rotulo="A4 · Mais cuidadosa"> Resposta B</label>
+        </div>
+      </fieldset>
+      <label class="campo" style="margin-top:12px"><span>Por quê?</span><textarea data-campo="a4.porque" data-rotulo="A4 · Por quê"></textarea></label>
+      <label class="campo" style="margin-top:12px"><span>Três motivos para uma IA dar uma resposta inadequada</span><textarea data-campo="a4.motivos" data-rotulo="A4 · Três motivos" placeholder="1.&#10;2.&#10;3."></textarea></label>
+      <div class="cartao" style="margin-top:14px">
+        <p style="margin-top:0"><strong>Completem:</strong> “Uma resposta de IA pode parecer correta porque <span class="lacuna">…</span>, mas precisamos verificar <span class="lacuna">…</span>.”</p>
+        <div class="grade g2">
+          <label class="campo"><span class="peq">…parecer correta porque</span><input type="text" data-campo="a4.lacuna1" data-rotulo="A4 · Parece correta porque"></label>
+          <label class="campo"><span class="peq">…mas precisamos verificar</span><input type="text" data-campo="a4.lacuna2" data-rotulo="A4 · Precisamos verificar"></label>
+        </div>
+      </div>
+      <blockquote style="margin-top:16px;font-size:18px">A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua.</blockquote>
+    </div>
+  </section>
+
+  <!-- L5 -->
+  <section class="secao" id="l-a5">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 5 · 85–105 min · dupla</span>
+      <h2>As quatro regras de ouro na prática</h2>
+      <div class="grade g2" style="margin-bottom:16px">
+        <div class="cartao"><strong>1. Confira sempre</strong><p class="sub peq">Busque evidências para afirmações importantes.</p></div>
+        <div class="cartao"><strong>2. Assuma a autoria com honestidade</strong><p class="sub peq">Entenda e respeite as regras do que você entrega.</p></div>
+        <div class="cartao"><strong>3. Proteja seus dados pessoais</strong><p class="sub peq">Não exponha dados seus ou de outras pessoas.</p></div>
+        <div class="cartao"><strong>4. Respeite as pessoas e a comunidade</strong><p class="sub peq">Não use IA para enganar, discriminar ou prejudicar.</p></div>
+      </div>
+      <p>Para cada situação, escolham a regra principal envolvida e digam o que a pessoa deveria fazer.</p>
+      <div id="situacoes" class="grade"></div>
+    </div>
+  </section>
+
+  <!-- L6 -->
+  <section class="secao" id="l-a6">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 6 · 105–135 min · dupla</span>
+      <h2>Crie, troque e julgue um caso</h2>
+      <div class="cartao">
+        <h3>Parte 1 · O caso da nossa dupla</h3>
+        <p class="sub peq">Escrevam uma situação nova de uso de IA <strong>sem dizer se a atitude foi certa ou errada</strong>. O caso precisa ter uma decisão para ser avaliada.</p>
+        <p class="sub peq"><em>Exemplo: um aluno recebeu uma mensagem que parecia oficial dizendo que o calendário escolar mudou. Pediu à IA um comunicado e mandou para a turma toda sem consultar a direção.</em></p>
+        <label class="campo"><span>Nosso caso</span><textarea data-campo="a6.caso" data-rotulo="A6 · Caso criado pela dupla" style="min-height:120px"></textarea></label>
+      </div>
+      <div class="cartao azul" style="margin-top:14px">
+        <h3>Parte 2 · Avaliação <span class="chip azul">feita pela outra dupla</span></h3>
+        <p class="sub peq">Quando o professor mandar, troquem de computador. Leiam o caso acima e respondam aqui.</p>
+        <label class="campo"><span>Nomes da dupla avaliadora</span><input type="text" data-campo="a6.avaliadores" data-rotulo="A6 · Dupla avaliadora" autocomplete="off"></label>
+        <fieldset style="margin-top:12px">
+          <legend class="campo"><span>A conduta foi…</span></legend>
+          <div class="opcoes">
+            <label><input type="radio" name="a6.conduta" value="Responsável" data-campo="a6.conduta" data-rotulo="A6 · Conduta"> Responsável</label>
+            <label><input type="radio" name="a6.conduta" value="Irresponsável" data-campo="a6.conduta" data-rotulo="A6 · Conduta"> Irresponsável</label>
+            <label><input type="radio" name="a6.conduta" value="Depende das condições" data-campo="a6.conduta" data-rotulo="A6 · Conduta"> Depende das condições</label>
+          </div>
+        </fieldset>
+        <label class="campo" style="margin-top:12px"><span>Regra de ouro envolvida</span>
+          <select data-campo="a6.regra" data-rotulo="A6 · Regra envolvida">
+            <option value="">Escolha…</option>
+            <option>Confira sempre</option><option>Assuma a autoria com honestidade</option><option>Proteja seus dados pessoais</option><option>Respeite as pessoas e a comunidade</option>
+          </select>
+        </label>
+        <label class="campo" style="margin-top:12px"><span>Justificativa</span><textarea data-campo="a6.justificativa" data-rotulo="A6 · Justificativa"></textarea></label>
+        <label class="campo" style="margin-top:12px"><span>O que a pessoa deveria fazer?</span><textarea data-campo="a6.conduta-certa" data-rotulo="A6 · O que deveria fazer"></textarea></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- L7 -->
+  <section class="secao" id="l-a7">
+    <div class="container estreito">
+      <span class="rotulo">Atividade 7 · 135–150 min · individual</span>
+      <h2>Avaliação individual</h2>
+      <p class="sub">Responda sozinho, com suas palavras. Se a dupla divide o computador, cada um responde no seu bloco.</p>
+      <div id="avaliacoes"></div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container estreito">
+      <h2>Terminou? Salve o arquivo para o professor</h2>
+      <p>O botão abaixo grava um arquivo .txt com tudo o que vocês registraram neste computador. Ele costuma ir para a pasta <strong>Downloads</strong>.</p>
+      <div class="acoes">
+        <button class="botao primario" type="button" data-salvar>Salvar arquivo com as respostas</button>
+      </div>
+      <details style="margin-top:18px" class="nao-imprimir">
+        <summary>Área do professor</summary>
+        <p class="sub peq">Depois de recolher o arquivo deste computador, apague as respostas para a próxima turma.</p>
+        <button class="botao perigo" type="button" id="limpar">Limpar para a próxima turma</button>
+      </details>
+    </div>
+  </section>
+
+  <div class="barra-salvar nao-imprimir">
+    <div class="container">
+      <span class="estado" id="estado-salvo" aria-live="polite">As respostas ficam guardadas neste computador.</span>
+      <button class="botao primario pequeno" type="button" data-salvar>Salvar arquivo com as respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PROJETAR                                                      -->
+<!-- ============================================================ -->
+<div class="vista" id="projetar" data-vista-id="projetar">
+  <div class="container">
+    <div class="palco">
+      <div style="width:100%">
+        <section class="slide" data-slide>
+          <span class="rotulo">Encontro 3 · laboratório sem internet</span>
+          <h2>A IA erra? Limites, pensamento crítico e uso ético</h2>
+          <ol class="programa">
+            <li><span class="min">0–15</span><span>Uma resposta convincente pode estar errada?</span><span class="dur"></span></li>
+            <li><span class="min">15–45</span><span>Como a IA escolhe o próximo token?</span><span class="dur"></span></li>
+            <li><span class="min">45–70</span><span>Caça às alucinações</span><span class="dur"></span></li>
+            <li><span class="min">70–85</span><span>Por que a IA erra?</span><span class="dur"></span></li>
+            <li><span class="min">85–105</span><span>As quatro regras de ouro</span><span class="dur"></span></li>
+            <li><span class="min">105–135</span><span>Crie, troque e julgue um caso</span><span class="dur"></span></li>
+            <li><span class="min">135–150</span><span>Avaliação individual</span><span class="dur"></span></li>
+          </ol>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 1 · a pergunta</span>
+          <h2>“Em que ano foi inaugurada a Biblioteca Comunitária Sol Nascente, em Santa Aurora?”</h2>
+          <p class="grande sub">Santa Aurora é um município fictício.</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 1 · a resposta</span>
+          <div class="ia-resposta">A Biblioteca Comunitária Sol Nascente foi inaugurada em 1992, por iniciativa de um grupo de pescadores da região, e começou com um acervo de cerca de 500 livros doados.</div>
+          <p class="grande" style="margin-top:20px">Correta, incorreta ou <strong>não dá para decidir</strong>? Registre no laboratório e justifique.</p>
+          <p class="aviso-ficticio">Resposta fictícia, escrita para a aula.</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 1 · a evidência</span>
+          <div class="documento"><div class="doc-tit">Secretaria Municipal de Cultura de Santa Aurora · Registro histórico simulado</div>A Biblioteca Comunitária Sol Nascente abriu as portas em <strong>5 de agosto de 2011</strong>, com <strong>180 livros</strong> doados pela escola municipal do bairro.<p class="aviso-ficticio">Documento inventado para a simulação.</p></div>
+          <p class="grande" style="margin-top:20px">O que podemos afirmar agora sobre a resposta da IA?</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Conceito</span>
+          <h2>Alucinação de IA</h2>
+          <p class="grande">Quando um sistema generativo apresenta conteúdo <strong>incorreto ou sem sustentação</strong> como se fosse informação factual.</p>
+          <p class="grande sub">Nem tudo o que não foi verificado é falso. <strong style="color:#fff">Verificar</strong> é o que separa os casos.</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 2 · simulador</span>
+          <div id="sim-proj"></div>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 3 · caça às alucinações</span>
+          <h2>Vocês são verificadores de informação</h2>
+          <p class="grande">Comparem cada resposta da IA com o documento e classifiquem:</p>
+          <div class="acoes"><span class="chip verde" style="font-size:20px;padding:6px 16px">Confirmada</span><span class="chip vermelho" style="font-size:20px;padding:6px 16px">Contradita</span><span class="chip ambar" style="font-size:20px;padding:6px 16px">Não verificável</span></div>
+          <p class="grande sub" style="margin-top:20px">Se não encontramos a informação, podemos afirmar que a IA mentiu?</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 4 · qual é mais cuidadosa?</span>
+          <h2 style="font-size:clamp(24px,3.4vw,40px)">“Como os estudantes de uma comunidade ribeirinha chegam à escola?”</h2>
+          <div class="grade g2">
+            <div class="ia-resposta"><strong>A.</strong> Todos os estudantes das comunidades ribeirinhas usam barcos diariamente para chegar à escola.</div>
+            <div class="ia-resposta"><strong>B.</strong> Depende da localização e das condições da comunidade. Alguns usam embarcações; outros chegam caminhando ou por outros meios.</div>
+          </div>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 4 · síntese</span>
+          <h2>A IA não é mais inteligente que você. Ela é mais rápida.</h2>
+          <p class="grande">A inteligência crítica continua sendo sua.</p>
+          <p class="grande sub">“Uma resposta de IA pode parecer correta porque ______, mas precisamos verificar ______.”</p>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 5</span>
+          <h2>As quatro regras de ouro</h2>
+          <div class="grade g2">
+            <div class="cartao verde grande"><strong>Confira sempre</strong></div>
+            <div class="cartao verde grande"><strong>Assuma a autoria com honestidade</strong></div>
+            <div class="cartao verde grande"><strong>Proteja seus dados pessoais</strong></div>
+            <div class="cartao verde grande"><strong>Respeite as pessoas e a comunidade</strong></div>
+          </div>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 6 · 30 min</span>
+          <h2>Crie, troque e julgue um caso</h2>
+          <ol class="lista grande">
+            <li>Escrevam um caso novo de uso de IA, sem dizer se foi certo ou errado. <span class="sub">(10 min)</span></li>
+            <li>Troquem de computador com a dupla ao lado. <span class="sub">(5 min)</span></li>
+            <li>Julguem o caso: responsável, irresponsável ou depende? Qual regra? O que deveria ser feito? <span class="sub">(10 min)</span></li>
+            <li>Discussão de dois casos. <span class="sub">(5 min)</span></li>
+          </ol>
+        </section>
+        <section class="slide" data-slide>
+          <span class="rotulo">Atividade 7 · individual</span>
+          <h2>Avaliação individual</h2>
+          <p class="grande">Responda sozinho no laboratório e, no fim, clique em <strong>“Salvar arquivo com as respostas”</strong>.</p>
+          <p class="grande sub">“A descoberta mais importante que fiz hoje sobre IA foi…”</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="controles-proj">
+    <div class="container">
+      <span class="pos" id="pos-slide" aria-live="polite">1 / 1</span>
+      <button class="botao pequeno" type="button" id="ant">← Anterior</button>
+      <button class="botao pequeno primario" type="button" id="prox">Próximo →</button>
+      <button class="botao pequeno" type="button" id="tela-cheia">Tela cheia</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="rodape" id="rodape">
+  <div class="container">Letramento Digital em IA · Módulo 1 · Encontro 3 — Plano B para laboratório sem internet. Arquivo autônomo: não carrega fontes, scripts nem imagens externas.</div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var $ = function(s, r){ return (r||document).querySelector(s); };
+var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+var reduzir = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------- Armazenamento local (tolerante a falhas) ---------------- */
+var CHAVE = 'planoB-encontro3-v1';
+var dados = {};
+try { dados = JSON.parse(localStorage.getItem(CHAVE) || '{}') || {}; } catch (e) { dados = {}; }
+function gravar(){ try { localStorage.setItem(CHAVE, JSON.stringify(dados)); return true; } catch (e) { return false; } }
+
+/* ---------------- Conteúdo: casos e situações ---------------- */
+var CASOS = [
+  { id:'A', tag:'Erro numérico', cor:'vermelho',
+    ia:'A Escola Rio das Pedras foi inaugurada em 1987 e começou suas atividades com 40 estudantes.',
+    docTit:'Histórico escolar simulado · Secretaria Municipal de Educação de Santa Aurora',
+    doc:'A escola iniciou suas atividades em março de 2004, com 26 estudantes.',
+    tarefa:'Quais são as duas informações incompatíveis com o registro?',
+    certa:'Contradita',
+    explica:'O documento contradiz as duas informações: o ano (2004, não 1987) e a matrícula inicial (26, não 40 estudantes).' },
+  { id:'B', tag:'Referência inventada', cor:'vermelho',
+    ia:'Segundo o Relatório Educacional de Santa Aurora (2023), página 17, todas as escolas do município possuem laboratório de informática.',
+    docTit:'Relatório Educacional de Santa Aurora (2023) · 12 páginas',
+    doc:'O levantamento registra 8 escolas no município, das quais 3 possuem laboratório de informática.',
+    tarefa:'Qual é o problema com a página citada? E com a afirmação sobre os laboratórios?',
+    certa:'Contradita',
+    explica:'A citação é impossível — o relatório tem 12 páginas, então não existe página 17 — e a generalização é falsa: só 3 das 8 escolas têm laboratório.' },
+  { id:'C', tag:'Informação não confirmada', cor:'ambar',
+    ia:'A primeira diretora da Escola Rio das Pedras foi Maria das Flores.',
+    docTit:'Histórico escolar simulado · Secretaria Municipal de Educação de Santa Aurora',
+    doc:'O histórico apresenta o ano de fundação e a matrícula inicial, mas não informa o nome da primeira diretora.',
+    tarefa:'A resposta é comprovadamente falsa, ou faltam informações para verificar?',
+    certa:'Não verificável',
+    explica:'O documento não fala da diretora: não confirma nem contradiz. A falta de confirmação não prova que é falso — mas a informação ainda não pode ser usada como fato.' }
+];
+var CLASSES = ['Confirmada','Contradita','Não verificável'];
+
+var REGRAS = ['Confira sempre','Assuma a autoria com honestidade','Proteja seus dados pessoais','Respeite as pessoas e a comunidade','Uso responsável (nenhuma regra violada)'];
+var SITUACOES = [
+  { t:'Um aluno compartilha no grupo da turma uma notícia criada por IA, sem verificar se é verdadeira.', r:0,
+    c:'A regra principal é Confira sempre: antes de compartilhar, procurar a notícia em fontes confiáveis — ou não compartilhar.' },
+  { t:'Um estudante entrega como seu um trabalho inteiramente gerado por IA, contrariando as orientações do professor.', r:1,
+    c:'A regra principal é Assuma a autoria com honestidade: seguir as orientações, usar a IA para aprender e escrever com as próprias palavras, informando como ela foi usada.' },
+  { t:'Uma pessoa envia à IA os CPFs dos colegas para organizar uma lista da turma.', r:2,
+    c:'A regra principal é Proteja seus dados pessoais: CPF é dado pessoal de outras pessoas. Dá para organizar a lista sem esses dados.' },
+  { t:'Um estudante usa IA para criar uma imagem falsa e ridicularizar um colega.', r:3,
+    c:'A regra principal é Respeite as pessoas e a comunidade: é uma forma de humilhar e enganar. Não criar nem repassar; se receber, avisar um adulto.' },
+  { t:'Um aluno usa IA para entender um assunto e depois escreve a própria explicação, seguindo as orientações da atividade.', r:4,
+    c:'É um uso responsável: a IA ajudou a aprender e a autoria foi respeitada. Vale conferir as informações importantes que ela trouxe.' }
+];
+var QUESTOES = [
+  'Uma IA responde que determinada escola foi fundada em 1995, mas você não tem nenhum documento sobre ela. É correto dizer que a resposta é verdadeira, falsa ou ainda não verificada? Justifique.',
+  'Um sistema deu 80% de probabilidade à escolha de um token. Isso significa que a afirmação produzida tem 80% de chance de ser verdadeira? Explique.',
+  'Qual é a principal diferença entre uma resposta coerente e uma resposta comprovadamente correta?',
+  'Dê um exemplo de informação que exige cuidado especial ao ser pedida a uma IA e explique o motivo.',
+  'Escolha uma regra de ouro e descreva uma situação em que ela deve ser aplicada.',
+  'Para terminar: “A descoberta mais importante que fiz hoje sobre IA foi…”'
+];
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+/* ---------------- Montagem: casos (A3) ---------------- */
+var casosEl = $('#casos');
+casosEl.innerHTML = CASOS.map(function(c, i){
+  var nome = 'a3.caso' + c.id;
+  return '<div class="cartao" role="tabpanel" id="caso-' + c.id + '" aria-labelledby="aba-' + c.id + '"' + (i ? ' hidden' : '') + '>' +
+    '<span class="chip ' + c.cor + '">Caso ' + c.id + ' · ' + esc(c.tag) + '</span>' +
+    '<div class="ia-resposta" style="margin-top:12px">' + esc(c.ia) + '</div>' +
+    '<div class="documento" style="margin-top:12px"><div class="doc-tit">' + esc(c.docTit) + '</div>' + esc(c.doc) + '<p class="aviso-ficticio">Documento fictício.</p></div>' +
+    '<p style="margin-top:12px"><strong>Tarefa:</strong> ' + esc(c.tarefa) + '</p>' +
+    '<fieldset><legend class="campo"><span>Classificação</span></legend><div class="opcoes">' +
+      CLASSES.map(function(k){ return '<label><input type="radio" name="' + nome + '" value="' + k + '" data-campo="' + nome + '.classe" data-rotulo="A3 · Caso ' + c.id + ' · Classificação"> ' + k + '</label>'; }).join('') +
+    '</div></fieldset>' +
+    '<label class="campo" style="margin-top:12px"><span>Justificativa: qual evidência sustenta a conclusão?</span><textarea data-campo="' + nome + '.just" data-rotulo="A3 · Caso ' + c.id + ' · Justificativa"></textarea></label>' +
+    '<div class="acoes"><button class="botao pequeno" type="button" data-conferir="' + c.id + '">Conferir</button>' +
+    (i < CASOS.length - 1 ? '<button class="botao pequeno" type="button" data-ir-caso="' + CASOS[i+1].id + '">Próximo caso →</button>' : '') + '</div>' +
+    '<div class="retorno" id="ret-' + c.id + '" aria-live="polite"></div>' +
+  '</div>';
+}).join('');
+
+var abas = $$('.casos-abas [role=tab]');
+function mostrarCaso(id, foco){
+  abas.forEach(function(a){
+    var sel = a.id === 'aba-' + id;
+    a.setAttribute('aria-selected', sel ? 'true' : 'false');
+    a.tabIndex = sel ? 0 : -1;
+    if (sel && foco) a.focus();
+  });
+  CASOS.forEach(function(c){ $('#caso-' + c.id).hidden = c.id !== id; });
+}
+abas.forEach(function(a, i){
+  a.addEventListener('click', function(){ mostrarCaso(a.id.slice(4)); });
+  a.addEventListener('keydown', function(e){
+    var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return; e.preventDefault();
+    var n = abas[(i + d + abas.length) % abas.length]; mostrarCaso(n.id.slice(4), true);
+  });
+});
+casosEl.addEventListener('click', function(e){
+  var ir = e.target.closest('[data-ir-caso]');
+  if (ir) { mostrarCaso(ir.getAttribute('data-ir-caso'), true); return; }
+  var b = e.target.closest('[data-conferir]'); if (!b) return;
+  var id = b.getAttribute('data-conferir'), c = CASOS.filter(function(x){ return x.id === id; })[0];
+  var marcado = $('input[name="a3.caso' + id + '"]:checked');
+  var ret = $('#ret-' + id);
+  ret.className = 'retorno mostrar';
+  if (!marcado) { ret.classList.add('revisar'); ret.innerHTML = '<strong>Escolham uma classificação primeiro.</strong>'; return; }
+  var ok = marcado.value === c.certa;
+  ret.classList.add(ok ? 'certo' : 'revisar');
+  ret.innerHTML = ok
+    ? '<strong>Isso mesmo: ' + esc(c.certa.toLowerCase()) + '.</strong> ' + esc(c.explica)
+    : '<strong>Revejam o documento.</strong> Comparem palavra por palavra o que a IA afirmou com o que o documento diz — e também o que ele <em>não</em> diz. Depois confiram de novo.';
+});
+
+/* ---------------- Montagem: situações (A5) ---------------- */
+$('#situacoes').innerHTML = SITUACOES.map(function(s, i){
+  var n = i + 1;
+  return '<div class="cartao">' +
+    '<span class="chip">Situação ' + n + '</span><p style="margin:8px 0 10px">' + esc(s.t) + '</p>' +
+    '<label class="campo"><span class="peq">Regra principal</span><select data-campo="a5.s' + n + '.regra" data-rotulo="A5 · Situação ' + n + ' · Regra" data-situacao="' + i + '"><option value="">Escolha…</option>' +
+      REGRAS.map(function(r){ return '<option>' + esc(r) + '</option>'; }).join('') + '</select></label>' +
+    '<label class="campo" style="margin-top:10px"><span class="peq">O que a pessoa deveria fazer?</span><textarea data-campo="a5.s' + n + '.conduta" data-rotulo="A5 · Situação ' + n + ' · Conduta" style="min-height:70px"></textarea></label>' +
+    '<div class="retorno" id="ret-s' + i + '" aria-live="polite"></div></div>';
+}).join('');
+function avaliarSituacao(sel){
+  var i = +sel.getAttribute('data-situacao'), s = SITUACOES[i], ret = $('#ret-s' + i);
+  if (!sel.value) { ret.className = 'retorno'; return; }
+  var ok = sel.value === REGRAS[s.r];
+  ret.className = 'retorno mostrar ' + (ok ? 'certo' : 'revisar');
+  ret.innerHTML = ok ? '<strong>Boa escolha.</strong> ' + esc(s.c) : '<strong>Pensem de novo:</strong> qual é o maior problema desta situação — a informação, a autoria, os dados ou o respeito às pessoas?';
+}
+$('#situacoes').addEventListener('change', function(e){ if (e.target.matches('select[data-situacao]')) avaliarSituacao(e.target); });
+
+/* ---------------- Montagem: avaliação individual (A7) ---------------- */
+function blocoAvaliacao(k){
+  return '<div class="cartao" style="margin-top:14px">' +
+    '<h3>Estudante ' + k + '</h3>' +
+    '<label class="campo" style="margin-top:8px"><span>Seu nome</span><input type="text" data-campo="a7.e' + k + '.nome" data-rotulo="A7 · Estudante ' + k + ' · Nome" autocomplete="off"></label>' +
+    QUESTOES.map(function(q, i){
+      return '<label class="campo" style="margin-top:12px"><span>' + (i < 5 ? 'Questão ' + (i + 1) + '. ' : '') + esc(q) + '</span><textarea data-campo="a7.e' + k + '.q' + (i + 1) + '" data-rotulo="A7 · Estudante ' + k + ' · ' + (i < 5 ? 'Questão ' + (i + 1) : 'Descoberta') + '"' + (i === 5 ? ' style="min-height:60px"' : '') + '></textarea></label>';
+    }).join('') + '</div>';
+}
+$('#avaliacoes').innerHTML = blocoAvaliacao(1) + blocoAvaliacao(2);
+
+/* ---------------- Simulador de próximo token ---------------- */
+var TOKENS = ['Belém','Santarém','Manaus'];
+var INICIAL = { z:[2,1,0], T:1 };
+var simuladores = [];
+function softmax(z, T){
+  var m = Math.max.apply(null, z.map(function(v){ return v / T; }));
+  var ex = z.map(function(v){ return Math.exp(v / T - m); });
+  var s = ex.reduce(function(a, b){ return a + b; }, 0);
+  return ex.map(function(v){ return v / s; });
+}
+function pct(p){ return (p * 100).toFixed(1).replace('.', ',') + '%'; }
+function criarSimulador(raiz, sufixo){
+  var st = { z: INICIAL.z.slice(), T: INICIAL.T, cont:[0,0,0], total:0 };
+  var etapas = ['Texto','Tokens','Números','Cálculos','Pontuações','Probabilidades','Sorteio','Novo token'];
+  raiz.innerHTML =
+    '<div class="sim">' +
+      '<div class="sim-entrada" aria-live="polite">A capital do Pará é <span class="sim-saida">…</span></div>' +
+      '<ol class="pipeline" aria-label="Etapas do cálculo">' + etapas.map(function(e){ return '<li>' + e + '</li>'; }).join('') + '</ol>' +
+      '<div class="sim-controles">' +
+        '<div class="cartao"><h3 class="peq" style="margin-bottom:10px">1. Pontuações (logits)</h3>' +
+          TOKENS.map(function(t, i){ return '<div class="controle"><label for="z' + i + sufixo + '">' + t + '</label><input type="range" id="z' + i + sufixo + '" min="-2" max="6" step="0.5" value="' + st.z[i] + '" data-z="' + i + '"><output for="z' + i + sufixo + '">' + st.z[i].toFixed(1) + '</output></div>'; }).join('') +
+          '<h3 class="peq" style="margin:14px 0 10px">2. Temperatura</h3>' +
+          '<div class="controle"><label for="T' + sufixo + '">Temperatura</label><input type="range" id="T' + sufixo + '" min="0.1" max="3" step="0.1" value="1" data-t><output for="T' + sufixo + '">1,0</output></div>' +
+          '<p class="sub peq" style="margin-bottom:0">Temperatura baixa concentra a probabilidade nas maiores pontuações; temperatura alta espalha.</p>' +
+        '</div>' +
+        '<div class="cartao"><h3 class="peq" style="margin-bottom:10px">3. Probabilidades calculadas</h3>' +
+          '<div class="barras">' + TOKENS.map(function(t, i){ return '<div class="barra-linha"><span>' + t + '</span><div class="barra-trilho" role="img" aria-label="Probabilidade de ' + t + '"><div class="barra-cheia" data-b="' + i + '"></div></div><span class="pct" data-p="' + i + '"></span></div>'; }).join('') + '</div>' +
+          '<div class="acoes"><button class="botao primario pequeno" type="button" data-sortear="1">Sortear 1 token</button><button class="botao pequeno" type="button" data-sortear="50">Sortear 50 vezes</button><button class="botao pequeno" type="button" data-reset>Restaurar</button></div>' +
+          '<p class="contagem" data-contagem>Nenhum sorteio ainda.</p>' +
+        '</div>' +
+      '</div>' +
+      '<p class="sub peq" style="margin:0">As pontuações foram definidas para a aula, não aprendidas por uma rede neural. O simulador não consulta a internet nem verifica fatos: ele só sorteia de acordo com as probabilidades.</p>' +
+    '</div>';
+  var saida = $('.sim-saida', raiz), lis = $$('.pipeline li', raiz);
+  function desenhar(){
+    var p = softmax(st.z, st.T);
+    p.forEach(function(v, i){
+      $('[data-b="' + i + '"]', raiz).style.width = (v * 100).toFixed(2) + '%';
+      $('[data-p="' + i + '"]', raiz).textContent = pct(v);
+      $('[data-b="' + i + '"]', raiz).parentNode.setAttribute('aria-label', 'Probabilidade de ' + TOKENS[i] + ': ' + pct(v));
+    });
+    TOKENS.forEach(function(t, i){
+      var r = $('[data-z="' + i + '"]', raiz); r.value = st.z[i];
+      r.nextElementSibling.textContent = st.z[i].toFixed(1).replace('.', ',');
+    });
+    var tr = $('[data-t]', raiz); tr.value = st.T; tr.nextElementSibling.textContent = st.T.toFixed(1).replace('.', ',');
+    var c = $('[data-contagem]', raiz);
+    c.textContent = st.total ? 'Em ' + st.total + ' sorteios: ' + TOKENS.map(function(t, i){ return t + ' ' + st.cont[i]; }).join(' · ') : 'Nenhum sorteio ainda.';
+  }
+  function zerarContagem(){ st.cont = [0,0,0]; st.total = 0; }
+  function sortearUm(){
+    var p = softmax(st.z, st.T), r = Math.random(), acc = 0;
+    for (var i = 0; i < p.length; i++) { acc += p[i]; if (r < acc) return i; }
+    return p.length - 1;
+  }
+  function animar(fim){
+    if (reduzir) { fim(); return; }
+    var k = 0;
+    (function passo(){
+      lis.forEach(function(li, j){ li.classList.toggle('aceso', j === k); });
+      k++;
+      if (k <= lis.length) setTimeout(passo, 90); else { lis.forEach(function(li){ li.classList.remove('aceso'); }); fim(); }
+    })();
+  }
+  raiz.addEventListener('input', function(e){
+    var t = e.target;
+    if (t.hasAttribute('data-z')) { st.z[+t.getAttribute('data-z')] = parseFloat(t.value); zerarContagem(); desenhar(); }
+    if (t.hasAttribute('data-t')) { st.T = parseFloat(t.value); zerarContagem(); desenhar(); }
+  });
+  raiz.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-reset')) { st.z = INICIAL.z.slice(); st.T = INICIAL.T; zerarContagem(); saida.textContent = '…'; desenhar(); return; }
+    var n = +b.getAttribute('data-sortear'); if (!n) return;
+    $$('button', raiz).forEach(function(x){ x.disabled = true; });
+    animar(function(){
+      var ultimo = 0;
+      for (var i = 0; i < n; i++) { ultimo = sortearUm(); st.cont[ultimo]++; st.total++; }
+      saida.textContent = TOKENS[ultimo];
+      if (!reduzir) { saida.classList.add('pulso'); setTimeout(function(){ saida.classList.remove('pulso'); }, 220); }
+      desenhar();
+      $$('button', raiz).forEach(function(x){ x.disabled = false; });
+    });
+  });
+  desenhar();
+  var api = { aplicar: function(z, T){ st.z = z.slice(); st.T = T; zerarContagem(); saida.textContent = '…'; desenhar(); } };
+  simuladores.push(api);
+  return api;
+}
+var simLab = criarSimulador($('#sim-lab'), '-lab');
+criarSimulador($('#sim-proj'), '-proj');
+var PRESETS = { A:{ z:[2,1,0], T:0.2 }, B:{ z:[2,1,0], T:2 }, C:{ z:[2,1,4], T:1 } };
+$$('[data-preset]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var p = PRESETS[b.getAttribute('data-preset')]; simLab.aplicar(p.z, p.T);
+    $('#sim-lab').scrollIntoView({ behavior: reduzir ? 'auto' : 'smooth', block: 'start' });
+  });
+});
+
+/* ---------------- Atividade 1: liberar documento ---------------- */
+var botaoDoc = $('#a1-ver-doc');
+function atualizarBotaoDoc(){ botaoDoc.disabled = !$('input[name="a1.julgamento"]:checked'); }
+botaoDoc.addEventListener('click', function(){ $('#a1-doc').classList.remove('oculto'); dados['a1.docAberto'] = '1'; gravar(); });
+
+/* ---------------- Campos: carregar e salvar ---------------- */
+function campos(){ return $$('[data-campo]'); }
+campos().forEach(function(el){
+  var k = el.getAttribute('data-campo'), v = dados[k];
+  if (v == null) return;
+  if (el.type === 'radio') el.checked = el.value === v;
+  else if (el.type === 'checkbox') el.checked = v === '1';
+  else el.value = v;
+});
+if (dados['a1.docAberto'] === '1') $('#a1-doc').classList.remove('oculto');
+$$('select[data-situacao]').forEach(avaliarSituacao);
+atualizarBotaoDoc();
+
+var estado = $('#estado-salvo'), tEstado;
+function aoMudar(e){
+  var el = e.target; if (!el.hasAttribute || !el.hasAttribute('data-campo')) return;
+  var k = el.getAttribute('data-campo');
+  if (el.type === 'radio') { if (el.checked) dados[k] = el.value; }
+  else if (el.type === 'checkbox') dados[k] = el.checked ? '1' : '';
+  else dados[k] = el.value;
+  var ok = gravar();
+  if (el.name === 'a1.julgamento') atualizarBotaoDoc();
+  if (k.indexOf('prof.check') === 0) contarChecklist();
+  clearTimeout(tEstado);
+  estado.textContent = ok ? 'Guardado neste computador às ' + new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) + '.' : 'Atenção: este navegador não está guardando. Salve o arquivo antes de fechar.';
+}
+document.addEventListener('input', aoMudar);
+document.addEventListener('change', aoMudar);
+
+function contarChecklist(){
+  var cx = $$('#lista-check input'), n = cx.filter(function(c){ return c.checked; }).length;
+  $('#contador-check').textContent = n + '/' + cx.length;
+}
+contarChecklist();
+
+/* ---------------- Exportar respostas (.txt) ---------------- */
+function valorDe(el){
+  if (el.type === 'radio') return el.checked ? el.value : null;
+  return el.value;
+}
+function montarTexto(){
+  var linhas = [], vistos = {};
+  linhas.push('ENCONTRO 3 — LIMITES, PENSAMENTO CRÍTICO E USO ÉTICO DA IA');
+  linhas.push('Laboratório offline · Letramento Digital em IA · Módulo 1');
+  linhas.push('Gerado em: ' + new Date().toLocaleString('pt-BR'));
+  linhas.push('');
+  $$('#laboratorio [data-campo]').forEach(function(el){
+    var k = el.getAttribute('data-campo');
+    if (el.type === 'radio') { if (vistos[k]) return; vistos[k] = 1; var m = $('#laboratorio input[name="' + el.name + '"]:checked'); linhas.push(el.getAttribute('data-rotulo') + ': ' + (m ? m.value : '(em branco)')); return; }
+    var v = (valorDe(el) || '').trim();
+    var rot = el.getAttribute('data-rotulo') || k;
+    if (v.indexOf('\n') >= 0) { linhas.push(rot + ':'); v.split('\n').forEach(function(l){ linhas.push('    ' + l); }); }
+    else linhas.push(rot + ': ' + (v || '(em branco)'));
+  });
+  return linhas.join('\r\n');
+}
+function nomeArquivo(){
+  var limpar = function(s){ return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase(); };
+  var partes = ['encontro3', limpar(dados['id.turma']), 'pc' + (limpar(dados['id.pc']) || 'x'), limpar(dados['id.nomes']).slice(0, 40)].filter(Boolean);
+  return partes.join('_') + '.txt';
+}
+$$('[data-salvar]').forEach(function(b){
+  b.addEventListener('click', function(){
+    if (!(dados['id.nomes'] || '').trim()) {
+      if (!confirm('Vocês ainda não escreveram os nomes da dupla no começo da página. Salvar mesmo assim?')) { $('[data-campo="id.nomes"]').focus(); return; }
+    }
+    var blob = new Blob(['﻿' + montarTexto()], { type:'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = nomeArquivo();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    estado.textContent = 'Arquivo “' + a.download + '” salvo. Avise o professor.';
+  });
+});
+$('#limpar').addEventListener('click', function(){
+  if (!confirm('Apagar todas as respostas do laboratório neste computador? Faça isso só depois de recolher o arquivo.')) return;
+  Object.keys(dados).forEach(function(k){ if (k.indexOf('prof.') !== 0) delete dados[k]; });
+  gravar(); location.hash = '#laboratorio'; location.reload();
+});
+
+/* ---------------- Navegação entre telas ---------------- */
+var vistas = $$('[data-vista-id]'), linksVista = $$('.abas a');
+function rota(){
+  var h = (location.hash || '#professor').slice(1);
+  var alvo = vistas.filter(function(v){ return v.id === h; })[0];
+  var dentro = null;
+  if (!alvo) { dentro = document.getElementById(h); alvo = dentro ? dentro.closest('[data-vista-id]') : null; }
+  if (!alvo) alvo = vistas[0];
+  vistas.forEach(function(v){ v.classList.toggle('ativa', v === alvo); });
+  linksVista.forEach(function(a){ if (a.getAttribute('data-vista') === alvo.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  document.title = { professor:'Plano B · Encontro 3 offline', laboratorio:'Laboratório · Encontro 3 offline', projetar:'Projeção · Encontro 3 offline' }[alvo.id];
+  if (dentro && dentro !== alvo) dentro.scrollIntoView(); else window.scrollTo(0, 0);
+  if (alvo.id === 'projetar') mostrarSlide(slideAtual);
+}
+window.addEventListener('hashchange', rota);
+
+/* ---------------- Projeção ---------------- */
+var slides = $$('[data-slide]'), slideAtual = 0;
+function mostrarSlide(i){
+  slideAtual = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, j){ s.classList.toggle('ativo', j === slideAtual); });
+  $('#pos-slide').textContent = (slideAtual + 1) + ' / ' + slides.length;
+  $('#ant').disabled = slideAtual === 0; $('#prox').disabled = slideAtual === slides.length - 1;
+}
+$('#ant').addEventListener('click', function(){ mostrarSlide(slideAtual - 1); });
+$('#prox').addEventListener('click', function(){ mostrarSlide(slideAtual + 1); });
+document.addEventListener('keydown', function(e){
+  if (!$('#projetar').classList.contains('ativa')) return;
+  var tag = document.activeElement.tagName;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
+  if (tag === 'BUTTON' && e.key === ' ') return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); mostrarSlide(slideAtual + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); mostrarSlide(slideAtual - 1); }
+});
+$('#tela-cheia').addEventListener('click', function(){
+  var d = document.documentElement;
+  if (!document.fullscreenElement && d.requestFullscreen) d.requestFullscreen().catch(function(){});
+  else if (document.exitFullscreen) document.exitFullscreen().catch(function(){});
+});
+
+/* ---------------- Impressão ---------------- */
+$$('[data-imprimir]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var voltar = location.hash;
+    var alvo = b.getAttribute('data-imprimir');
+    vistas.forEach(function(v){ v.classList.toggle('ativa', v.id === alvo); });
+    $$('details').forEach(function(d){ d.setAttribute('data-estava', d.open ? '1' : ''); d.open = true; });
+    setTimeout(function(){
+      window.print();
+      $$('details').forEach(function(d){ d.open = d.getAttribute('data-estava') === '1'; });
+      if (location.hash !== voltar) location.hash = voltar; else rota();
+    }, 50);
+  });
+});
+
+rota();
+})();
+</script>
+</body>
+</html>

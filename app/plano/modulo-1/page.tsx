@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, CheckCircle2, ClipboardList, Clock, ExternalLink, FileText, Inbox, KeyRound, MonitorSmartphone, Presentation, Sparkles, Target, Trophy, Wrench } from 'lucide-react';
+import { ArrowRight, BookOpen, WifiOff, CheckCircle2, ClipboardList, Clock, ExternalLink, FileText, Inbox, KeyRound, MonitorSmartphone, Presentation, Sparkles, Target, Trophy, Wrench } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import QRCode from '@/components/plano/QRCode';
@@ -26,11 +26,11 @@ const COR: Record<Ferramenta, string> = {
 };
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-const ICONE_MATERIAL = { Apostila: FileText, Site: BookOpen, Projetar: Presentation } as const;
+const ICONE_MATERIAL = { Apostila: FileText, Site: BookOpen, Projetar: Presentation, Offline: WifiOff } as const;
 
 function CartaoMaterial({ m }: { m: Material }) {
   const Icone = ICONE_MATERIAL[m.tipo];
-  const pdf = m.href.endsWith('.pdf');
+  const pdf = m.href.endsWith('.pdf') || m.href.endsWith('.html');
   const conteudo = (
     <>
       <span className="flex items-center gap-2">

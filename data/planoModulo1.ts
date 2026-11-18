@@ -16,7 +16,7 @@ export const NOTION_URL =
   'https://app.notion.com/p/profbrunopereira/M-dulo-1-Fundamentos-Roteiro-do-Professor-3f2dde8b8c80819b8686d7c7183ad651';
 
 export type Material = {
-  tipo: 'Apostila' | 'Site' | 'Projetar';
+  tipo: 'Apostila' | 'Site' | 'Projetar' | 'Offline';
   nome: string;
   /** Caminho interno do site (sem basePath). PDFs começam com /apostilas/. */
   href: string;
@@ -441,6 +441,7 @@ export const ENCONTROS: Encontro[] = [
     ],
     recompensa: 'Selo digital "Pensador Crítico de IA — Nível 3" + reconhecimento da dupla que melhor flagrou uma alucinação real.',
     material: [
+      { tipo: 'Offline', nome: 'Plano B — aula completa sem internet (arquivo único)', href: '/plano-b/encontro-3-offline.html', nota: 'Para laboratório sem rede: plano do professor, laboratório da turma e modo projeção. Salve o arquivo (Ctrl+S) e copie para os computadores.' },
       { tipo: 'Apostila', nome: 'Apostila do Módulo 1 (PDF oficial)', href: '/apostilas/modulo-1-fundamentos.pdf', nota: 'Tópicos 6 a 8 — alucinações, a IA não pensa como gente e as 4 regras de ouro.' },
       { tipo: 'Site', nome: 'Seção 6 — Alucinações e limites', href: '/modulo/1#alucinacoes', nota: 'Base para a caça às alucinações e o arriscado × seguro.' },
       { tipo: 'Site', nome: 'Seção 7 — A IA não pensa como gente', href: '/modulo/1#ia-nao-pensa', nota: 'Apoio para a discussão dos 55–70 min.' },
