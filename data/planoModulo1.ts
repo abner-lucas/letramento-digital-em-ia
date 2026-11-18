@@ -359,7 +359,7 @@ export const ENCONTROS: Encontro[] = [
     selo: 'Pensador Crítico de IA — Nível 3',
     corSelo: '#a78bfa',
     ferramentas: [
-      'Mentimeter — retomada, discussão e bilhete de saída',
+      'Mentimeter — um slide por etapa: retomada, instruções, nuvem das alucinações, votação, discussão e bilhete de saída',
       'ChatGPT, Claude, Gemini ou DeepSeek — oficina da caça às alucinações',
       'Padlet — ficha da oficina, "arriscado x seguro" e "crie seu caso"',
       'Kahoot — "Casos do dia a dia" e quiz final',
@@ -370,7 +370,7 @@ export const ENCONTROS: Encontro[] = [
       {
         inicio: 0, fim: 10, titulo: 'Retomada ativa — o caminho da IA', ferramenta: 'Mentimeter',
         descricao: ['Pergunta rápida sobre a ordem do caminho da IA, para reativar o Encontro 2 antes de seguir.'],
-        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 1–2)', 'e3')],
+        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 1–3: abertura, roteiro e retomada)', 'e3')],
       },
       {
         inicio: 10, fim: 40, titulo: 'Caça às alucinações', ferramenta: 'Duplas, com celular',
@@ -384,11 +384,11 @@ export const ENCONTROS: Encontro[] = [
           { nome: 'Claude', ferramenta: 'IA', url: 'https://claude.ai' },
           { nome: 'DeepSeek', ferramenta: 'IA', url: 'https://chat.deepseek.com' },
           { nome: 'Ficha da oficina (coluna do Padlet)', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET },
-          mentiRecurso('Mentimeter do Encontro 3 (slides 3–4)', 'e3'),
+          mentiRecurso('Mentimeter do Encontro 3 (slides 4–6)', 'e3'),
         ],
       },
       {
-        inicio: 40, fim: 55, titulo: 'Quando desconfiar mais', ferramenta: 'Padlet classificatório',
+        inicio: 40, fim: 55, titulo: 'Quando desconfiar mais', ferramenta: 'Padlet classificatório + Mentimeter',
         descricao: [
           'No Padlet, colunas "Pergunta arriscada" e "Pergunta segura": cada dupla posta 1 exemplo novo (além do que já testou) em cada coluna, usando as 4 categorias do material: números específicos, fatos recentes, assuntos muito locais, citações/referências.',
           'Quem quiser treinar antes usa o classificador da página da turma.',
@@ -396,6 +396,7 @@ export const ENCONTROS: Encontro[] = [
         recursos: [
           { nome: 'Padlet — colunas "Arriscada" e "Segura"', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET },
           { nome: 'Classificador arriscado × seguro (página da turma)', ferramenta: 'Site', ancora: 'arriscado-seguro' },
+          mentiRecurso('Mentimeter do Encontro 3 (slides 7–8: instruções + votação da categoria mais difícil)', 'e3'),
         ],
       },
       {
@@ -404,17 +405,17 @@ export const ENCONTROS: Encontro[] = [
           'Leia em voz alta: "A IA não é mais inteligente que você. Ela é mais rápida. A inteligência crítica continua sendo sua."',
           'Abra a discussão com a "pergunta para levar para casa" do material: se a IA repete os padrões da internet, que tem tanto conteúdo bom quanto ruim, o que pode aparecer nas respostas dela? As respostas vão para o Menti.',
         ],
-        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 5–6)', 'e3')],
+        recursos: [mentiRecurso('Mentimeter do Encontro 3 (slides 9–10)', 'e3')],
       },
       {
         inicio: 70, fim: 100, titulo: 'As regras de ouro + casos do dia a dia', ferramenta: 'Kahoot',
         descricao: ['Apresente as 4 regras de ouro (confira sempre, assuma a autoria, proteja seus dados, respeite as pessoas). Rode o Kahoot com os 5 "casos do dia a dia" da tabela do material como certo ou errado, mais 3 novos.'],
-        recursos: [kahootRecurso('Kahoot "Casos do dia a dia"', KAHOOT.e3casos)],
+        recursos: [kahootRecurso('Kahoot "Casos do dia a dia"', KAHOOT.e3casos), mentiRecurso('Mentimeter do Encontro 3 (slide 11: regras de ouro)', 'e3')],
       },
       {
         inicio: 100, fim: 130, titulo: 'Oficina de síntese — crie seu próprio caso', ferramenta: 'Padlet',
         descricao: ['Cada dupla inventa 1 situação nova de uso da IA (certa ou errada) e posta no Padlet sem revelar a resposta. Trocam de posição com outra dupla, que comenta o post classificando como certo/errado e justificando por escrito com a regra de ouro.'],
-        recursos: [{ nome: 'Padlet — coluna "E3 · Crie seu caso" (comentários ligados)', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET }],
+        recursos: [{ nome: 'Padlet — coluna "E3 · Crie seu caso" (comentários ligados)', ferramenta: 'Padlet', url: PADLET.e23, coleta: COLETA_PADLET }, mentiRecurso('Mentimeter do Encontro 3 (slide 12: instruções)', 'e3')],
       },
       {
         inicio: 130, fim: 145, titulo: 'Quiz final', ferramenta: 'Kahoot + Mentimeter',
@@ -422,7 +423,7 @@ export const ENCONTROS: Encontro[] = [
           'Quiz de 11 perguntas com situações novas sobre os Tópicos 6 a 8 (conferir em fonte oficial, links inventados, pedidos de menor risco, autoria, imagem falsa viralizando, dados de colegas). Nenhuma repete o site, o Menti ou o Kahoot "Casos do dia a dia".',
           'Bilhete de saída no Menti: ranking da regra de ouro mais difícil, autoavaliação e "qual descoberta você vai contar em casa?".',
         ],
-        recursos: [kahootRecurso('Kahoot "Quiz final"', KAHOOT.e3final), mentiRecurso('Mentimeter do Encontro 3 (slides 7–9)', 'e3')],
+        recursos: [kahootRecurso('Kahoot "Quiz final"', KAHOOT.e3final), mentiRecurso('Mentimeter do Encontro 3 (slides 13–16)', 'e3')],
       },
       {
         inicio: 145, fim: 150, titulo: 'Selo digital + missão para a próxima aula', ferramenta: 'Site',
@@ -430,7 +431,7 @@ export const ENCONTROS: Encontro[] = [
           'Os alunos geram o selo "Pensador Crítico de IA — Nível 3".',
           'Repasse a "Sua missão para a próxima aula" do material: abrir um assistente de IA, pedir para explicar o que é um token para um estudante do ensino médio, testar uma alucinação sobre o próprio bairro e trazer uma descoberta para compartilhar.',
         ],
-        recursos: [{ nome: 'Gerador do selo — Nível 3', ferramenta: 'Site', ancora: 'selo-3' }],
+        recursos: [{ nome: 'Gerador do selo — Nível 3', ferramenta: 'Site', ancora: 'selo-3' }, mentiRecurso('Mentimeter do Encontro 3 (slide 17: selo + missão)', 'e3')],
       },
     ],
     registro: [
